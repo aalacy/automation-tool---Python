@@ -1,0 +1,950 @@
+
+/home/johnathanstv/bin/gam update org /HQ add users laguilar
+/home/johnathanstv/bin/gam update org /Portland add users jalberts
+/home/johnathanstv/bin/gam update org /Portland add users bamsden
+/home/johnathanstv/bin/gam update org /HQ add users aandersen
+/home/johnathanstv/bin/gam update org /Portland add users ianderson
+/home/johnathanstv/bin/gam update org /HQ add users dantonijevic
+/home/johnathanstv/bin/gam update org /HQ add users narena
+/home/johnathanstv/bin/gam update org /Portland add users latwood
+/home/johnathanstv/bin/gam update org /HQ add users maudino
+/home/johnathanstv/bin/gam update org /HQ add users javalos
+/home/johnathanstv/bin/gam update org /HQ add users eavila
+/home/johnathanstv/bin/gam update org /Portland add users cbabcock
+/home/johnathanstv/bin/gam update org /Portland add users gbaker
+/home/johnathanstv/bin/gam update org /Portland add users nbaker
+/home/johnathanstv/bin/gam update org /HQ add users nbandre
+/home/johnathanstv/bin/gam update org /HQ add users cbaum
+/home/johnathanstv/bin/gam update org /Portland add users ibeaule
+/home/johnathanstv/bin/gam update org /HQ add users abede
+/home/johnathanstv/bin/gam update org /HQ add users abelanger
+/home/johnathanstv/bin/gam update org /Portland add users abell
+/home/johnathanstv/bin/gam update org /HQ add users nbhave
+/home/johnathanstv/bin/gam update org /Portland add users mbielec
+/home/johnathanstv/bin/gam update org /HQ add users fbinetti
+/home/johnathanstv/bin/gam update org /Portland add users jblatchford
+/home/johnathanstv/bin/gam update org /HQ add users ebordages
+/home/johnathanstv/bin/gam update org /HQ add users jbordner
+/home/johnathanstv/bin/gam update org /HQ add users mrocco
+/home/johnathanstv/bin/gam update org /Portland add users cbouchard
+/home/johnathanstv/bin/gam update org /Portland add users abouthot
+/home/johnathanstv/bin/gam update org /Portland add users sbowen
+/home/johnathanstv/bin/gam update org /Portland add users mbray
+/home/johnathanstv/bin/gam update org /Portland add users zbrincefield
+/home/johnathanstv/bin/gam update org /Portland add users abrosseau
+/home/johnathanstv/bin/gam update org /Portland add users cbrown
+/home/johnathanstv/bin/gam update org /Portland add users obrown
+/home/johnathanstv/bin/gam update org /HQ add users jbucher
+/home/johnathanstv/bin/gam update org /Durham add users sbunn
+/home/johnathanstv/bin/gam update org /HQ add users tburns
+/home/johnathanstv/bin/gam update org /Portland add users cbush
+/home/johnathanstv/bin/gam update org /HQ add users tbutler
+/home/johnathanstv/bin/gam update org /Durham add users ns
+/home/johnathanstv/bin/gam update org /Portland add users rcalder
+/home/johnathanstv/bin/gam update org /HQ add users ccarey
+/home/johnathanstv/bin/gam update org /Portland add users nchamberlain
+/home/johnathanstv/bin/gam update org /HQ add users jchampeau
+/home/johnathanstv/bin/gam update org /HQ add users lchaney
+/home/johnathanstv/bin/gam update org /Portland add users mchapman
+/home/johnathanstv/bin/gam update org /Portland add users rchason
+/home/johnathanstv/bin/gam update org /HQ add users cchen
+/home/johnathanstv/bin/gam update org /HQ add users kchen
+/home/johnathanstv/bin/gam update org /HQ add users ncheung
+/home/johnathanstv/bin/gam update org /HQ add users jchoi
+/home/johnathanstv/bin/gam update org /HQ add users echong
+/home/johnathanstv/bin/gam update org /HQ add users echow
+/home/johnathanstv/bin/gam update org /HQ add users cchoy
+/home/johnathanstv/bin/gam update org /HQ add users chriscichon
+/home/johnathanstv/bin/gam update org /HQ add users cc
+/home/johnathanstv/bin/gam update org /NV Warehouse add users mclemo
+/home/johnathanstv/bin/gam update org /HQ add users bcoffman
+/home/johnathanstv/bin/gam update org /Portland add users ccolatosti
+/home/johnathanstv/bin/gam update org /Portland add users dcoleman
+/home/johnathanstv/bin/gam update org /Durham add users rcoleman
+/home/johnathanstv/bin/gam update org /HQ add users bcollins
+/home/johnathanstv/bin/gam update org / add users bridget.collins
+/home/johnathanstv/bin/gam update org /MO Warehouse add users mcollins
+/home/johnathanstv/bin/gam update org /Portland add users cconstant
+/home/johnathanstv/bin/gam update org /Portland add users acormier
+/home/johnathanstv/bin/gam update org /Portland add users lcosmas
+/home/johnathanstv/bin/gam update org /HQ add users dcostin
+/home/johnathanstv/bin/gam update org /Portland add users kcragg
+/home/johnathanstv/bin/gam update org /HQ add users acraig
+/home/johnathanstv/bin/gam update org /HQ add users ac
+/home/johnathanstv/bin/gam update org /PA Warehouse add users acrater
+/home/johnathanstv/bin/gam update org /Portland add users ncremin
+/home/johnathanstv/bin/gam update org /Portland add users mcummings
+/home/johnathanstv/bin/gam update org /HQ add users ccummins
+/home/johnathanstv/bin/gam update org /Durham add users icunningham
+/home/johnathanstv/bin/gam update org /Durham add users ddahl
+/home/johnathanstv/bin/gam update org /Portland add users hdavis
+/home/johnathanstv/bin/gam update org /Portland add users sdavis
+/home/johnathanstv/bin/gam update org /HQ add users janae
+/home/johnathanstv/bin/gam update org /Portland add users ddelbianco
+/home/johnathanstv/bin/gam update org /HQ add users jd
+/home/johnathanstv/bin/gam update org /Portland add users gdixon
+/home/johnathanstv/bin/gam update org /HQ add users mdoll
+/home/johnathanstv/bin/gam update org /HQ add users edoyle
+/home/johnathanstv/bin/gam update org /Portland add users jdreher
+/home/johnathanstv/bin/gam update org /Portland add users aduchette
+/home/johnathanstv/bin/gam update org /Portland add users meidsness
+/home/johnathanstv/bin/gam update org /HQ add users felias
+/home/johnathanstv/bin/gam update org /HQ add users melias
+/home/johnathanstv/bin/gam update org /Portland add users bestes
+/home/johnathanstv/bin/gam update org /Portland add users jestes
+/home/johnathanstv/bin/gam update org /Portland add users aethier
+/home/johnathanstv/bin/gam update org /MO Warehouse add users aevans
+/home/johnathanstv/bin/gam update org /Portland add users tezquerro
+/home/johnathanstv/bin/gam update org /HQ add users afarkas
+/home/johnathanstv/bin/gam update org /HQ add users mf
+/home/johnathanstv/bin/gam update org /Portland add users kfasulo
+/home/johnathanstv/bin/gam update org /Portland add users afleming
+/home/johnathanstv/bin/gam update org /HQ add users mfletcher
+/home/johnathanstv/bin/gam update org /HQ add users tfontaine
+/home/johnathanstv/bin/gam update org /Portland add users eforte
+/home/johnathanstv/bin/gam update org /HQ add users jfoxworth
+/home/johnathanstv/bin/gam update org /Portland add users hfoydel
+/home/johnathanstv/bin/gam update org /Portland add users lfredette
+/home/johnathanstv/bin/gam update org /HQ add users bfriedland
+/home/johnathanstv/bin/gam update org /HQ add users lfromherz
+/home/johnathanstv/bin/gam update org /HQ add users jgagnon
+/home/johnathanstv/bin/gam update org /HQ add users sgallagher
+/home/johnathanstv/bin/gam update org /HQ add users jgamble
+/home/johnathanstv/bin/gam update org /HQ add users vgarber
+/home/johnathanstv/bin/gam update org /Portland add users sgarvey
+/home/johnathanstv/bin/gam update org /HQ add users rgash
+/home/johnathanstv/bin/gam update org /Portland add users lgauthier
+/home/johnathanstv/bin/gam update org /Portland add users jgenaro
+/home/johnathanstv/bin/gam update org /Portland add users jgerard
+/home/johnathanstv/bin/gam update org /HQ add users tgerrodette
+/home/johnathanstv/bin/gam update org /Portland add users sgervais
+/home/johnathanstv/bin/gam update org /MO Warehouse add users tgibson
+/home/johnathanstv/bin/gam update org /HQ add users rginsberg
+/home/johnathanstv/bin/gam update org /Durham add users bglesias
+/home/johnathanstv/bin/gam update org /PA Warehouse add users agomez
+/home/johnathanstv/bin/gam update org /NV Warehouse add users jgomez
+/home/johnathanstv/bin/gam update org /HQ add users Ggornall
+/home/johnathanstv/bin/gam update org /HQ add users jgoslin
+/home/johnathanstv/bin/gam update org /Portland add users sgreenwood
+/home/johnathanstv/bin/gam update org /Portland add users jgrindle
+/home/johnathanstv/bin/gam update org /HQ add users kgrishkoff
+/home/johnathanstv/bin/gam update org /Portland add users sgriswold
+/home/johnathanstv/bin/gam update org /HQ add users lguo
+/home/johnathanstv/bin/gam update org /HQ add users nguy
+/home/johnathanstv/bin/gam update org /HQ add users reyna
+/home/johnathanstv/bin/gam update org /HQ add users fhabib
+/home/johnathanstv/bin/gam update org /Portland add users dhack
+/home/johnathanstv/bin/gam update org /Portland add users chafford
+/home/johnathanstv/bin/gam update org /HQ add users mhandler
+/home/johnathanstv/bin/gam update org /HQ add users khaney
+/home/johnathanstv/bin/gam update org /Portland add users mharvey
+/home/johnathanstv/bin/gam update org /Portland add users jhebb
+/home/johnathanstv/bin/gam update org /MO Warehouse add users bhenderson
+/home/johnathanstv/bin/gam update org /HQ add users chetrick
+/home/johnathanstv/bin/gam update org /Portland add users jhitchcock
+/home/johnathanstv/bin/gam update org /Portland add users mhodge
+/home/johnathanstv/bin/gam update org /PA Warehouse add users aholland
+/home/johnathanstv/bin/gam update org / add users mhollender
+/home/johnathanstv/bin/gam update org /Portland add users dholt
+/home/johnathanstv/bin/gam update org /HQ add users SH
+/home/johnathanstv/bin/gam update org /Portland add users ahowell
+/home/johnathanstv/bin/gam update org /HQ add users chubbard
+/home/johnathanstv/bin/gam update org /Portland add users bhudson
+/home/johnathanstv/bin/gam update org /HQ add users jhughes
+/home/johnathanstv/bin/gam update org /HQ add users rhuhn
+/home/johnathanstv/bin/gam update org /MO Warehouse add users bhunter
+/home/johnathanstv/bin/gam update org /MO Warehouse add users rinman
+/home/johnathanstv/bin/gam update org /Portland add users jmjackson
+/home/johnathanstv/bin/gam update org / add users jjames2
+/home/johnathanstv/bin/gam update org /HQ add users mjames
+/home/johnathanstv/bin/gam update org /Portland add users vjeffery
+/home/johnathanstv/bin/gam update org /HQ add users djezienicki
+/home/johnathanstv/bin/gam update org /HQ add users bjoe
+/home/johnathanstv/bin/gam update org /PA Warehouse add users kjohnson
+/home/johnathanstv/bin/gam update org /NV Warehouse add users vjovel
+/home/johnathanstv/bin/gam update org /Portland add users kkeith
+/home/johnathanstv/bin/gam update org /HQ add users MKelter
+/home/johnathanstv/bin/gam update org /Portland add users bkenney
+/home/johnathanstv/bin/gam update org /HQ add users akhan
+/home/johnathanstv/bin/gam update org /Portland add users cking
+/home/johnathanstv/bin/gam update org /Portland add users kkitchen
+/home/johnathanstv/bin/gam update org /Portland add users bkorpi
+/home/johnathanstv/bin/gam update org /Portland add users kkrech
+/home/johnathanstv/bin/gam update org /Portland add users slacasse
+/home/johnathanstv/bin/gam update org /HQ add users claire
+/home/johnathanstv/bin/gam update org /HQ add users klakshminarayanan
+/home/johnathanstv/bin/gam update org /Portland add users elambert
+/home/johnathanstv/bin/gam update org /HQ add users sl
+/home/johnathanstv/bin/gam update org /Portland add users mlandry
+/home/johnathanstv/bin/gam update org /HQ add users jlejowett
+/home/johnathanstv/bin/gam update org /HQ add users clee
+/home/johnathanstv/bin/gam update org /HQ add users aleung
+/home/johnathanstv/bin/gam update org /HQ add users blewis
+/home/johnathanstv/bin/gam update org /PA Warehouse add users jl
+/home/johnathanstv/bin/gam update org /HQ add users clim
+/home/johnathanstv/bin/gam update org /HQ add users clin
+/home/johnathanstv/bin/gam update org /HQ add users mlindsay
+/home/johnathanstv/bin/gam update org / add users nl
+/home/johnathanstv/bin/gam update org /Portland add users blorello
+/home/johnathanstv/bin/gam update org /Portland add users mlortie
+/home/johnathanstv/bin/gam update org /Portland add users klowe
+/home/johnathanstv/bin/gam update org /Portland add users cmackellar
+/home/johnathanstv/bin/gam update org /Portland add users smacwilliam
+/home/johnathanstv/bin/gam update org /Portland add users amalsbury
+/home/johnathanstv/bin/gam update org /HQ add users amarchesano
+/home/johnathanstv/bin/gam update org /Portland add users amarchessault
+/home/johnathanstv/bin/gam update org /HQ add users mmarion
+/home/johnathanstv/bin/gam update org /NV Warehouse add users nmarsh
+/home/johnathanstv/bin/gam update org /NV Warehouse add users dmartinez
+/home/johnathanstv/bin/gam update org /HQ add users lmattis
+/home/johnathanstv/bin/gam update org /Portland add users jmavodones
+/home/johnathanstv/bin/gam update org /Durham add users rmcalister
+/home/johnathanstv/bin/gam update org /HQ add users emccarthy
+/home/johnathanstv/bin/gam update org /Portland add users gmcdermott
+/home/johnathanstv/bin/gam update org /Portland add users emcdonough
+/home/johnathanstv/bin/gam update org /Portland add users cmcgarry
+/home/johnathanstv/bin/gam update org /HQ add users jmcguire
+/home/johnathanstv/bin/gam update org /HQ add users cmcpherson
+/home/johnathanstv/bin/gam update org /PA Warehouse add users kmcwhite
+/home/johnathanstv/bin/gam update org /Portland add users ameara
+/home/johnathanstv/bin/gam update org /HQ add users bmeitzler
+/home/johnathanstv/bin/gam update org /HQ add users mmerrigan
+/home/johnathanstv/bin/gam update org /Portland add users rmerritt
+/home/johnathanstv/bin/gam update org /HQ add users amiao
+/home/johnathanstv/bin/gam update org /HQ add users kmihan
+/home/johnathanstv/bin/gam update org /HQ add users wmiller
+/home/johnathanstv/bin/gam update org /HQ add users cmoberg
+/home/johnathanstv/bin/gam update org /HQ add users jmok
+/home/johnathanstv/bin/gam update org /HQ add users mlafrance
+/home/johnathanstv/bin/gam update org /Portland add users amondak
+/home/johnathanstv/bin/gam update org /HQ add users pmoon
+/home/johnathanstv/bin/gam update org /HQ add users nmooney
+/home/johnathanstv/bin/gam update org /PA Warehouse add users lmora
+/home/johnathanstv/bin/gam update org /HQ add users mm
+/home/johnathanstv/bin/gam update org /Portland add users mmowers
+/home/johnathanstv/bin/gam update org /Portland add users hmurphy
+/home/johnathanstv/bin/gam update org /HQ add users nnakaso
+/home/johnathanstv/bin/gam update org /Portland add users enedik
+/home/johnathanstv/bin/gam update org /Portland add users dnesher
+/home/johnathanstv/bin/gam update org /HQ add users gnguyen
+/home/johnathanstv/bin/gam update org /Portland add users snicolay
+/home/johnathanstv/bin/gam update org /Portland add users anielson
+/home/johnathanstv/bin/gam update org /HQ add users snijhawan
+/home/johnathanstv/bin/gam update org /HQ add users anixon
+/home/johnathanstv/bin/gam update org /HQ add users jnoonan
+/home/johnathanstv/bin/gam update org /NV Warehouse add users rnorthrup
+/home/johnathanstv/bin/gam update org /HQ add users hnutt
+/home/johnathanstv/bin/gam update org /PA Warehouse add users joberry
+/home/johnathanstv/bin/gam update org /HQ add users tochiai
+/home/johnathanstv/bin/gam update org /Portland add users aouellette
+/home/johnathanstv/bin/gam update org /Portland add users apackard
+/home/johnathanstv/bin/gam update org /Portland add users mparr
+/home/johnathanstv/bin/gam update org /Portland add users aparziale
+/home/johnathanstv/bin/gam update org /Portland add users apaul
+/home/johnathanstv/bin/gam update org /NV Warehouse add users lpeffer
+/home/johnathanstv/bin/gam update org /HQ add users apeterson
+/home/johnathanstv/bin/gam update org /Portland add users speterson
+/home/johnathanstv/bin/gam update org /Portland add users tpinette
+/home/johnathanstv/bin/gam update org /HQ add users tpiroeva
+/home/johnathanstv/bin/gam update org /Durham add users apolisskaya
+/home/johnathanstv/bin/gam update org /HQ add users jpresnick
+/home/johnathanstv/bin/gam update org /HQ add users wquach
+/home/johnathanstv/bin/gam update org /HQ add users patrick
+/home/johnathanstv/bin/gam update org /Portland add users bquinn
+/home/johnathanstv/bin/gam update org /HQ add users aquinonez
+/home/johnathanstv/bin/gam update org /Portland add users erama
+/home/johnathanstv/bin/gam update org /HQ add users sramirez
+/home/johnathanstv/bin/gam update org /Portland add users cranger
+/home/johnathanstv/bin/gam update org /HQ add users irasmussen
+/home/johnathanstv/bin/gam update org /Portland add users jraymond
+/home/johnathanstv/bin/gam update org /NV Warehouse add users dreifschneider
+/home/johnathanstv/bin/gam update org /HQ add users arendich
+/home/johnathanstv/bin/gam update org /HQ add users trettig
+/home/johnathanstv/bin/gam update org /Portland add users greynolds
+/home/johnathanstv/bin/gam update org /NV Warehouse add users nrhoades
+/home/johnathanstv/bin/gam update org /Portland add users mrichard
+/home/johnathanstv/bin/gam update org /Portland add users brichardson
+/home/johnathanstv/bin/gam update org /Portland add users mroberts
+/home/johnathanstv/bin/gam update org /Portland add users jrobertson
+/home/johnathanstv/bin/gam update org /HQ add users mrobinson
+/home/johnathanstv/bin/gam update org /NV Warehouse add users mrodriguez
+/home/johnathanstv/bin/gam update org /Durham add users drogers
+/home/johnathanstv/bin/gam update org /Portland add users mrogers
+/home/johnathanstv/bin/gam update org /HQ add users broley
+/home/johnathanstv/bin/gam update org /NV Warehouse add users hromig
+/home/johnathanstv/bin/gam update org /PA Warehouse add users frosario
+/home/johnathanstv/bin/gam update org /NV Warehouse add users mrossi
+/home/johnathanstv/bin/gam update org /Portland add users vroyall
+/home/johnathanstv/bin/gam update org /NV Warehouse add users aroyle
+/home/johnathanstv/bin/gam update org /Portland add users cryan
+/home/johnathanstv/bin/gam update org /Portland add users dryan
+/home/johnathanstv/bin/gam update org / add users eryan
+/home/johnathanstv/bin/gam update org /HQ add users asalai
+/home/johnathanstv/bin/gam update org /MO Warehouse add users csandquist
+/home/johnathanstv/bin/gam update org /HQ add users asathyan
+/home/johnathanstv/bin/gam update org /NV Warehouse add users ksausedo
+/home/johnathanstv/bin/gam update org /Portland add users savage
+/home/johnathanstv/bin/gam update org /PA Warehouse add users andre
+/home/johnathanstv/bin/gam update org /MO Warehouse add users sschack
+/home/johnathanstv/bin/gam update org /Roven add users kschrillo
+/home/johnathanstv/bin/gam update org /Portland add users jschulte
+/home/johnathanstv/bin/gam update org /HQ add users ascott
+/home/johnathanstv/bin/gam update org /HQ add users csdregas
+/home/johnathanstv/bin/gam update org /HQ add users kseaton
+/home/johnathanstv/bin/gam update org /Portland add users aselby
+/home/johnathanstv/bin/gam update org /HQ add users ssepasi
+/home/johnathanstv/bin/gam update org /Portland add users lsession
+/home/johnathanstv/bin/gam update org /HQ add users gshaffer
+/home/johnathanstv/bin/gam update org /HQ add users hsharma
+/home/johnathanstv/bin/gam update org /HQ add users eshaw2
+/home/johnathanstv/bin/gam update org /Portland add users eshaw
+/home/johnathanstv/bin/gam update org /HQ add users asheldon
+/home/johnathanstv/bin/gam update org /HQ add users ashimshi
+/home/johnathanstv/bin/gam update org /Portland add users mshugrue
+/home/johnathanstv/bin/gam update org /HQ add users asieglock
+/home/johnathanstv/bin/gam update org /HQ add users andrew
+/home/johnathanstv/bin/gam update org /HQ add users jon
+/home/johnathanstv/bin/gam update org /HQ add users usinha
+/home/johnathanstv/bin/gam update org /HQ add users tsiragusa
+/home/johnathanstv/bin/gam update org /Portland add users asites
+/home/johnathanstv/bin/gam update org /Portland add users ssloan
+/home/johnathanstv/bin/gam update org /NV Warehouse add users bsmith
+/home/johnathanstv/bin/gam update org /Portland add users brsmith
+/home/johnathanstv/bin/gam update org /NV Warehouse add users csmith
+/home/johnathanstv/bin/gam update org /HQ add users rson
+/home/johnathanstv/bin/gam update org /HQ add users rsong
+/home/johnathanstv/bin/gam update org /Portland add users sspellman
+/home/johnathanstv/bin/gam update org /Portland add users jstein
+/home/johnathanstv/bin/gam update org /Portland add users kstenger
+/home/johnathanstv/bin/gam update org /HQ add users dstephens
+/home/johnathanstv/bin/gam update org /Portland add users nstevens
+/home/johnathanstv/bin/gam update org /PA Warehouse add users jstevenson
+/home/johnathanstv/bin/gam update org /Portland add users astoker
+/home/johnathanstv/bin/gam update org /MO Warehouse add users bswearengen
+/home/johnathanstv/bin/gam update org /Portland add users bswett
+/home/johnathanstv/bin/gam update org /HQ add users ctabucchi
+/home/johnathanstv/bin/gam update org /HQ add users atagal
+/home/johnathanstv/bin/gam update org /HQ add users itambunan
+/home/johnathanstv/bin/gam update org /HQ add users ntennakoon
+/home/johnathanstv/bin/gam update org /Portland add users cterhune
+/home/johnathanstv/bin/gam update org /Portland add users btesta
+/home/johnathanstv/bin/gam update org /Portland add users jthibodeau
+/home/johnathanstv/bin/gam update org /HQ add users stholen
+/home/johnathanstv/bin/gam update org /Portland add users ktingley
+/home/johnathanstv/bin/gam update org /Portland add users rtrail
+/home/johnathanstv/bin/gam update org /HQ add users htrelogan
+/home/johnathanstv/bin/gam update org /HQ add users jtrinh
+/home/johnathanstv/bin/gam update org /Portland add users ktrolan
+/home/johnathanstv/bin/gam update org /HQ add users ytsai
+/home/johnathanstv/bin/gam update org /Durham add users atung
+/home/johnathanstv/bin/gam update org /HQ add users jtunick
+/home/johnathanstv/bin/gam update org /MO Warehouse add users tunderwood
+/home/johnathanstv/bin/gam update org /Portland add users tvallee
+/home/johnathanstv/bin/gam update org /HQ add users mvascelli
+/home/johnathanstv/bin/gam update org /Portland add users svatter
+/home/johnathanstv/bin/gam update org /MO Warehouse add users mvenable
+/home/johnathanstv/bin/gam update org /HQ add users rv
+/home/johnathanstv/bin/gam update org /Portland add users pvigue
+/home/johnathanstv/bin/gam update org /Portland add users tvincent
+/home/johnathanstv/bin/gam update org /Portland add users rviola
+/home/johnathanstv/bin/gam update org /HQ add users avizcaino
+/home/johnathanstv/bin/gam update org /HQ add users jvollmert
+/home/johnathanstv/bin/gam update org /HQ add users jwagstaff
+/home/johnathanstv/bin/gam update org /Portland add users lwaite
+/home/johnathanstv/bin/gam update org /HQ add users hwang
+/home/johnathanstv/bin/gam update org /Portland add users lwaters
+/home/johnathanstv/bin/gam update org /Portland add users kwatts
+/home/johnathanstv/bin/gam update org /HQ add users rwedig
+/home/johnathanstv/bin/gam update org /HQ add users eweibel
+/home/johnathanstv/bin/gam update org /HQ add users dweindorf
+/home/johnathanstv/bin/gam update org /Portland add users jweyant
+/home/johnathanstv/bin/gam update org /NV Warehouse add users lwilliams
+/home/johnathanstv/bin/gam update org /Portland add users awojenski
+/home/johnathanstv/bin/gam update org /HQ add users awojewidka
+/home/johnathanstv/bin/gam update org /HQ add users ewong
+/home/johnathanstv/bin/gam update org /HQ add users hwong
+/home/johnathanstv/bin/gam update org /Portland add users mwood
+/home/johnathanstv/bin/gam update org /Portland add users dwyman
+/home/johnathanstv/bin/gam update org /Portland add users cyates
+/home/johnathanstv/bin/gam update org /Portland add users wyeager
+/home/johnathanstv/bin/gam update org /HQ add users azavala
+/home/johnathanstv/bin/gam update org /HQ add users jzhou
+/home/johnathanstv/bin/gam update org /HQ add users hzhu
+/home/johnathanstv/bin/gam update org /HQ add users azurmuhle
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
