@@ -41,6 +41,7 @@ import pdb
 from spoofcheck import _run_spoofcheck
 from ctfr import _run_ctrf
 from urlscan import _run_urlscan, urlscan_sumbit, print_summary
+from whoxy import _run_whoxy_history_data
 
 data = {
     "spf_record": "",
@@ -65,7 +66,7 @@ class PublicData:
     # set up engine for database
     Base = declarative_base()
     metadata = MetaData()
-    engine = create_engine(config.get('database', 'mysql2'))
+    engine = create_engine(config.get('database', 'mysql1'))
     connection = engine.connect()
 
     # define table schema
@@ -141,9 +142,14 @@ if __name__ == "__main__":
 
     # run urlscan.io
     data = print_summary(data, target_uuid)
+
+    # run whoxy
+    data = _run_whoxy_history_data(data, domain)
+
+    # print(data)
     
     # update the table with the data
-    # public_data._update_table()
+    public_data._update_table()
 
     # close db
     public_data.close_db()
