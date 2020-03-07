@@ -44,6 +44,7 @@ def print_summary(data, target_uuid):
 
     r = response.content.decode("utf-8")
     
+    run_success = False
     if null_response_string in r:
         logging.warning('Results not processed. Please check again later.')
     else:
@@ -132,7 +133,9 @@ def print_summary(data, target_uuid):
         print("Malicious Requests: " + str(malicious_total))
         print("Pointed Domains: " + str(pointed_domains))
 
-    return data
+        run_success = True
+
+    return data, run_success
 
 def _run_urlscan(domain, data):
     print('[=] urlscan.io [=]')
