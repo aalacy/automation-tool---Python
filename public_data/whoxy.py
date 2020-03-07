@@ -16,6 +16,8 @@ API_KEY = '084557fdee67d0f5i713e2fca2bebc3be'
 session = requests.Session()
 
 def _run_whoxy_history_data(data, domain):
+	print('[***] whoxy [***]')
+
 	res = session.get('http://api.whoxy.com/?key=084557fdee67d0f5i713e2fca2bebc3be&history=' + domain)
 	content = res.json()
 
