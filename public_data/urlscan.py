@@ -1,8 +1,8 @@
 import sys
 import requests
 import time
-import logging
 import argparse
+import logging
 
 logging.basicConfig(level=logging.INFO)
 
@@ -29,27 +29,34 @@ def urlscan_sumbit(domain):
 
     ## end POST request
     r = response.content.decode("utf-8")
-    print(r)
     target_uuid = response.json().get('uuid')
 
-    print('[*] successfully submitted request to the server. please wait a few secs to get results [*]')
-    time.sleep(15)
+    print('[***] urlscan.io: successfully submitted request to the server.[***]')
+    time.sleep(5)
 
     return target_uuid
 
 # print url scan summary
 def print_summary(data, target_uuid):
-    response = session.get("https://urlscan.io/api/v1/result/%s/" % target_uuid)
-    null_response_string = '"status": 404'
+    print('[***] urlscan.io: retrieving the results from the server [***]')
+    response = None
+    cnt = 0
+    while True:
+        response = session.get("https://urlscan.io/api/v1/result/%s/" % target_uuid)
+        null_response_string = '"status": 404'
 
-    r = response.content.decode("utf-8")
-    
-    run_success = False
-    if null_response_string in r:
-        logging.warning('Results not processed. Please check again later.')
-    else:
+        r = response.content.decode("utf-8")
+        
+        run_success = False
+        cnt += 1
+        if null_response_string in r:
+            logging.warning('urlscan.io: Results not processed. Please check again later.')
+            time.sleep(6)
+        elif cnt > 3:
+            break
 
-        ### relevant aggregate data
+    ### relevant aggregate data
+    if response:
         content = response.json()
         request_info = content.get("data").get("requests")
         meta_info = content.get("meta")
@@ -106,7 +113,7 @@ def print_summary(data, target_uuid):
         data['urlscan_ip_address'] = page_ip
         data['urlscan_country'] = page_country
         data['urlscan_server'] = page_server
-        data['urlscan_web_apps'] = web_apps
+        data['urlscan_web_apps'] = ';'.join(web_apps)
         data['urlscan_number_of_requests'] = num_requests
         data['urlscan_ads_blocked'] = ads_blocked
         data['urlscan_http_requests'] = str(https_percentage) + "%"
@@ -114,7 +121,7 @@ def print_summary(data, target_uuid):
         data['urlscan_unique_country'] = country_count
         data['urlscan_malicious'] = str(is_malicious)
         data['urlscan_malicious_requests'] = str(malicious_total)
-        data['urlscan_pointed_domains'] = str(pointed_domains)
+        data['urlscan_pointed_domains'] = ';'.join(pointed_domains)
 
         
         ### print data
@@ -133,9 +140,7 @@ def print_summary(data, target_uuid):
         print("Malicious Requests: " + str(malicious_total))
         print("Pointed Domains: " + str(pointed_domains))
 
-        run_success = True
-
-    return data, run_success
+    return data
 
 def _run_urlscan(domain, data):
     print('[=] urlscan.io [=]')

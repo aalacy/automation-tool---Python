@@ -200,7 +200,7 @@ if __name__ == "__main__":
     data = _run_whoxy_history_data(data, domain)
 
     # run urlscan.io
-    data, run_success = print_summary(data, target_uuid)
+    data = print_summary(data, target_uuid)
 
     # update the table with the data
     public_data._update_table(data)
