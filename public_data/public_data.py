@@ -90,7 +90,7 @@ class PublicData:
         self.target_uuid = None
 
 
-    def _update_table(self):
+    def _update_table(self, data):
         '''
             Update the data into table
                 @table name: public_data
@@ -106,29 +106,29 @@ class PublicData:
         try:
             query = db.insert(self.data_table).values(
                 company_id=self.domain,
-                spf_record=self.data['spf_record'],
-                spf_record_more=self.data['spf_record_more'],
-                spf_dmarc=self.data['spf_dmarc'],
-                spf_spoofing_possible=self.data['spf_spoofing_possible'],
-                whoxy_registered=self.data['whoxy_registered'],
-                whoxy_updated=self.data['whoxy_updated'],
-                whoxy_expiry=self.data['whoxy_expiry'],
-                whoxy_registrar=self.data['whoxy_registrar'],
-                whoxy_nameservers=self.data['whoxy_nameservers'],
-                whoxy_domainstatus=self.data['whoxy_domainstatus'],
-                urlscan_domain=self.data['urlscan_domain'],
-                urlscan_ip_address=self.data['urlscan_ip_address'],
-                urlscan_country=self.data['urlscan_country'],
-                urlscan_server=self.data['urlscan_server'],
-                urlscan_web_apps=self.data['urlscan_web_apps'],
-                urlscan_number_of_requests=self.data['urlscan_number_of_requests'],
-                urlscan_ads_blocked=self.data['urlscan_ads_blocked'],
-                urlscan_http_requests=self.data['urlscan_http_requests'],
-                urlscan_ipv6=self.data['urlscan_ipv6'],
-                urlscan_unique_country=self.data['urlscan_unique_country'],
-                urlscan_malicious=self.data['urlscan_malicious'],
-                urlscan_malicious_requests=self.data['urlscan_malicious_requests'],
-                urlscan_pointed_domains=self.data['urlscan_pointed_domains'],
+                spf_record=data['spf_record'],
+                spf_record_more=data['spf_record_more'],
+                spf_dmarc=data['spf_dmarc'],
+                spf_spoofing_possible=data['spf_spoofing_possible'],
+                whoxy_registered=data['whoxy_registered'],
+                whoxy_updated=data['whoxy_updated'],
+                whoxy_expiry=data['whoxy_expiry'],
+                whoxy_registrar=data['whoxy_registrar'],
+                whoxy_nameservers=data['whoxy_nameservers'],
+                whoxy_domainstatus=data['whoxy_domainstatus'],
+                urlscan_domain=data['urlscan_domain'],
+                urlscan_ip_address=data['urlscan_ip_address'],
+                urlscan_country=data['urlscan_country'],
+                urlscan_server=data['urlscan_server'],
+                urlscan_web_apps=data['urlscan_web_apps'],
+                urlscan_number_of_requests=data['urlscan_number_of_requests'],
+                urlscan_ads_blocked=data['urlscan_ads_blocked'],
+                urlscan_http_requests=data['urlscan_http_requests'],
+                urlscan_ipv6=data['urlscan_ipv6'],
+                urlscan_unique_country=data['urlscan_unique_country'],
+                urlscan_malicious=data['urlscan_malicious'],
+                urlscan_malicious_requests=data['urlscan_malicious_requests'],
+                urlscan_pointed_domains=data['urlscan_pointed_domains'],
                 run_at=date.now().strftime("%Y-%m-%d %H:%M:%S"))
             self.connection.execute(query)
         except Exception as E:
@@ -167,7 +167,7 @@ if __name__ == "__main__":
     # print(data)
     
     # update the table with the data
-    public_data._update_table()
+    public_data._update_table(data)
 
     # close db
     public_data.close_db()
