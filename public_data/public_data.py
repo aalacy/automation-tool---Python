@@ -44,34 +44,6 @@ from ctfr import _run_ctrf
 from urlscan import _run_urlscan, urlscan_sumbit, print_summary
 from whoxy import _run_whoxy_history_data
 
-data = {
-    "company_id": "",
-    "spf_record": "",
-    "spf_record_more": "",
-    "spf_dmarc": "",
-    "spf_spoofing_possible": "",
-    "ctfr_subdomain": "",
-    "whoxy_registered": "" ,
-    "whoxy_updated": "" ,
-    "whoxy_expiry": "" ,
-    "whoxy_registrar": "" ,
-    "whoxy_nameservers": "" ,
-    "whoxy_domainstatus": "" ,
-    "urlscan_domain": "" ,
-    "urlscan_ip_address": "" ,
-    "urlscan_country": "" ,
-    "urlscan_server" : "",
-    "urlscan_web_apps": "" ,
-    "urlscan_number_of_requests": "" ,
-    "urlscan_ads_blocked": "" ,
-    "urlscan_http_requests": "" ,
-    "urlscan_ipv6": "" ,
-    "urlscan_unique_country": "" ,
-    "urlscan_malicious": "" ,
-    "urlscan_malicious_requests": "" ,
-    "urlscan_pointed_domains": "" ,
-}
-
 class PublicData:
     '''
         /// Credentials \\\
@@ -124,6 +96,7 @@ class PublicData:
         Column('run_at', String(512))
     )
 
+    data_table.drop(engine)
     metadata.create_all()
 
     def __init__(self):
@@ -221,7 +194,7 @@ if __name__ == "__main__":
     data = _run_spoofcheck(domain)
 
     # run ctfr
-    data = _run_ctrf(domain, data)
+    data = _run_ctrf(data, domain)
 
     # run whoxy
     data = _run_whoxy_history_data(data, domain)
@@ -237,4 +210,3 @@ if __name__ == "__main__":
 
     print("\n\n[!]  Done. Have a nice day! ;).")
 
-    

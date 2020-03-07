@@ -8,11 +8,31 @@ from libs.PrettyOutput import output_good, output_bad, \
 logging.basicConfig(level=logging.INFO)
 
 data = {
+    "company_id": "",
     "spf_record": "",
     "spf_record_more": "",
     "spf_dmarc": "",
     "spf_spoofing_possible": "",
     "ctfr_subdomain": "",
+    "whoxy_registered": "" ,
+    "whoxy_updated": "" ,
+    "whoxy_expiry": "" ,
+    "whoxy_registrar": "" ,
+    "whoxy_nameservers": "" ,
+    "whoxy_domainstatus": "" ,
+    "urlscan_domain": "" ,
+    "urlscan_ip_address": "" ,
+    "urlscan_country": "" ,
+    "urlscan_server" : "",
+    "urlscan_web_apps": "" ,
+    "urlscan_number_of_requests": "" ,
+    "urlscan_ads_blocked": "" ,
+    "urlscan_http_requests": "" ,
+    "urlscan_ipv6": "" ,
+    "urlscan_unique_country": "" ,
+    "urlscan_malicious": "" ,
+    "urlscan_malicious_requests": "" ,
+    "urlscan_pointed_domains": "" ,
 }
 
 # spoofcheck

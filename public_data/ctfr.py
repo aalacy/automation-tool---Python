@@ -7,7 +7,7 @@ session = requests.Session()
 def clear_url(target):
     return re.sub('.*www\.','',target,1).split('/')[0].strip()
 
-def _run_ctrf(domain, data):
+def _run_ctrf(data, domain):
     print('[***] ctrf checking [***]')
     subdomains = []
     target = clear_url(domain)
