@@ -13,8 +13,8 @@ import requests
 from mail import send_email, send_email_by_template
 from email_users import Email
 
-# BASE_PATH = os.path.abspath(os.curdir)
-BASE_PATH = '/home/johnathanstv/automation'
+BASE_PATH = os.path.abspath(os.curdir)
+# BASE_PATH = '/home/johnathanstv/automation'
 
 # config
 config = RawConfigParser()
@@ -26,6 +26,7 @@ metadata = MetaData()
 engine = create_engine(config.get('database', 'mysql1'))
 
 # slack api credentials
+# SLACK_TOKEN = 'xoxp-151682192533-268011284087-937133863458-6b95e834e25acd4cf3e9a35353f95d53'
 SLACK_TOKEN = 'xoxp-25274897922-248657672914-852474845509-fd06080b93c57cd66994d5840ccc1cad'
 SLACK_POST_MESSAGE_URL = 'https://slack.com/api/chat.postMessage'
 
@@ -36,24 +37,25 @@ SLACK_HEADERS = {
 }
 
 slack_daily_tips_table = Table('slack_daily_tips', metadata,	
-    Column('_id', Integer, primary_key=True),
-    Column('user_id', String(256)),
-    Column('email', String(256)),
-    Column('username', String(256)),
-    Column('billing_active', String(256)),
-    Column('privileged', String(256)),
-    Column('department', String(256)),
-    Column('opt_out', String(256)),
-    Column('jamf_installed', String(256)),
-    Column('run_at', DateTime)
+	Column('_id', Integer, primary_key=True),
+	Column('user_id', String(256)),
+	Column('email', String(256)),
+	Column('username', String(256)),
+	Column('billing_active', String(256)),
+	Column('privileged', String(256)),
+	Column('department', String(256)),
+	Column('opt_out', String(256)),
+	Column('jamf_installed', String(256)),
+	Column('run_at', DateTime)
 )
 
 delivery_history_table = Table('slack_delivery_history', metadata,	
-    Column('_id', Integer, primary_key=True),
-    Column('user_id', String(256)),
-    Column('message_id', String(256)),
-    Column('status', String(20)),
-    Column('run_at', DateTime)
+	Column('_id', Integer, primary_key=True),
+	Column('user_id', String(256)),
+	Column('message_id', String(256)),
+	Column('message_type', String(256)),
+	Column('status', String(20)),
+	Column('run_at', DateTime)
 )
 
 class Slack:
@@ -110,14 +112,14 @@ class Slack:
 			if user['billing_active'] == '1' and user['opt_out'] == '0':
 				self.users.append(user)
 
-	def send_message(self):
+	def send_daily_message(self):
 		'''
 			- Format text in slack
 				_italic_ will produce italicized text
 				*bold* will produce bold text
 				~strike~ will produce strikethrough text
 		'''
-		print('--- send message to users ---')
+		print('--- send message to users in daily basis---')
 		data = None
 		data = {
 			'token': SLACK_TOKEN,
@@ -145,7 +147,7 @@ class Slack:
 			if data['channel']:
 				res = self.session.post(url=SLACK_POST_MESSAGE_URL, data=json.dumps(data), headers=SLACK_HEADERS)
 				status = res.json()['ok']
-				self.history_to_insert += [dict(user_id=user['user_id'], message_id=self.tip['id'], status=status, run_at=date.now().strftime("%Y-%m-%d %H:%M:%S"))]
+				self.history_to_insert += [dict(user_id=user['user_id'], message_id=self.tip['id'], status=status, message_type="daily_tips", run_at=date.now().strftime("%Y-%m-%d %H:%M:%S"))]
 
 	def create_delivery_history_table(self):
 		'''
@@ -157,7 +159,9 @@ class Slack:
 		if len(self.history_to_insert) > 0:
 			self.connection.execute(delivery_history_table.insert(), self.history_to_insert)
 
-	def select_unique_tip(self):
+		self.connection.close()
+
+	def select_daily_tip(self):
 		'''
 			select unique tip based upon month and day to match today from daily_tips table
 		'''
@@ -176,21 +180,53 @@ class Slack:
 	# 	'''
 	# 	self.connection.execute("UPDATE daily_tips SET cnt = {} WHERE id={}".format(int(self.tip['cnt'])+1), self.tip['id'])
 
+	def send_daily_tips(self):
+		# read tips to send from daily_tips table
+		self.select_daily_tip()
+		# send message to the users
+		self.send_daily_message()
+
+	def send_weekly_corona_tips(self):
+		day = date.today().strftime('%a')
+		res = self.connection.execute("SELECT * FROM weekly_tips WHERE corona_date='{}'".format(day))
+		tips = [dict(r) for r in res]
+		pdb.set_trace()
+		tip = tips[0]
+
+		if tip:
+			print('--- send message to users in daily basis---')
+			data = None
+			data = {
+				'token': SLACK_TOKEN,
+				'as_user': 'false',
+				'channel': '',
+				'username': tip['bot_title'],
+				'mrkdwn': 'true',
+				'text': tip['corona_message']
+			}
+			for user in self.users:
+				data['channel'] = user['user_id']
+
+				if data['channel']:
+					res = self.session.post(url=SLACK_POST_MESSAGE_URL, data=json.dumps(data), headers=SLACK_HEADERS)
+					status = res.json()['ok']
+					self.history_to_insert += [dict(user_id=user['user_id'], message_id=tip['id'], status=status, message_type="weekly_corona_tips", run_at=date.now().strftime("%Y-%m-%d %H:%M:%S"))]
+
 if __name__ == '__main__':
-    slack = Slack()
+	slack = Slack()
 
-    # create a slack_daily_tips table from slack_users and users tables
-    slack.create_slack_daily_tips_table()
+	# create a slack_daily_tips table from slack_users and users tables
+	slack.create_slack_daily_tips_table()
 
-    # read users from slack_users table
-    slack.read_users()
+	# read users from slack_users table
+	slack.read_users()
 
-    # read tips to send from daily_tips table
-    slack.select_unique_tip()
+	# send daily tips
+	# slack.send_daily_tips()
 
-    # send message to the users
-    slack.send_message()
+  	#send weekly tips
+	slack.send_weekly_corona_tips()
 
-    # save delivery history
-    slack.create_delivery_history_table()
+	# save delivery history
+	slack.create_delivery_history_table()
 
