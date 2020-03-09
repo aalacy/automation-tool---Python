@@ -13,8 +13,8 @@ import requests
 from mail import send_email, send_email_by_template
 from email_users import Email
 
-BASE_PATH = os.path.abspath(os.curdir)
-# BASE_PATH = '/home/johnathanstv/automation'
+# BASE_PATH = os.path.abspath(os.curdir)
+BASE_PATH = '/home/johnathanstv/automation'
 
 # config
 config = RawConfigParser()
@@ -26,8 +26,8 @@ metadata = MetaData()
 engine = create_engine(config.get('database', 'mysql1'))
 
 # slack api credentials
-# SLACK_TOKEN = 'xoxp-151682192533-268011284087-937133863458-6b95e834e25acd4cf3e9a35353f95d53'
-SLACK_TOKEN = 'xoxp-25274897922-248657672914-852474845509-fd06080b93c57cd66994d5840ccc1cad'
+SLACK_TOKEN = 'xoxp-151682192533-268011284087-937133863458-6b95e834e25acd4cf3e9a35353f95d53'
+# SLACK_TOKEN = 'xoxp-25274897922-248657672914-852474845509-fd06080b93c57cd66994d5840ccc1cad'
 SLACK_POST_MESSAGE_URL = 'https://slack.com/api/chat.postMessage'
 
 # slack config
