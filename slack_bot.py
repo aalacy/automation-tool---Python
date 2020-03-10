@@ -101,7 +101,7 @@ class Slack:
 		except Exception as E:
 			print(E)
 
-	def read_users(self):
+	def read_daily_users(self):
 		'''
 			Retrieve the users from slack_users table 
 		'''
@@ -181,36 +181,14 @@ class Slack:
 	# 	self.connection.execute("UPDATE daily_tips SET cnt = {} WHERE id={}".format(int(self.tip['cnt'])+1), self.tip['id'])
 
 	def send_daily_tips(self):
+		# read users from slack_users table
+		slack.read_daily_users()
+
 		# read tips to send from daily_tips table
 		self.select_daily_tip()
+
 		# send message to the users
 		self.send_daily_message()
-
-	def send_weekly_corona_tips(self):
-		day = date.today().strftime('%a')
-		res = self.connection.execute("SELECT * FROM weekly_tips WHERE corona_date='{}'".format(day))
-		tips = [dict(r) for r in res]
-		pdb.set_trace()
-		tip = tips[0]
-
-		if tip:
-			print('--- send message to users in daily basis---')
-			data = None
-			data = {
-				'token': SLACK_TOKEN,
-				'as_user': 'false',
-				'channel': '',
-				'username': tip['bot_title'],
-				'mrkdwn': 'true',
-				'text': tip['corona_message']
-			}
-			for user in self.users:
-				data['channel'] = user['user_id']
-
-				if data['channel']:
-					res = self.session.post(url=SLACK_POST_MESSAGE_URL, data=json.dumps(data), headers=SLACK_HEADERS)
-					status = res.json()['ok']
-					self.history_to_insert += [dict(user_id=user['user_id'], message_id=tip['id'], status=status, message_type="weekly_corona_tips", run_at=date.now().strftime("%Y-%m-%d %H:%M:%S"))]
 
 if __name__ == '__main__':
 	slack = Slack()
@@ -218,14 +196,8 @@ if __name__ == '__main__':
 	# create a slack_daily_tips table from slack_users and users tables
 	slack.create_slack_daily_tips_table()
 
-	# read users from slack_users table
-	slack.read_users()
-
 	# send daily tips
-	# slack.send_daily_tips()
-
-  	#send weekly tips
-	slack.send_weekly_corona_tips()
+	slack.send_daily_tips()
 
 	# save delivery history
 	slack.create_delivery_history_table()
