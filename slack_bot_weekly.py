@@ -13,8 +13,8 @@ import requests
 from mail import send_email, send_email_by_template
 from email_users import Email
 
-BASE_PATH = os.path.abspath(os.curdir)
-# BASE_PATH = '/home/johnathanstv/automation'
+# BASE_PATH = os.path.abspath(os.curdir)
+BASE_PATH = '/home/johnathanstv/automation'
 
 # config
 config = RawConfigParser()

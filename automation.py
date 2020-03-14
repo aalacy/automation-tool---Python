@@ -32,7 +32,6 @@ import shlex, subprocess
 ##
 
 class Automation:
-
 	BASE_PATH = os.path.abspath(os.curdir)
 
 	SENDGRID_API_KEY = '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'
@@ -89,7 +88,6 @@ class Automation:
 
 	def __init__(self):
 		# Connect mysql
-		
 
 		# requests
 		self.session = requests.Session()
@@ -221,6 +219,8 @@ class Automation:
 			print('-- error while populating zoho crm ---', E)
 			self.send_email('-- error while populating zoho crm ---' + str(E))   
 
+		cursor.close()
+
 	# Register watcher for notification about new lead/company
 	def register_watcher(self):
 		next_day = date.now() + datetime.timedelta(days=1) 
@@ -298,6 +298,8 @@ class Automation:
 
 			if not next_cursor:
 				break;
+
+		cursor.close()
 		print('======== End of Slack API ===============')
 
 	# bamboohr api
@@ -339,6 +341,8 @@ class Automation:
 		except Exception as E:
 			print('-- error while populating bamboo ---', E)   
 			self.send_email('-- error while populating bamboo ---' + str(E))
+
+		cursor.close()
 		print('============ end of bamboo api ===============')
 
 	def get_dropbox_groups_data(self, groups):
@@ -417,6 +421,7 @@ class Automation:
 			print('-- error while populating dropbox ---', E)   
 			self.send_email('-- error while populating dropbox ---' + str(E))
 
+		cursor.close()
 		print('*** end of dropbox  api ***')
 
 	def populate_application(self):
@@ -430,8 +435,8 @@ class Automation:
 		)
 		cursor = db.cursor()
 		cursor.execute("DROP TABLE IF EXISTS applications")
-		cursor.execute("CREATE TABLE IF NOT EXISTS applications (company_name VARCHAR(255), application_name VARCHAR(255), purpose VARCHAR(11), department VARCHAR(11), owner VARCHAR(11), NDA_on_file VARCHAR(11),  authentication_method VARCHAR(11), risk VARCHAR(11), notes VARCHAR(11), soc2 VARCHAR(11), renewal_date VARCHAR(11), cost VARCHAR(11), number_of_users VARCHAR(11), expiration_date VARCHAR(11), SAML_capable VARCHAR(11), has_PII VARCHAR(11), application_risk_management VARCHAR(11), contract VARCHAR(11), run_at VARCHAR(255))")
-		insert_query = "INSERT INTO applications (company_name, application_name, purpose, department, owner, NDA_on_file, authentication_method, risk, notes, soc2, renewal_date, cost, number_of_users, expiration_date, SAML_capable, has_PII, application_risk_management, contract,  run_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"	
+		cursor.execute("CREATE TABLE IF NOT EXISTS applications (id INT(11), company_name VARCHAR(255), application_name VARCHAR(255), application_logo VARCHAR(512), login_url VARCHAR(512), purpose VARCHAR(11), department VARCHAR(11), owner VARCHAR(11), NDA_on_file VARCHAR(11),  authentication_method VARCHAR(11), risk VARCHAR(11), notes VARCHAR(11), soc2 VARCHAR(11), renewal_date VARCHAR(11), cost VARCHAR(11), number_of_users VARCHAR(11), expiration_date VARCHAR(11), SAML_capable VARCHAR(11), has_PII VARCHAR(11), application_risk_management VARCHAR(11), contract VARCHAR(11), run_at VARCHAR(255))")
+		insert_query = "INSERT INTO applications (company_name, application_name, application_logo, login_url, purpose, department, owner, NDA_on_file, authentication_method, risk, notes, soc2, renewal_date, cost, number_of_users, expiration_date, SAML_capable, has_PII, application_risk_management, contract,  run_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"	
 		csv_data = csv.reader(open(self.APPLICATIONS_CSV, mode='r'))
 		apps_reader = None
 		for row in csv_data:
@@ -448,7 +453,7 @@ class Automation:
 				continue
 			json_row = json.loads(json.dumps(row))
 			try:
-				values = ('', json_row['Application name'], json_row['Purpose'], json_row['Department'], \
+				values = ('', json_row['Application name'], json_row.get('application_logo', ''), json_row.get('login_url', ''), json_row['Purpose'], json_row['Department'], \
                 	json_row['Owner'], json_row['NDA on File'], json_row['Authentication Method'], \
                 	json_row['Risk'], json_row['Notes'], json_row['Soc2'], json_row['Renewal Date'], \
                 	json_row['cost'], json_row['number of users'], json_row['Expiration Date'], \
@@ -466,6 +471,7 @@ class Automation:
 			print('-- error while populating Applcations ---', E)   
 			self.send_email('-- error while populating Applcations ---' + str(E))
 
+		cursor.close()
 		print('------ end of populating Applcations CSV file ------')
 
 	def run(self):
