@@ -14,6 +14,7 @@ data = {
     "spf_dmarc": "",
     "spf_spoofing_possible": "",
     "ctfr_subdomain": "",
+    "whoxy": "" ,
     "whoxy_registered": "" ,
     "whoxy_updated": "" ,
     "whoxy_expiry": "" ,

@@ -51,11 +51,11 @@ def print_summary(data, target_uuid):
         cnt += 1
         if null_response_string in r:
             logging.warning('urlscan.io: Results not processed. Please check again later.')
-            time.sleep(6)
+            time.sleep(8)
         else:
             break
 
-        if cnt > 3:
+        if cnt > 4:
             break
 
     ### relevant aggregate data

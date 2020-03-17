@@ -28,19 +28,20 @@ def _run_whoxy_history_data(data, domain):
 	whoxy_nameservers=  ''
 	whoxy_domainstatus = ''
 
-	for record in content['whois_records']:
-		whoxy_registered += record['create_date'] + ';'
-		whoxy_updated += record['update_date'] + ';'
-		whoxy_expiry += record['expiry_date'] + ';'
-		whoxy_registrar += json.dumps(record['domain_registrar']) + ';'
-		whoxy_nameservers += ",".join(record['name_servers']) + ';'
-		whoxy_domainstatus += ",".join(record['domain_status']) + ';'
+	# for record in content['whois_records']:
+	# 	whoxy_registered += record['create_date'] + ';'
+	# 	whoxy_updated += record['update_date'] + ';'
+	# 	whoxy_expiry += record['expiry_date'] + ';'
+	# 	whoxy_registrar += json.dumps(record['domain_registrar']) + ';'
+	# 	whoxy_nameservers += ",".join(record['name_servers']) + ';'
+	# 	whoxy_domainstatus += ",".join(record['domain_status']) + ';'
 
-	data['whoxy_registered'] = whoxy_registered
-	data['whoxy_updated'] = whoxy_updated
-	data['whoxy_expiry'] = whoxy_expiry
-	data['whoxy_registrar'] = whoxy_registrar
-	data['whoxy_nameservers'] = whoxy_nameservers
-	data['whoxy_domainstatus'] = whoxy_domainstatus
+	# data['whoxy_registered'] = whoxy_registered
+	# data['whoxy_updated'] = whoxy_updated
+	# data['whoxy_expiry'] = whoxy_expiry
+	# data['whoxy_registrar'] = whoxy_registrar
+	# data['whoxy_nameservers'] = whoxy_nameservers
+	# data['whoxy_domainstatus'] = whoxy_domainstatus
 
+	data['whoxy'] = json.dumps(content['whois_records'])
 	return data

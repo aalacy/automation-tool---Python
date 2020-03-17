@@ -108,11 +108,11 @@ class Automation:
 		msg_body = '<strong>{} at {}</strong>'.format(text,  date.now().strftime("%Y-%m-%d %H:%M:%S"))
 		message = Mail(
 		    from_email='report@revamp.com',
-		    to_emails=TO_EMAIL,
+		    to_emails=self.TO_EMAIL,
 		    subject='Issue report on automation.py',
 		    html_content=msg_body)
 		try:
-		    sg = SendGridAPIClient(SENDGRID_API_KEY)
+		    sg = SendGridAPIClient(self.SENDGRID_API_KEY)
 		    response = sg.send(message)
 		except Exception as e:
 		    print(str(e))
@@ -435,8 +435,8 @@ class Automation:
 		)
 		cursor = db.cursor()
 		cursor.execute("DROP TABLE IF EXISTS applications")
-		cursor.execute("CREATE TABLE IF NOT EXISTS applications (id INT(11), company_name VARCHAR(255), application_name VARCHAR(255), application_logo VARCHAR(512), login_url VARCHAR(512), purpose VARCHAR(11), department VARCHAR(11), owner VARCHAR(11), NDA_on_file VARCHAR(11),  authentication_method VARCHAR(11), risk VARCHAR(11), notes VARCHAR(11), soc2 VARCHAR(11), renewal_date VARCHAR(11), cost VARCHAR(11), number_of_users VARCHAR(11), expiration_date VARCHAR(11), SAML_capable VARCHAR(11), has_PII VARCHAR(11), application_risk_management VARCHAR(11), contract VARCHAR(11), run_at VARCHAR(255))")
-		insert_query = "INSERT INTO applications (company_name, application_name, application_logo, login_url, purpose, department, owner, NDA_on_file, authentication_method, risk, notes, soc2, renewal_date, cost, number_of_users, expiration_date, SAML_capable, has_PII, application_risk_management, contract,  run_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"	
+		cursor.execute("CREATE TABLE IF NOT EXISTS applications (id INT(11) NOT NULL AUTO_INCREMENT, primary key (id), company_name VARCHAR(255), application_name VARCHAR(255), application_logo VARCHAR(512), login_url VARCHAR(512), purpose VARCHAR(11), department VARCHAR(11), owner VARCHAR(11), NDA_on_file VARCHAR(11),  authentication_method VARCHAR(11), risk VARCHAR(11), notes VARCHAR(11), soc2 VARCHAR(11), renewal_date VARCHAR(11), cost VARCHAR(11), number_of_users VARCHAR(11), expiration_date VARCHAR(11), SAML_capable VARCHAR(11), has_PII VARCHAR(11), application_risk_management VARCHAR(11), contract VARCHAR(11), run_at VARCHAR(255))")
+		insert_query = "INSERT INTO applications (company_name, application_name, application_logo, login_url, purpose, department, owner, NDA_on_file, authentication_method, risk, notes, soc2, renewal_date, cost, number_of_users, expiration_date, SAML_capable, has_PII, application_risk_management, contract,  run_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"	
 		csv_data = csv.reader(open(self.APPLICATIONS_CSV, mode='r'))
 		apps_reader = None
 		for row in csv_data:
