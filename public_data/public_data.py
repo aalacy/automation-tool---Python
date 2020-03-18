@@ -25,7 +25,7 @@ import time
 from colorama import init as color_init
 import sqlalchemy as db
 from sqlalchemy import create_engine, Table, Column, Text, BLOB, \
-                    Integer, Text, String, MetaData, DateTime
+                    Integer, Text, String, MetaData, DateTime, JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql.expression import bindparam
 from sqlalchemy.orm import Session
@@ -43,6 +43,7 @@ from spoofcheck import _run_spoofcheck
 from ctfr import _run_ctrf
 from urlscan import _run_urlscan, urlscan_sumbit, print_summary
 from whoxy import _run_whoxy_history_data
+from shodan import _run_shodan_ip
 
 class PublicData:
     '''
@@ -74,7 +75,7 @@ class PublicData:
         Column('spf_dmarc', String(512)),
         Column('spf_spoofing_possible', String(512)),
         Column('ctfr_subdomain', String(512)),
-        Column('whoxy', BLOB),
+        Column('whoxy', JSON),
         Column('whoxy_registered', String(512)),
         Column('whoxy_updated', String(512)),
         Column('whoxy_expiry', String(512)),
@@ -94,16 +95,16 @@ class PublicData:
         Column('urlscan_malicious', String(512)),
         Column('urlscan_malicious_requests', String(512)),
         Column('urlscan_pointed_domains', String(512)),
+        Column('shodan', JSON),
         Column('run_at', String(512))
     )
 
-    data_table.drop(engine)
+    # data_table.drop(engine)
     metadata.create_all()
 
     def __init__(self):
         # initialize color for beautiful output
         color_init()
-
 
         # urlscan.io
         self.target_uuid = None
@@ -149,7 +150,7 @@ class PublicData:
                 spf_dmarc=data['spf_dmarc'],
                 spf_spoofing_possible=data['spf_spoofing_possible'],
                 ctfr_subdomain=data['ctfr_subdomain'],
-                whoxy=bytes(data['whoxy'], 'utf8'),
+                whoxy=data['whoxy'],
                 urlscan_domain=data['urlscan_domain'],
                 urlscan_ip_address=data['urlscan_ip_address'],
                 urlscan_country=data['urlscan_country'],
@@ -163,6 +164,7 @@ class PublicData:
                 urlscan_malicious=data['urlscan_malicious'],
                 urlscan_malicious_requests=data['urlscan_malicious_requests'],
                 urlscan_pointed_domains=data['urlscan_pointed_domains'],
+                shodan=data['shodan'],
                 run_at=date.now().strftime("%Y-%m-%d %H:%M:%S"))
             self.connection.execute(query)
         except Exception as E:
@@ -177,9 +179,12 @@ if __name__ == "__main__":
     # parse argument from user input
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--domain', type=str, required=True, help="Target domain.")
+    parser.add_argument('-i', '--ip', type=str, required=True, help="Target ip.")
     
     domain = parser.parse_args().domain
+    ip = parser.parse_args().ip
     public_data.domain = domain
+    public_data.ip = ip
 
     print("\n[!] ---- TARGET: {d} ---- [!] \n".format(d=public_data.domain))
 
@@ -194,6 +199,9 @@ if __name__ == "__main__":
 
     # run whoxy
     data = _run_whoxy_history_data(data, domain)
+
+    # run shodan
+    data = _run_shodan_ip(data, ip)
 
     # run urlscan.io
     data = print_summary(data, target_uuid)

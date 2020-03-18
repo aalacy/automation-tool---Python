@@ -43,5 +43,5 @@ def _run_whoxy_history_data(data, domain):
 	# data['whoxy_nameservers'] = whoxy_nameservers
 	# data['whoxy_domainstatus'] = whoxy_domainstatus
 
-	data['whoxy'] = json.dumps(content['whois_records'])
+	data['whoxy'] = content['whois_records']
 	return data
