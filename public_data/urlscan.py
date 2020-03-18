@@ -98,19 +98,19 @@ def print_summary(data, target_uuid):
 
 
         ### data for summary
-        page_domain = page_info.get("domain")
-        page_ip = page_info.get("ip")
-        page_country = page_info.get("country")
-        page_server = page_info.get("server")
-        ads_blocked = stats_info.get("adBlocked")
-        https_percentage = stats_info.get("securePercentage")
-        ipv6_percentage = stats_info.get("IPv6Percentage")
-        country_count = stats_info.get("uniqCountries")
+        page_domain = page_info.get("domain", "")
+        page_ip = page_info.get("ip", "")
+        page_country = page_info.get("country", "")
+        page_server = page_info.get("server", "")
+        ads_blocked = stats_info.get("adBlocked", "")
+        https_percentage = stats_info.get("securePercentage", "")
+        ipv6_percentage = stats_info.get("IPv6Percentage", "")
+        country_count = stats_info.get("uniqCountries", "")
         num_requests = len(request_info)
-        is_malicious = verdict_info.get("overall").get("malicious")
-        malicious_total = verdict_info.get("engines").get("maliciousTotal")
-        ip_addresses = list_info.get("ips")
-        urls = list_info.get("urls")
+        is_malicious = verdict_info.get("overall", {}).get("malicious", "")
+        malicious_total = verdict_info.get("engines", {}).get("maliciousTotal", "")
+        ip_addresses = list_info.get("ips", [])
+        urls = list_info.get("urls", [])
 
         data['urlscan_domain'] = page_domain
         data['urlscan_ip_address'] = page_ip
