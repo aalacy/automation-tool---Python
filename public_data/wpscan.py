@@ -17,8 +17,10 @@ def _run_wpscan(data, domain):
 	OUTPUT_FILE = '../data/wpscan-{}.txt'.format(domain)
 
 	try:
-		run_args = shlex.split('wpscan --url {} --ignore-main-redirect --no-banner -f cli-no-color -o {}'.format(domain, OUTPUT_FILE))
-		subprocess.Popen(run_args)
+		# run_args = shlex.split('wpscan --url {} --ignore-main-redirect --no-banner -f cli-no-color -o {}'.format(domain, OUTPUT_FILE))
+		# subprocess.Popen(run_args)
+		run_command = 'wpscan --url {} --ignore-main-redirect --no-banner -f cli-no-color -o {}'.format(domain, OUTPUT_FILE)
+		subprocess.run(run_command, shell=True, check=True)
 		time.sleep(1)
 	except Exception as E:
 		logging.warning(E)

@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 '''
     Script for automation of different source
-        1. whoxy.com - api not available
+        1. whoxy.com - done
         2. spoofcheck - done
-        3. wpscan   - confirm information
+        3. wpscan   - done
         4. ctfr - done
-        5. crunchbase - confirm information 
-        6. builtwith - api is not enough to get info
-        7. dnstwist
-        8. urlscan.io - confirm summary
-        9. shodan
-        10. ssllab.com
+        5. crunchbase - done
+        6. builtwith - iframe
+        7. dnstwist - done
+        8. urlscan.io - done
+        9. shodan - done
+        10. ssllabs.com
         11. HIBP Domain only
 
 '''
@@ -44,6 +44,10 @@ from ctfr import _run_ctrf
 from urlscan import _run_urlscan, urlscan_sumbit, print_summary
 from whoxy import _run_whoxy_history_data
 from shodan import _run_shodan_ip
+from wpscan import _run_wpscan
+from ssllabs import _run_ssllabs
+from hibp import _run_hibp
+from dnstwist import _run_dnstwist
 
 class PublicData:
     '''
@@ -96,6 +100,10 @@ class PublicData:
         Column('urlscan_malicious_requests', String(512)),
         Column('urlscan_pointed_domains', String(512)),
         Column('shodan', JSON),
+        Column('ssllabs', JSON),
+        Column('wpscan', JSON),
+        Column('hibp', JSON),
+        Column('dnstwist', JSON),
         Column('run_at', String(512))
     )
 
@@ -165,6 +173,10 @@ class PublicData:
                 urlscan_malicious_requests=data['urlscan_malicious_requests'],
                 urlscan_pointed_domains=data['urlscan_pointed_domains'],
                 shodan=data['shodan'],
+                ssllabs=data['ssllabs'],
+                hibp=data['hibp'],
+                dnstwist=data['dnstwist'],
+                wpscan=data['wpscan'],
                 run_at=date.now().strftime("%Y-%m-%d %H:%M:%S"))
             self.connection.execute(query)
         except Exception as E:
@@ -202,6 +214,18 @@ if __name__ == "__main__":
 
     # run shodan
     data = _run_shodan_ip(data, ip)
+
+    # run ssllabs
+    data = _run_ssllabs(data, domain)
+
+    # run wpscan
+    data = _run_wpscan(data, domain)
+
+    # run hibp
+    data = _run_hibp(data, domain)
+
+    # run dnstwist
+    data = _run_dnstwist(data, domain)
 
     # run urlscan.io
     data = print_summary(data, target_uuid)

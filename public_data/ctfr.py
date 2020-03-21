@@ -31,3 +31,7 @@ def _run_ctrf(data, domain):
         data['ctfr_subdomain'] = ';'.join(subdomains)
 
     return data
+
+if __name__ == '__main__':
+    data = _run_ctrf({}, 'grove.co')
+    print(data)
