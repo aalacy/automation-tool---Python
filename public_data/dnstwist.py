@@ -14,17 +14,32 @@ logging.basicConfig(level=logging.INFO)
 def _run_dnstwist(data, domain):
 	print('[***] DNSTwist [***]')
 
-	OUTPUT_FILE = '../data/dnstwist-{}.csv'.format(domain)
+	CSV_OUTPUT = '../data/dnstwist-{}.csv'.format(domain)
 
 	try:
-		run_command = 'python3 dnstwist/dnstwist.py {} -f csv > {}'.format(domain, OUTPUT_FILE)
+		run_command = 'python3 dnstwist/dnstwist.py {} -f csv > {}'.format(domain, CSV_OUTPUT)
 		subprocess.run(run_command, shell=True, check=True)
 		time.sleep(1)
 	except Exception as E:
 		logging.warning(E)
 
-	with open(OUTPUT_FILE, 'r') as f:
-		data['dnstwist'] = f.read()
+	csv_data = csv.reader(open(CSV_OUTPUT, mode='r'))
+	csv_reader = None
+	for row in csv_data:
+		fieldnames = row
+		csvfile = open(CSV_OUTPUT, 'r')
+		csv_reader = csv.DictReader(csvfile, fieldnames)
+		break
+    
+	cnt = 0
+	rows = []
+	for row in csv_reader:
+		if cnt < 1:
+			cnt += 1;
+			continue
+		rows.append(row)
+
+	data['dnstwist'] = json.loads(json.dumps(rows))
 
 	return data
 
