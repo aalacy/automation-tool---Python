@@ -1,3 +1,17 @@
+#!/bin/usr/env python3
+
+'''
+	1. fetch the companies list from the angel.co
+	2. fetch the details of companies obtained from angel.co in hunter.io
+	3. fetch the details of companies obtained from angel.co in findemail.com
+
+	@param: -q: query to search on angel.co
+
+
+	e.g.
+		python3 angel_hunter_findemail.py  -q "los angeles"
+
+'''
 import argparse
 import json
 import re
@@ -17,9 +31,6 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 import xml.etree.ElementTree as ET
 from lxml import etree
-import sqlalchemy as db
-from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData, DateTime
-from sqlalchemy.ext.declarative import declarative_base
 from configparser import RawConfigParser
 import mysql.connector as mysql
 from datetime import datetime as date
@@ -64,7 +75,7 @@ class ThreePipeline:
 		# initialize selenium
 		self.option = webdriver.ChromeOptions()
 		self.option.add_argument('--no-sandbox')
-		self.driver = webdriver.Chrome(executable_path= path + '/data/chromedriver', chrome_options=self.option)
+		self.driver = webdriver.Chrome(executable_path= path + '/data/chromedriver.exe', chrome_options=self.option)
 
 	def get_angel_page(self, search_query=[]):
 		'''
@@ -77,7 +88,7 @@ class ThreePipeline:
 		time.sleep(2)
 		if len(search_query):
 			for query in search_query:
-				ActionChains(self.driver).send_keys(query).key_up(Keys.ENTER).perform()
+				ActionChains(self.driver).send_keys(query.strip()).key_up(Keys.ENTER).perform()
 				time.sleep(1)
 
 		print('... get the pages ....')
@@ -125,7 +136,8 @@ class ThreePipeline:
 				founders_or_people = ';'.join(company_source.xpath('//div[@class="component_0ab6d"]/div[contains(@class, "component_11e1f")]//a/text()'))
 				self.company_list.append([name, tagline, website, twitter, facebook, linkedin, location, company_size, markets, founders_or_people, date.now().strftime("%Y-%m-%d %H:%M:%S")])
 				# time.sleep(1)
-
+			self.driver.close()
+			print('length of companies', len(self.company_list))
 		except Exception as E:
 			print('error in company for loop ' + E)
 			send_email('An error happened while populating the company data into database in Angel.co scraper ', E)
@@ -172,15 +184,15 @@ if __name__ == "__main__":
 
 	pipeline = ThreePipeline()
 
-	myargs = []
-	if len(sys.argv) > 2:
-		myargs = sys.argv[2:]
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-q', '--query', type=str, required=True, help="Search querys with comma separator. e.g. python3 angel.py -q 'los angeles, San francisco'")
 
+	querys = parser.parse_args().query
 	# scrape company data from angel.co 
-	pipeline.get_angel_page(search_query=myargs)
+	pipeline.get_angel_page(search_query=querys.split(','))
 
 	# hunter.io
-	pipeline.get_prospects_from_hunter()
+	# pipeline.get_prospects_from_hunter()
 
 	# findemails.com
-	pipeline.get_prospects_from_findemails()
+	# pipeline.get_prospects_from_findemails()

@@ -1,3 +1,15 @@
+#!/bin/usr/env python3
+
+'''
+	fetch the companies list from the angel.co
+
+	@param: -q: query to search on angel.co
+
+	e.g.
+		python3 angel.py  -q "los angeles"
+		
+'''
+
 import argparse
 import json
 import re
@@ -92,7 +104,7 @@ class Angel:
 		time.sleep(2)
 		if len(search_query):
 			for query in search_query:
-				ActionChains(driver).send_keys(query).key_up(Keys.ENTER).perform()
+				ActionChains(driver).send_keys(query.strip()).key_up(Keys.ENTER).perform()
 				time.sleep(1)
 
 		print('... get the pages ....')
@@ -160,13 +172,11 @@ class Angel:
 		return res
 
 if __name__ == "__main__":
-	# argument_parser = argparse.ArgumentParser()
-	# argument_parser.add_argument("-q", "--query", metavar='N', nargs='+', type=str, help="Search companies with specific market query")
-
-	# args = argument_parser.parse_args()
 	angel = Angel()
-	myargs = []
-	if len(sys.argv) > 2:
-		myargs = sys.argv[2:]
-	companies = angel.get_page(search_query=myargs)
+
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-q', '--query', type=str, required=True, help="Search querys with comma separator. e.g. python3 angel.py -q 'los angeles, San francisco'")
+
+	querys = parser.parse_args().query
+	companies = angel.get_page(search_query=querys.split(','))
 
