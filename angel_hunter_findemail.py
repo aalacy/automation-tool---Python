@@ -7,7 +7,6 @@
 
 	@param: -q: query to search on angel.co
 
-
 	e.g.
 		python3 angel_hunter_findemail.py  -q "los angeles"
 
