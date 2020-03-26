@@ -252,8 +252,8 @@ class Automation:
 		cursor.execute('DROP TABLE IF EXISTS slack_users')
 		cursor.execute("CREATE TABLE IF NOT EXISTS slack_users (username VARCHAR(255), email VARCHAR(255), status VARCHAR(255), \
 		            billing_active VARCHAR(11), has_2fa VARCHAR(11), has_sso VARCHAR(11), userid VARCHAR(255), fullname VARCHAR(255), \
-		            displayname VARCHAR(255), run_at VARCHAR(255))")
-		insert_query = "INSERT INTO slack_users (username, email, status, billing_active, has_2fa, has_sso, userid, fullname, displayname, run_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+		            displayname VARCHAR(255), run_at VARCHAR(255), company_id VARCHAR(255))")
+		insert_query = "INSERT INTO slack_users (username, email, status, billing_active, has_2fa, has_sso, userid, fullname, displayname, run_at, company_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
 		next_cursor = ''
 		# parse pagination
@@ -282,7 +282,7 @@ class Automation:
 							has_2fa = user['has_2fa']
 						except:
 							pass
-						row = [user['name'], user_profile['email'], 'admin', not user['deleted'], has_2fa, '0', user['id'], user_profile['real_name'], user_profile['display_name'], date.now().strftime("%Y-%m-%d %H:%M:%S")]
+						row = [user['name'], user_profile['email'], 'admin', not user['deleted'], has_2fa, '0', user['id'], user_profile['real_name'], user_profile['display_name'], date.now().strftime("%Y-%m-%d %H:%M:%S"), '']
 						rows.append(row)
 					# print('**** Slack populate row***')
 				except:
