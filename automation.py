@@ -206,10 +206,10 @@ class Automation:
 		for lead in leads:
 			try:
 				row = (lead['Company'], lead['Owner']['name'], lead['Owner']['id'], lead['Email'], lead['Description'], lead['$currency_symbol'], lead['$review_process'], lead['Twitter'], lead['Website'], lead['HTT'], lead['Salutation'], lead['Linkedin_Profile'], lead['Last_Activity_Time'], lead['Full_Name'], lead['First_Name'], lead['Lead_Status'], lead['Industry'], lead['Record_Image'], lead['Modified_By']['name'], lead['Modified_By']['id'], lead['$review'], lead['$converted'], lead['$process_flow'], lead['Phone'], lead['Street'], lead['Zip_Code'], lead['id'], lead['Email_Opt_Out'], lead['$approved'], lead['Follow_Up_Date'], lead['Designation'], lead['$approval']['delegate'], lead['$approval']['approve'], lead['$approval']['reject'], lead['$approval']['resubmit'], lead['Modified_Time'], lead['Created_Time'], json.dumps(lead['$converted_detail']), lead['$editable'], lead['City'], lead['No_of_Employees'], lead['Facebook_Pofile'], lead['Active'], lead['Alignable'], lead['Last_Name'], lead['State'], lead['Lead_Source'], lead['Instagram'], lead['Country'], lead['Email_Provider'], lead['Created_By']['name'], lead['Created_By']['id'], json.dumps(lead['Tag']), json.dumps(lead.get('Assigned_Company_Applications')), date.now().strftime("%Y-%m-%d %H:%M:%S"))
+				rows.append(row)
 			except KeyError:
 				self.d_log('error in zoho' + json.dumps(lead))
 
-			rows.append(row)
 	
 		try:
 			cursor.executemany(insert_query, rows)
@@ -378,9 +378,9 @@ class Automation:
 		)
 		cursor = db.cursor()
 		cursor.execute('DROP TABLE IF EXISTS dropbox_users')
-		cursor.execute("CREATE TABLE IF NOT EXISTS dropbox_users (team_member_id VARCHAR(255), email VARCHAR(255), email_verified VARCHAR(11), status VARCHAR(255), given_name VARCHAR(255), surname VARCHAR(255), familiar_name VARCHAR(255), display_name VARCHAR(255), abbreviated_name VARCHAR(255), membership_type VARCHAR(255), account_id VARCHAR(255), secondary_emails VARCHAR(255), joined_on VARCHAR(100), access_type VARCHAR(255), group_name VARCHAR(255), run_at VARCHAR(100))")
+		cursor.execute("CREATE TABLE IF NOT EXISTS dropbox_users (team_member_id VARCHAR(255), email VARCHAR(255), email_verified VARCHAR(11), status VARCHAR(255), given_name VARCHAR(255), surname VARCHAR(255), familiar_name VARCHAR(255), display_name VARCHAR(255), abbreviated_name VARCHAR(255), membership_type VARCHAR(255), account_id VARCHAR(255), secondary_emails VARCHAR(255), joined_on VARCHAR(100), access_type VARCHAR(255), group_name VARCHAR(255), run_at VARCHAR(100), company_id VARCHAR(255))")
 
-		insert_query = "INSERT INTO dropbox_users (team_member_id, email, email_verified, status, given_name, surname, familiar_name, display_name, abbreviated_name, membership_type, account_id, secondary_emails, joined_on, access_type, group_name, run_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+		insert_query = "INSERT INTO dropbox_users (team_member_id, email, email_verified, status, given_name, surname, familiar_name, display_name, abbreviated_name, membership_type, account_id, secondary_emails, joined_on, access_type, group_name, run_at, company_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
 		self.res_groups = []
 		groups = json.loads(self.session.post(url = self.DROPBOX_GROUP_LIST_URL, headers={'Authorization':'Bearer ' + self.DROPBOX_ACCESS_TOKEN, 'Content-Type': 'application/json'}, data=json.dumps({'limit': 1000})).text)
