@@ -141,7 +141,7 @@ class Angel:
 		return res
 
 	def send_email(self):
-		send_email_with_attachment_normal(content=self.b64data, query=self.query, to_email='ideveloper003@gmail.com')
+		send_email_with_attachment_normal(content=self.b64data, query=self.query)
 
 if __name__ == '__main__':
 	angel = Angel()
