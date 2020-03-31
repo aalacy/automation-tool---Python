@@ -40,7 +40,16 @@ from pyvirtualdisplay import Display
 
 path = os.path.abspath(os.curdir)
 
+# angle.co
 BASE_URL = 'https://angel.co/companies'
+
+# hunter.io API credential
+HUNTER_API_KEY = '12004336799ab123a9a123c42466ba83ab720e66'
+HUNTER_PROSPECTS_URL = 'https://api.hunter.io/v2/domain-search?api_key='+ HUNTER_API_KEY +'&domain={}'
+
+# findemails.com API credential
+FINDEMAILS_API_KEY = '69bb3c5d092f2e8b19bdaeadc425e2fe'
+FINDEMAILS_PROSPECTS_URL = 'https://www.findemails.com/api/v1/get_prospects?key='+ FINDEMAILS_API_KEY +'&company_name={}'
 
 # requests
 session = requests.Session()
@@ -54,6 +63,9 @@ option.add_argument('--no-sandbox')
 driver = webdriver.Chrome(executable_path= path + '/data/chromedriver', chrome_options=option)
 
 class Angel:
+	b64data = [] 
+	company_list = []
+
 	def __init__(self):
 		print('... initialize scraper ....')
 
@@ -85,7 +97,6 @@ class Angel:
 		page_source = etree.HTML(driver.page_source)
 		companies = page_source.xpath('//div[@class="results"]//div[contains(@class, "startup")]')
 
-		companies_to_insert = [['name', 'tagline', 'website', 'twitter', 'facebook', 'linkedin', 'location', 'company_size', 'markets', 'founders_or_people', 'run_at']]
 		print('... scraped the data ....')
 		try:
 			for company in companies:
@@ -113,7 +124,7 @@ class Angel:
 						linkedin = social
 
 				founders_or_people = ';'.join(company_source.xpath('//div[@class="component_0ab6d"]/div[contains(@class, "component_11e1f")]//a/text()'))
-				companies_to_insert.append([name, tagline, website, twitter, facebook, linkedin, location, company_size, markets, founders_or_people, date.now().strftime("%Y-%m-%d %H:%M:%S")])
+				self.company_list.append([name, tagline, website, twitter, facebook, linkedin, location, company_size, markets, founders_or_people, date.now().strftime("%Y-%m-%d %H:%M:%S")])
 
 		except Exception as E:
 			self.send_email('An error happened while populating the company data into database in Angel.co scraper ', E)
@@ -121,14 +132,36 @@ class Angel:
 
 		driver.close()
 
-		csv_line_length = len(max(companies_to_insert,key=len))
-		csv_string = ''
-		for row in companies_to_insert:
-			temp_row = ['"' + col + '"' for col in row]
-			while len(temp_row) < csv_line_length:
-				temp_row.append([])
-			csv_string += ','.join(temp_row) + '\n'
-		self.b64data = base64.b64encode(csv_string.encode('utf-8')).decode()
+	def get_prospects_from_hunter(self):
+		'''
+			fetch the prospects from hunter.io and write those information on csv hunter.csv
+			inside the data directory
+		'''
+		print('*** hunter.io api propagation ***')
+		data = [['company', 'first_name', 'last_name', 'email', 'position', 'run_at']]
+		for company in self.company_list:
+			prospects_list = json.loads(session.get(HUNTER_PROSPECTS_URL.format(company[2])).text)['data']['emails']
+			for prospect in prospects_list:
+				data.append([company[2], prospect['first_name'], prospect['last_name'], prospect['value'], prospect['position'], date.now().strftime("%Y-%m-%d %H:%M:%S")]) 
+
+		self.encode_data(data, 'hunter.csv')
+
+	def get_prospects_from_findemails(self):
+		'''
+			fetch the prospects from findemails.io and write those information on csv findemails.csv
+			inside the data directory
+		'''
+		print('*** findemails.com api propagation ***')
+		data = [['company', 'first_name', 'last_name', 'email', 'position', 'run_at']]
+		for company in self.company_list:
+			try:
+				prospects_list = json.loads(session.get(FINDEMAILS_PROSPECTS_URL.format(company[2])).text)['prospects']
+				for prospect in prospects_list:
+					data.append([company[2], prospect['first_name'], prospect['last_name'], prospect['email']['email'], prospect['title'], date.now().strftime("%Y-%m-%d %H:%M:%S")])
+			except Exception as E:
+				send_email('An error happened while fetching the company prospects from findemails.com', E)
+
+		self.encode_data(data, 'findemails.csv')
 
 	def validate(self, val):
 		res = ''
@@ -138,9 +171,22 @@ class Angel:
 			pass
 		return res
 
+	def encode_data(self, data, file_name):
+		csv_line_length = len(max(data,key=len))
+		csv_string = ''
+		for row in data:
+			temp_row = ['"' + str(col) + '"' for col in row]
+			while len(temp_row) < csv_line_length:
+				temp_row.append([])
+			csv_string += ','.join(temp_row) + '\n'
+		self.b64data.append({
+			'file_name': file_name,
+			'content': base64.b64encode(csv_string.encode('utf-8')).decode()	
+		})
+
 	def send_email(self):
 		print('--- send email with attachment ---')
-		send_email_with_attachment_normal(content=self.b64data, query=self.query)
+		send_email_with_attachment_normal(data=self.b64data, query=self.query)
 		print('... Done ! ....')
 
 if __name__ == '__main__':
@@ -152,6 +198,10 @@ if __name__ == '__main__':
 	# read a query and scrape the page of angel.co
 	querys = parser.parse_args().query
 	angel.get_page(search_query=querys.split(','))
+
+	angel.get_prospects_from_hunter()
+
+	angel.get_prospects_from_findemails()
 
 	# send email to crm@revampcybersecurity.com
 	angel.send_email()

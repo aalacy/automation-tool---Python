@@ -70,7 +70,7 @@ def send_email_with_attachment(template_id='d-8b6655afc0de466eb5b5b856b55a959d',
 
 	return response
 
-def send_email_with_attachment_normal(to_email='crm@revampcybersecurity.com', from_email='info@revampcybersecurity.com', content="", query='los'):
+def send_email_with_attachment_normal(to_email='crm@revampcybersecurity.com', from_email='info@revampcybersecurity.com', data="", query='los'):
 	message = Mail(
 	    from_email=from_email,
 	    to_emails=to_email,
@@ -83,13 +83,14 @@ def send_email_with_attachment_normal(to_email='crm@revampcybersecurity.com', fr
 	# 	data = f.read()
 	# 	f.close()
 	# encoded = base64.b64encode(data).decode()
-	attachment = Attachment()
-	attachment.file_content = FileContent(content)
-	attachment.file_type = FileType('application/csv')
-	attachment.file_name = FileName('angel scraper.csv')
-	attachment.disposition = Disposition('attachment')
-	attachment.content_id = ContentId('Content ID')
-	message.attachment = attachment
+	for item in data:
+		attachment = Attachment()
+		attachment.file_content = FileContent(item['content'])
+		attachment.file_type = FileType('application/csv')
+		attachment.file_name = FileName(item['file_name'])
+		attachment.disposition = Disposition('attachment')
+		attachment.content_id = ContentId('Content ID')
+		message.add_attachment(attachment)
 	try:
 		sg = SendGridAPIClient(SENDGRID_API_KEY)
 		response = sg.send(message)
