@@ -1,7 +1,8 @@
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, Email
+from sendgrid.helpers.mail import Mail, Email, Attachment, FileContent, FileName, FileType, Disposition, ContentId
 from datetime import datetime as date
 import pdb
+import base64
 
 # sendgrid
 SENDGRID_API_KEY = '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'
@@ -39,3 +40,59 @@ def send_email_by_template(template_id='d-a1b7b69d690241fd9b20f78d76518b0b', to_
 		print('send_email_by_template ', response.status_code)
 	except Exception as e:
 		print('err in send_email_by_template ', e)
+
+def send_email_with_attachment(template_id='d-8b6655afc0de466eb5b5b856b55a959d', to_email='crm@revampcybersecurity.com', from_email='info@revampcybersecurity.com', content=""):
+	message = Mail(
+		to_emails=to_email,
+		from_email=Email(from_email, 'Revamp Cybersecurity'),
+	)
+	message.template_id = template_id
+	file_path = 'data/allcompanies.csv'
+	data = ''
+	with open(file_path, 'rb') as f:
+		data = f.read()
+		f.close()
+	content = base64.b64encode(data).decode()
+	attachment = Attachment()
+	attachment.file_content = FileContent(content)
+	attachment.file_type = FileType('application/csv')
+	attachment.file_name = FileName('test_filename.csv')
+	attachment.disposition = Disposition('attachment')
+	attachment.content_id = ContentId('Example Content ID')
+	message.attachment = attachment
+	response = None
+	try:
+		sg = SendGridAPIClient(SENDGRID_API_KEY)
+		response = sg.client.mail.send.post(request_body=message).status_code
+		print('send_email_by_template ', response)
+	except Exception as e:
+		print('err in send_email_by_template ', e)
+
+	return response
+
+def send_email_with_attachment_normal(to_email='crm@revampcybersecurity.com', from_email='info@revampcybersecurity.com', content="", query='los'):
+	message = Mail(
+	    from_email=from_email,
+	    to_emails=to_email,
+	    subject='Attachment',
+	    html_content='<strong>Here is the attachment for angel scraper with query <i>{}</i></strong>'.format(query)
+	)
+	# file_path = 'data/allcompanies.csv'
+	# data = ''
+	# with open(file_path, 'rb') as f:
+	# 	data = f.read()
+	# 	f.close()
+	# encoded = base64.b64encode(data).decode()
+	attachment = Attachment()
+	attachment.file_content = FileContent(content)
+	attachment.file_type = FileType('application/csv')
+	attachment.file_name = FileName('angel scraper.csv')
+	attachment.disposition = Disposition('attachment')
+	attachment.content_id = ContentId('Content ID')
+	message.attachment = attachment
+	try:
+		sg = SendGridAPIClient(SENDGRID_API_KEY)
+		response = sg.send(message)
+		print(response.status_code)
+	except Exception as e:
+		print(e.message)

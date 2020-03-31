@@ -110,5 +110,5 @@ if __name__ == '__main__':
 	slack.send_weekly_corona_tips()
 
 	# save delivery history
-	slack.create_delivery_history_table()
+	#slack.create_delivery_history_table()
 

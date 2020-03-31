@@ -363,7 +363,7 @@ class Automation:
 			except:
 				pass
 
-			row = (_member['team_member_id'], _member['email'], _member['email_verified'], _member['status']['.tag'], name['given_name'], name['surname'], name['familiar_name'], name['display_name'], name['abbreviated_name'], _member['membership_type']['.tag'], _member['account_id'], ";".join(secondary_emails), joined_on, member['access_type']['.tag'], group['group_name'], date.now().strftime("%Y-%m-%d %H:%M:%S"))
+			row = (_member['team_member_id'], _member['email'], _member['email_verified'], _member['status']['.tag'], name['given_name'], name['surname'], name['familiar_name'], name['display_name'], name['abbreviated_name'], _member['membership_type']['.tag'], _member['account_id'], ";".join(secondary_emails), joined_on, member['access_type']['.tag'], group['group_name'], date.now().strftime("%Y-%m-%d %H:%M:%S"), '')
 
 			self.members_rows.append(row)
 

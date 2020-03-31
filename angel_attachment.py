@@ -1,7 +1,6 @@
 #!/bin/usr/env python3
-
 '''
-	fetch the companies list from the angel.co
+	fetch the companies list from the angel.co and send csv result via email
 
 	@param: -q: query to search on angel.co
 
@@ -10,6 +9,8 @@
 		
 '''
 
+import base64
+from mail import send_email_with_attachment, send_email_with_attachment_normal
 import argparse
 import json
 import re
@@ -30,29 +31,16 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 import xml.etree.ElementTree as ET
 from lxml import etree
-import sqlalchemy as db
-from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from configparser import RawConfigParser
-import mysql.connector as mysql
-
 from datetime import datetime as date
 import datetime
 import pdb
 import time
 import sys
 from pyvirtualdisplay import Display
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
-
-from mail import send_email_with_attachment
 
 path = os.path.abspath(os.curdir)
 
 BASE_URL = 'https://angel.co/companies'
-
-SENDGRID_API_KEY = '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'
-TO_EMAIL = 'martin@revampcybersecurity.com'
 
 # requests
 session = requests.Session()
@@ -65,38 +53,9 @@ option = webdriver.ChromeOptions()
 option.add_argument('--no-sandbox')
 driver = webdriver.Chrome(executable_path= path + '/data/chromedriver', chrome_options=option)
 
-# config
-# config = RawConfigParser()
-# config.read(path + '/settings.cfg')
-
-db= mysql.connect(
-    host = "localhost",
-    user = "root",
-    passwd = "12345678",
-    database = "revamp"
-)
-cursor = db.cursor()
-cursor.execute('DROP TABLE IF EXISTS angelcompanies')
-cursor.execute("CREATE TABLE IF NOT EXISTS angelcompanies (name VARCHAR(255), tagline VARCHAR(255), website VARCHAR(255), twitter VARCHAR(255), facebook VARCHAR(255), linkedin VARCHAR(255), location VARCHAR(255), company_size VARCHAR(255), markets VARCHAR(255), founders_or_people VARCHAR(255) , run_at VARCHAR(255))")
-
-insert_query = "INSERT INTO angelcompanies (name, tagline, website, twitter, facebook, linkedin, location, company_size, markets, founders_or_people, run_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-
 class Angel:
 	def __init__(self):
 		print('... initialize scraper ....')
-
-	def send_email(self, text):
-		msg_body = '<strong>{} at {}</strong>'.format(text,  date.now().strftime("%Y-%m-%d %H:%M:%S"))
-		message = Mail(
-		    from_email='report@revamp.com',
-		    to_emails=TO_EMAIL,
-		    subject='Issue report on Angel.co scraper',
-		    html_content=msg_body)
-		try:
-		    sg = SendGridAPIClient(SENDGRID_API_KEY)
-		    response = sg.send(message)
-		except Exception as e:
-		    print(str(e))
 
 	def get_page(self, search_query=[]):
 		driver.get(BASE_URL)
@@ -104,6 +63,7 @@ class Angel:
 		WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, "search-box")))
 		driver.find_elements_by_class_name('search-box')[0].click()
 		time.sleep(2)
+		self.query = ''.join(search_query)
 		if len(search_query):
 			for query in search_query:
 				ActionChains(driver).send_keys(query.strip()).key_up(Keys.ENTER).perform()
@@ -125,8 +85,8 @@ class Angel:
 		page_source = etree.HTML(driver.page_source)
 		companies = page_source.xpath('//div[@class="results"]//div[contains(@class, "startup")]')
 
-		companies_to_insert = []
-		print('... populate the data into db ....')
+		companies_to_insert = [['name', 'tagline', 'website', 'twitter', 'facebook', 'linkedin', 'location', 'company_size', 'markets', 'founders_or_people', 'run_at']]
+		print('... scraped the data ....')
 		try:
 			for company in companies:
 				name = self.validate(company.xpath('.//a[@class="startup-link"]/text()'))
@@ -154,15 +114,22 @@ class Angel:
 
 				founders_or_people = ';'.join(company_source.xpath('//div[@class="component_0ab6d"]/div[contains(@class, "component_11e1f")]//a/text()'))
 				companies_to_insert.append([name, tagline, website, twitter, facebook, linkedin, location, company_size, markets, founders_or_people, date.now().strftime("%Y-%m-%d %H:%M:%S")])
-				# time.sleep(1)
 
 		except Exception as E:
 			self.send_email('An error happened while populating the company data into database in Angel.co scraper ', E)
 			print('error in company for loop ' + E)
 
-		cursor.executemany(insert_query, companies_to_insert)
-		db.commit()
 		driver.close()
+
+		csv_line_length = len(max(companies_to_insert,key=len))
+		csv_string = ''
+		for row in companies_to_insert:
+			temp_row = ['"' + col + '"' for col in row]
+			while len(temp_row) < csv_line_length:
+				temp_row.append([])
+			csv_string += ','.join(temp_row) + '\n'
+		pdb.set_trace()
+		self.b64data = base64.b64encode(csv_string.encode('utf-8')).decode()
 		print('... Done ! ....')
 
 	def validate(self, val):
@@ -173,21 +140,18 @@ class Angel:
 			pass
 		return res
 
-	def read_csv(self):
-		b64data = ''
-		with open('data/allcompanies.csv', 'rb') as fd:
-			b64data = base64.b64encode(fd.read())
+	def send_email(self):
+		send_email_with_attachment_normal(content=self.b64data, query=self.query, to_email='ideveloper003@gmail.com')
 
-		return b64data
-
-if __name__ == "__main__":
+if __name__ == '__main__':
 	angel = Angel()
 
-	# parser = argparse.ArgumentParser()
-	# parser.add_argument('-q', '--query', type=str, required=True, help="Search querys with comma separator. e.g. python3 angel.py -q 'los angeles, San francisco'")
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-q', '--query', type=str, required=True, help="Search querys with comma separator. e.g. python3 angel.py -q 'los angeles, San francisco'")
 
-	# querys = parser.parse_args().query
-	# companies = angel.get_page(search_query=querys.split(','))
+	# read a query and scrape the page of angel.co
+	querys = parser.parse_args().query
+	angel.get_page(search_query=querys.split(','))
 
-	content = angel.read_csv()
-	send_email_with_attachment(content=content, to_email='ideveloper003@gmail.com')
+	# send email to crm@revampcybersecurity.com
+	angel.send_email()

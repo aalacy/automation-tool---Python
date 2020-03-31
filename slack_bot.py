@@ -200,5 +200,5 @@ if __name__ == '__main__':
 	slack.send_daily_tips()
 
 	# save delivery history
-	slack.create_delivery_history_table()
+	#slack.create_delivery_history_table()
 
