@@ -128,9 +128,7 @@ class Angel:
 			while len(temp_row) < csv_line_length:
 				temp_row.append([])
 			csv_string += ','.join(temp_row) + '\n'
-		pdb.set_trace()
 		self.b64data = base64.b64encode(csv_string.encode('utf-8')).decode()
-		print('... Done ! ....')
 
 	def validate(self, val):
 		res = ''
@@ -141,7 +139,9 @@ class Angel:
 		return res
 
 	def send_email(self):
+		print('--- send email with attachment ---')
 		send_email_with_attachment_normal(content=self.b64data, query=self.query)
+		print('... Done ! ....')
 
 if __name__ == '__main__':
 	angel = Angel()
