@@ -42,17 +42,12 @@ import pdb
 import time
 import sys
 from pyvirtualdisplay import Display
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 
-from mail import send_email_with_attachment
+from mail import send_email_with_attachment, send_email
 
 path = os.path.abspath(os.curdir)
 
 BASE_URL = 'https://angel.co/companies'
-
-SENDGRID_API_KEY = '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'
-TO_EMAIL = 'martin@revampcybersecurity.com'
 
 # requests
 session = requests.Session()
@@ -84,19 +79,6 @@ insert_query = "INSERT INTO angelcompanies (name, tagline, website, twitter, fac
 class Angel:
 	def __init__(self):
 		print('... initialize scraper ....')
-
-	def send_email(self, text):
-		msg_body = '<strong>{} at {}</strong>'.format(text,  date.now().strftime("%Y-%m-%d %H:%M:%S"))
-		message = Mail(
-		    from_email='report@revamp.com',
-		    to_emails=TO_EMAIL,
-		    subject='Issue report on Angel.co scraper',
-		    html_content=msg_body)
-		try:
-		    sg = SendGridAPIClient(SENDGRID_API_KEY)
-		    response = sg.send(message)
-		except Exception as e:
-		    print(str(e))
 
 	def get_page(self, search_query=[]):
 		driver.get(BASE_URL)
@@ -157,7 +139,7 @@ class Angel:
 				# time.sleep(1)
 
 		except Exception as E:
-			self.send_email('An error happened while populating the company data into database in Angel.co scraper ', E)
+			send_email('Issue report on Angel.co scraper', 'An error happened while populating the company data into database in Angel.co scraper ', E)
 			print('error in company for loop ' + E)
 
 		cursor.executemany(insert_query, companies_to_insert)

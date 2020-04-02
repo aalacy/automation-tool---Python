@@ -23,9 +23,9 @@ import pdb
 import time
 import threading
 from pyvirtualdisplay import Display
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 import shlex, subprocess
+
+from mail import send_email
 
 ###
 # Zoho -> Application -> Slack, Dropbox, Bamboo, 
@@ -33,9 +33,6 @@ import shlex, subprocess
 
 class Automation:
 	BASE_PATH = os.path.abspath(os.curdir)
-
-	SENDGRID_API_KEY = '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'
-	TO_EMAIL = 'martin@revampcybersecurity.com'
 
 	###
 	# API credentials
@@ -103,19 +100,6 @@ class Automation:
 		option = webdriver.ChromeOptions()
 		option.add_argument('--no-sandbox')
 		self.driver = webdriver.Chrome(executable_path= self.BASE_PATH + '/data/chromedriver', chrome_options=option)
-
-	def send_email(self, text):
-		msg_body = '<strong>{} at {}</strong>'.format(text,  date.now().strftime("%Y-%m-%d %H:%M:%S"))
-		message = Mail(
-		    from_email='report@revamp.com',
-		    to_emails=self.TO_EMAIL,
-		    subject='Issue report on automation.py',
-		    html_content=msg_body)
-		try:
-		    sg = SendGridAPIClient(self.SENDGRID_API_KEY)
-		    response = sg.send(message)
-		except Exception as e:
-		    print(str(e))
 		    
 	# common functions
 	def bamboo_valiate(self, val):
@@ -217,7 +201,7 @@ class Automation:
 			db.commit()   
 		except Exception as E:
 			print('-- error while populating zoho crm ---', E)
-			self.send_email('-- error while populating zoho crm ---' + str(E))   
+			send_email('Issue report on automation.py', '-- error while populating zoho crm ---' + str(E))   
 
 		cursor.close()
 
@@ -294,7 +278,7 @@ class Automation:
 				db.commit()   
 			except Exception as E:
 				print('-- error while populating slack ---', E)
-				self.send_email('-- error while populating slack ---' + str(E))
+				send_email('Issue report on automation.py', '-- error while populating slack ---' + str(E))
 
 			if not next_cursor:
 				break;
@@ -340,7 +324,7 @@ class Automation:
 			db.commit()   
 		except Exception as E:
 			print('-- error while populating bamboo ---', E)   
-			self.send_email('-- error while populating bamboo ---' + str(E))
+			send_email('Issue report on automation.py', '-- error while populating bamboo ---' + str(E))
 
 		cursor.close()
 		print('============ end of bamboo api ===============')
@@ -419,7 +403,7 @@ class Automation:
 			db.commit()   
 		except Exception as E:
 			print('-- error while populating dropbox ---', E)   
-			self.send_email('-- error while populating dropbox ---' + str(E))
+			send_email('Issue report on automation.py', '-- error while populating dropbox ---' + str(E))
 
 		cursor.close()
 		print('*** end of dropbox  api ***')
@@ -469,7 +453,7 @@ class Automation:
 			db.commit()   
 		except Exception as E:
 			print('-- error while populating Applcations ---', E)   
-			self.send_email('-- error while populating Applcations ---' + str(E))
+			send_email('Issue report on automation.py', '-- error while populating Applcations ---' + str(E))
 
 		cursor.close()
 		print('------ end of populating Applcations CSV file ------')

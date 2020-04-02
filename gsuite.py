@@ -10,16 +10,10 @@ from datetime import datetime as date
 import os
 import requests
 import pdb
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+from mail import send_email
 
 BASE_PATH = os.path.abspath(os.curdir)
 session = requests.Session()
-
-# Sendgrid
-SENDGRID_API_KEY = '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'
-# TO_EMAIL = 'martin@revampcybersecurity.com'
-TO_EMAIL = 'ideveloper003@gmail.com'
 
 # Email of the Service Account
 SERVICE_ACCOUNT_EMAIL = 'it-software@gamproject-261122.iam.gserviceaccount.com'
@@ -62,19 +56,6 @@ db= mysql.connect(
 )
 cursor = db.cursor()
 
-def send_email(text):
-    msg_body = '<strong>{} at {}</strong>'.format(text,  date.now().strftime("%Y-%m-%d %H:%M:%S"))
-    message = Mail(
-        from_email='report@revamp.com',
-        to_emails=TO_EMAIL,
-        subject='Issue report on gsuite.py',
-        html_content=msg_body)
-    try:
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
-        response = sg.send(message)
-    except Exception as e:
-        print(str(e))
-
 def get_users():
     cursor.execute('DROP TABLE IF EXISTS gsuite_users')
     create_query = ("CREATE TABLE IF NOT EXISTS gsuite_users (email VARCHAR(255), agree_to_terms VARCHAR(255), aliases VARCHAR(255), is_forced_in_2sv VARCHAR(255), is_admin VARCHAR(255), \
@@ -106,7 +87,7 @@ def get_users():
         cursor.executemany(query, user_list)
         db.commit()
     except Exception as E:
-        send_email('--- error happened while populating the gsuite users ----' + str(E))
+        send_email('Issue report on gsuite.py', '--- error happened while populating the gsuite users ----' + str(E))
 
 def get_groups():
     # Call the Admin SDK Directory API
@@ -147,7 +128,7 @@ def get_groups():
     except Exception as E:
         # pdb.set_trace()
         print(E)
-        # send_email('--- error happened while populating the gsuite users ----' + str(E))
+        send_email('--- error happened while populating the gsuite users ----' + str(E))
 
 if __name__ == '__main__':
     get_users()

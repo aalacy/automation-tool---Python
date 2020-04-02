@@ -5,7 +5,7 @@ import pdb
 import base64
 
 # sendgrid
-SENDGRID_API_KEY = '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'
+SENDGRID_API_KEY = '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'
 # TO_EMAIL = 'ideveloper003@gmail.com'
 TO_EMAIL = 'martin@revampcybersecurity.com'
 
