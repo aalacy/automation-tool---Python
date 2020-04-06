@@ -154,7 +154,7 @@ class PublicData:
 
         # update the security_answers table based upon mapping fields
         # first delete only answers for 612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634
-        query = "delete from security_answers where question_id in (612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634);"
+        query = "delete from security_answers where question_id in (612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634) company_id='{}';".format(self.domain)
 
         self.connection.execute(query)
         
