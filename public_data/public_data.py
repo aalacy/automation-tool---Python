@@ -55,11 +55,11 @@ class PublicData:
     '''
 
     # base path
-    BASE_PATH = ('/').join(os.path.abspath(os.curdir).split('/')[:-1])
+    BASE_PATH = os.path.abspath(os.curdir)
 
     # config
     config = RawConfigParser()
-    config.read(BASE_PATH + '/settings.cfg')
+    config.read(BASE_PATH + '/../settings.cfg')
 
     # set up engine for database
     Base = declarative_base()
@@ -86,25 +86,23 @@ class PublicData:
         Column('whoxy_registrar', String(512)),
         Column('whoxy_nameservers', String(512)),
         Column('whoxy_domainstatus', String(512)),
-        Column('urlscan_domain', String(512)),
-        Column('urlscan_ip_address', String(512)),
-        Column('urlscan_country', String(512)),
-        Column('urlscan_server', String(512)),
-        Column('urlscan_web_apps', String(512)),
-        Column('urlscan_number_of_requests', String(512)),
-        Column('urlscan_ads_blocked', String(512)),
-        Column('urlscan_http_requests', String(512)),
-        Column('urlscan_ipv6', String(512)),
-        Column('urlscan_unique_country', String(512)),
-        Column('urlscan_malicious', String(512)),
-        Column('urlscan_malicious_requests', String(512)),
-        Column('urlscan_pointed_domains', String(512)),
+        Column('urlscan', JSON),
         Column('shodan', JSON),
         Column('ssllabs', JSON),
         Column('wpscan', JSON),
         Column('hibp', JSON),
         Column('dnstwist', JSON),
         Column('run_at', String(512))
+    )
+
+    answers_table = Table(
+        'security_answers',
+        metadata,
+        Column('id', Integer),
+        Column('question_id', Integer),
+        Column('company_id', String(512)),
+        Column('high_risk', Integer),
+        Column('Answer', JSON)
     )
 
     # data_table.drop(engine)
@@ -128,59 +126,55 @@ class PublicData:
                     "spf_dmarc": "",
                     "spf_spoofing_possible": "",
                     "ctfr_subdomain": "",
-                    "whoxy_registered": "" ,
-                    "whoxy_updated": "" ,
-                    "whoxy_expiry": "" ,
-                    "whoxy_registrar": "" ,
-                    "whoxy_nameservers": "" ,
-                    "whoxy_domainstatus": "" ,
-                    "urlscan_domain": "" ,
-                    "urlscan_ip_address": "" ,
-                    "urlscan_country": "" ,
-                    "urlscan_server" : "",
-                    "urlscan_web_apps": "" ,
-                    "urlscan_number_of_requests": "" ,
-                    "urlscan_ads_blocked": "" ,
-                    "urlscan_http_requests": "" ,
-                    "urlscan_ipv6": "" ,
-                    "urlscan_unique_country": "" ,
-                    "urlscan_malicious": "" ,
-                    "urlscan_malicious_requests": "" ,
-                    "urlscan_pointed_domains": "" ,
+                    "whoxy": "" ,
+                    "urlscan": "" ,
                 }
         '''
         print('[=] Update the table with the data for {} [=]'.format(self.domain))
+        # populdate data into public_data table, but now it is useless though
         try:
             query = db.insert(self.data_table).values(
                 company_id=self.domain,
-                spf_record=data['spf_record'],
-                spf_record_more=data['spf_record_more'],
-                spf_dmarc=data['spf_dmarc'],
-                spf_spoofing_possible=data['spf_spoofing_possible'],
-                ctfr_subdomain=data['ctfr_subdomain'],
-                whoxy=data['whoxy'],
-                urlscan_domain=data['urlscan_domain'],
-                urlscan_ip_address=data['urlscan_ip_address'],
-                urlscan_country=data['urlscan_country'],
-                urlscan_server=data['urlscan_server'],
-                urlscan_web_apps=data['urlscan_web_apps'],
-                urlscan_number_of_requests=data['urlscan_number_of_requests'],
-                urlscan_ads_blocked=data['urlscan_ads_blocked'],
-                urlscan_http_requests=data['urlscan_http_requests'],
-                urlscan_ipv6=data['urlscan_ipv6'],
-                urlscan_unique_country=data['urlscan_unique_country'],
-                urlscan_malicious=data['urlscan_malicious'],
-                urlscan_malicious_requests=data['urlscan_malicious_requests'],
-                urlscan_pointed_domains=data['urlscan_pointed_domains'],
-                shodan=data['shodan'],
-                ssllabs=data['ssllabs'],
-                hibp=data['hibp'],
-                dnstwist=data['dnstwist'],
-                wpscan=data['wpscan'],
+                spf_record=data.get('spf_record', ''),
+                spf_record_more=data.get('spf_record_more', ''),
+                spf_dmarc=data.get('spf_dmarc', ''),
+                spf_spoofing_possible=data.get('spf_spoofing_possible', ''),
+                ctfr_subdomain=data.get('ctfr_subdomain', ''),
+                whoxy=data.get('whoxy', ''),
+                urlscan=data.get('urlscan', ''),
+                shodan=data.get('shodan', ''),
+                ssllabs=data.get('ssllabs', ''),
+                hibp=data.get('hibp', ''),
+                dnstwist=data.get('dnstwist', ''),
+                wpscan=data.get('wpscan', ''),
                 run_at=date.now().strftime("%Y-%m-%d %H:%M:%S"))
             self.connection.execute(query)
         except Exception as E:
             print('Error: ', E)
+
+        # update the security_answers table based upon mapping fields
+        # first delete only answers for 612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634
+        query = "delete from security_answers where question_id in (612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634);"
+
+        self.connection.execute(query)
+        
+        # insert public data
+        public_data_to_insert = [dict(question_id=612, company_id='grove.co', Answer=data['spf_spoofing_possible'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=614, company_id='grove.co', Answer=data['spf_record_more'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=615, company_id='grove.co', Answer=data['spf_dmarc'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=616, company_id='grove.co', Answer=data['spf_record'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=617, company_id='grove.co', Answer=data['ctfr_subdomain'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=618, company_id='grove.co', Answer=data['ssllabs'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=620, company_id='grove.co', Answer=self.domain, high_risk=1)]
+        public_data_to_insert += [dict(question_id=623, company_id='grove.co', Answer=data['whoxy'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=624, company_id='grove.co', Answer=self.ip, high_risk=1)]
+        public_data_to_insert += [dict(question_id=626, company_id='grove.co', Answer=data['wpscan'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=631, company_id='grove.co', Answer=data['hibp'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=632, company_id='grove.co', Answer=data['dnstwist'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=633, company_id='grove.co', Answer=data['shodan'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=634, company_id='grove.co', Answer=data['urlscan'], high_risk=1)]
+
+        self.connection.execute(self.answers_table.insert(), public_data_to_insert)
 
     def close_db(self):
         self.connection.close()

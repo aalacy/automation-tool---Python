@@ -270,3 +270,7 @@ def _run_spoofcheck(domain):
         output_error("Usage: " + sys.argv[0] + " [DOMAIN]")
 
     return data
+
+if __name__ == '__main__':
+    data = _run_spoofcheck('grove.co')
+    print(data)

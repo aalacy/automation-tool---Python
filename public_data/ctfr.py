@@ -1,6 +1,7 @@
 import requests
 import re
 import logging
+import pdb
 
 logging.basicConfig(level=logging.INFO)
 
@@ -28,7 +29,8 @@ def _run_ctrf(data, domain):
         for subdomain in subdomains:
             print("[-]  {s}".format(s=subdomain))
 
-        data['ctfr_subdomain'] = ';'.join(subdomains)
+        data['ctfr_subdomain'] = ';'.join([item.replace('\n', ';') for item in subdomains])
+        data['ctfr_subdomain'] = data['ctfr_subdomain']
 
     return data
 

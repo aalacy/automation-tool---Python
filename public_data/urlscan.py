@@ -112,19 +112,21 @@ def print_summary(data, target_uuid):
         ip_addresses = list_info.get("ips", [])
         urls = list_info.get("urls", [])
 
-        data['urlscan_domain'] = page_domain
-        data['urlscan_ip_address'] = page_ip
-        data['urlscan_country'] = page_country
-        data['urlscan_server'] = page_server
-        data['urlscan_web_apps'] = ';'.join(web_apps)
-        data['urlscan_number_of_requests'] = num_requests
-        data['urlscan_ads_blocked'] = ads_blocked
-        data['urlscan_http_requests'] = str(https_percentage) + "%"
-        data['urlscan_ipv6'] = str(ipv6_percentage) + "%"
-        data['urlscan_unique_country'] = country_count
-        data['urlscan_malicious'] = str(is_malicious)
-        data['urlscan_malicious_requests'] = str(malicious_total)
-        data['urlscan_pointed_domains'] = ';'.join(pointed_domains)
+        data['urlscan'] = {
+            'urlscan_domain': page_domain,
+            'urlscan_ip_address': page_ip,
+            'urlscan_country': page_country,
+            'urlscan_server': page_server,
+            'urlscan_web_apps': ';'.join(web_apps),
+            'urlscan_number_of_requests': num_requests,
+            'urlscan_ads_blocked': ads_blocked,
+            'urlscan_http_requests': str(https_percentage) + "%",
+            'urlscan_ipv6': str(ipv6_percentage) + "%",
+            'urlscan_unique_country': country_count,
+            'urlscan_malicious': str(is_malicious),
+            'urlscan_malicious_requests': str(malicious_total),
+            'urlscan_pointed_domains': ';'.join(pointed_domains)
+        }
 
         
         ### print data
