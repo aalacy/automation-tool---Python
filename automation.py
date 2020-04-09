@@ -53,7 +53,7 @@ class Automation:
 	ZOHO_REFRESH_TOKEN = '1000.d6a72e0ca03009550895e69f2ef33a29.eecbfc31578854643c83736d7a163717'
 	# https://accounts.zoho.com/oauth/v2/auth?scope=ZohoCRM.modules.ALL,ZohoCRM.notifications.READ,ZohoCRM.users.ALL&client_id=1000.XZC8I4FCMVTPNWQ1T2LQ6HHM4ZXFIH&response_type=code&access_type=offline&redirect_uri=https://www.revampcybersecurity.com/
 	ZOHO_UN = 'info@revampcybersecurity.com'
-	ZOHO_PW = '*x6X%5Z8%##r'
+	ZOHO_PW = 'MU)^s,UDv]uTf%9&JYajXV2?s'
 	# ZOHO_UN = 'johnathanstv@gmail.com'
 	# ZOHO_PW = 'Imobile123'
 
@@ -254,7 +254,7 @@ class Automation:
 				pass
 
 			rows = []
-			for user in slack_users['members']:
+			for user in slack_users.get('members', []):
 				try:
 					user_profile = user['profile']
 					row = []
@@ -460,8 +460,8 @@ class Automation:
 
 	def run(self):
 		# application csv
-		application_thread = threading.Thread(target=self.populate_application)
-		application_thread.start()
+		# application_thread = threading.Thread(target=self.populate_application)
+		# application_thread.start()
 
 		# dropbox api
 		dropbox_thread = threading.Thread(target=self.populate_dropbox)

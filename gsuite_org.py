@@ -44,7 +44,7 @@ class Bamboo:
 
 	def run_commandline(self, rows, cond, command_line):
 		for row in rows:
-			if row[4] == cond:
+			if row[4] == cond and row[5]:
 				_command = command_line.format(row[5])
 				print(' --- run command --- ', _command)
 				run_args = shlex.split(_command)
