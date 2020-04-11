@@ -36,6 +36,7 @@ import argparse
 from datetime import datetime as date
 import logging
 import threading
+import socket
 
 import pdb
 
@@ -155,8 +156,9 @@ class PublicData:
         # update the security_answers table based upon mapping fields
         # first delete only answers for 612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634
         query = "delete from security_answers where question_id in (612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634) and company_id='{}';".format(self.domain)
-
         self.connection.execute(query)
+        
+        ip = socket.gethostbyname(self.domain)
         
         # insert public data
         public_data_to_insert = [dict(question_id=612, company_id=self.domain, Answer=data['spf_spoofing_possible'], high_risk=1)]
@@ -167,7 +169,7 @@ class PublicData:
         public_data_to_insert += [dict(question_id=618, company_id=self.domain, Answer=data['ssllabs'], high_risk=1)]
         public_data_to_insert += [dict(question_id=620, company_id=self.domain, Answer=self.domain, high_risk=1)]
         public_data_to_insert += [dict(question_id=623, company_id=self.domain, Answer=data['whoxy'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=624, company_id=self.domain, Answer=self.ip, high_risk=1)]
+        public_data_to_insert += [dict(question_id=624, company_id=self.domain, Answer=ip, high_risk=1)]
         public_data_to_insert += [dict(question_id=626, company_id=self.domain, Answer=data['wpscan'], high_risk=1)]
         public_data_to_insert += [dict(question_id=631, company_id=self.domain, Answer=data['hibp'], high_risk=1)]
         public_data_to_insert += [dict(question_id=632, company_id=self.domain, Answer=data['dnstwist'], high_risk=1)]
@@ -185,12 +187,9 @@ if __name__ == "__main__":
     # parse argument from user input
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--domain', type=str, required=True, help="Target domain.")
-    parser.add_argument('-i', '--ip', type=str, required=True, help="Target ip.")
     
     domain = parser.parse_args().domain
-    ip = parser.parse_args().ip
     public_data.domain = domain
-    public_data.ip = ip
 
     print("\n[!] ---- TARGET: {d} ---- [!] \n".format(d=public_data.domain))
 
@@ -207,7 +206,7 @@ if __name__ == "__main__":
     data = _run_whoxy_history_data(data, domain)
 
     # run shodan
-    data = _run_shodan_ip(data, ip)
+    data = _run_shodan_ip(data, domain)
 
     # run ssllabs
     data = _run_ssllabs(data, domain)

@@ -1,0 +1,375 @@
+2020-04-09 11:03:42,082 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:09:06,409 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:09:13,085 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:10:43,897 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:10:47,275 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:10:58,310 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:10:59,881 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:12:25,769 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:12:29,223 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:12:46,867 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:12:50,554 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:12:56,122 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:12:56,198 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:19:10,789 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:19:14,274 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:26:52,064 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:26:53,497 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:27:34,933 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:27:36,357 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:28:34,399 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:28:36,156 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:29:40,084 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:29:41,290 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:31:10,158 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:31:17,042 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:57:35,562 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 11:57:43,929 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:04:31,891 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:04:31,946 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:04:44,635 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:04:44,673 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:05:20,110 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:05:20,146 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:34:15,505 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:34:15,579 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:34:15,706 - local variable 'links' referenced before assignment
+2020-04-09 12:35:23,480 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:35:23,530 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:55:14,638 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:55:19,321 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:55:39,339 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/big-values-card/div/div[1]/mat-card/span[2]/field-formatter/a"}
+  (Session info: headless chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 12:56:01,894 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:56:03,785 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:56:23,842 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/big-values-card/div/div[1]/mat-card/span[2]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 12:58:09,302 - driver: fetching link: https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:58:11,161 - driver: done fetching https://www.crunchbase.com/organization/entelo#section-overview
+2020-04-09 12:58:31,209 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/big-values-card/div/div[1]/mat-card/span[2]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:05:44,916 - driver: fetching link: https://www.crunchbase.com/organization/goldman-sachs#section-overview
+2020-04-09 13:05:52,725 - driver: done fetching https://www.crunchbase.com/organization/goldman-sachs#section-overview
+2020-04-09 13:06:33,237 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[14]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:22:56,277 - driver: fetching link: https://www.crunchbase.com/organization/goldman-sachs#section-overview
+2020-04-09 13:23:06,323 - driver: done fetching https://www.crunchbase.com/organization/goldman-sachs#section-overview
+2020-04-09 13:23:46,757 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[14]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:05,333 - driver: fetching link: https://www.crunchbase.com/organization/goldman-sachs#section-overview
+2020-04-09 13:35:09,765 - driver: done fetching https://www.crunchbase.com/organization/goldman-sachs#section-overview
+2020-04-09 13:35:09,772 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,784 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,787 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,789 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,791 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,793 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,794 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,795 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,797 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,798 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,799 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,800 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,801 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,802 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,803 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,804 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,805 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,806 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,807 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,809 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,809 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,810 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,811 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,812 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,814 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,815 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:09,817 - Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:35:32,561 - driver: fetching link: https://www.crunchbase.com/organization/goldman-sachs#section-overview
+2020-04-09 13:35:41,032 - driver: done fetching https://www.crunchbase.com/organization/goldman-sachs#section-overview
+2020-04-09 13:36:21,456 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[14]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:36:41,631 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[2]/field-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:37:01,648 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[4]/field-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:37:21,692 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[3]/div/span[2]/field-formatter/link-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:37:41,757 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[3]/div/span[6]/field-formatter/link-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:38:01,765 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[3]/div/span[8]/field-formatter/link-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:38:21,792 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[3]/div/span[10]/field-formatter/blob-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:38:41,824 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[3]/div/span[12]/field-formatter/blob-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:40:21,195 - driver: fetching link: https://www.crunchbase.com/organization/goldman-sachs#section-overview
+2020-04-09 13:40:30,344 - driver: done fetching https://www.crunchbase.com/organization/goldman-sachs#section-overview
+2020-04-09 13:41:10,910 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[14]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:41:31,077 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[2]/field-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:41:51,113 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[4]/field-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:42:11,169 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[3]/div/span[2]/field-formatter/link-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:42:31,262 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[3]/div/span[6]/field-formatter/link-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:42:51,289 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[3]/div/span[8]/field-formatter/link-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:43:11,341 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[3]/div/span[10]/field-formatter/blob-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:43:31,347 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[3]/div/span[12]/field-formatter/blob-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:57:03,585 - driver: fetching link: https://www.crunchbase.com/organization/pace#section-overview
+2020-04-09 13:57:07,680 - driver: done fetching https://www.crunchbase.com/organization/pace#section-overview
+2020-04-09 13:57:27,734 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/big-values-card/div/div[1]/mat-card/span[2]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:57:48,024 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[12]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:58:08,099 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[14]/field-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:58:28,169 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[16]/field-formatter/blob-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:59:08,204 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[2]/field-formatter/enum-multi-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:59:28,245 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[4]/field-formatter/enum-multi-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 13:59:48,291 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[6]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:00:08,340 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[4]/field-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:21:49,336 - driver: fetching link: https://www.crunchbase.com/organization/pace#section-overview
+2020-04-09 14:21:51,911 - driver: done fetching https://www.crunchbase.com/organization/pace#section-overview
+2020-04-09 14:22:12,816 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/big-values-card/div/div[1]/mat-card/span[2]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:22:33,131 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[12]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:22:53,185 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[14]/field-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:23:13,199 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[16]/field-formatter/blob-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:23:53,231 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[2]/field-formatter/enum-multi-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:24:13,237 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[4]/field-formatter/enum-multi-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:24:33,279 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[6]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:24:53,336 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[4]/field-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:56:41,540 - driver: fetching link: https://www.crunchbase.com/organization/pace#section-overview
+2020-04-09 14:56:45,289 - driver: done fetching https://www.crunchbase.com/organization/pace#section-overview
+2020-04-09 14:57:05,325 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/big-values-card/div/div[1]/mat-card/span[2]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:57:25,621 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[12]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:57:45,669 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[14]/field-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:58:05,678 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[1]/div/span[16]/field-formatter/blob-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:58:45,730 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[2]/field-formatter/enum-multi-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:59:05,789 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[4]/field-formatter/enum-multi-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:59:25,816 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[6]/field-formatter/a"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
+2020-04-09 14:59:45,852 - Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="section-overview"]/mat-card/div[2]/fields-card[2]/div/span[4]/field-formatter/span"}
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.41.578737 (49da6702b16031c40d63e5618de03a32ff6c197e),platform=Windows NT 10.0.18363 x86_64)
+
