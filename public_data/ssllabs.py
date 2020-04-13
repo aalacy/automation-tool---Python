@@ -16,26 +16,30 @@ def _run_ssllabs(data, domain):
 	res = {}
 	BASE_URL = 'https://api.ssllabs.com/api/v3'
 	url = BASE_URL + '/analyze?host=' + domain # startNew=on
-	run_success = False
-	while True:
-		response = session.get(url)
-		res = response.json()
+	data['ssllabs'] = ''
+	try:
+		run_success = False
+		while True:
+			response = session.get(url)
+			res = response.json()
 
-		if res.get('errors', ''):
-			logging.warning(res['errors'][0]['message'])
-			break
-		elif res['status'] == 'READY':
-			run_success = True
-			break
-		elif res['status'] == 'IN_PROGRESS':
-			url = BASE_URL + '/analyze?host=' + domain
-			for endpoint in res['endpoints']:
-				logging.info('{} {} {}'.format(endpoint['ipAddress'], endpoint['statusMessage'], endpoint.get('progress', '')))
+			if res.get('errors', ''):
+				logging.warning(res['errors'][0]['message'])
+				break
+			elif res['status'] == 'READY':
+				run_success = True
+				break
+			elif res['status'] == 'IN_PROGRESS':
+				url = BASE_URL + '/analyze?host=' + domain
+				for endpoint in res['endpoints']:
+					logging.info('{} {} {}'.format(endpoint['ipAddress'], endpoint['statusMessage'], endpoint.get('progress', '')))
 
-		time.sleep(10)
+			time.sleep(10)
 
-	if run_success:
-		data['ssllabs'] = res
+		if run_success:
+			data['ssllabs'] = res
+	except Exception as E:
+		print('error in ssllabs', E)
 
 	return data
 

@@ -160,12 +160,12 @@ class PublicData:
 
         # update the security_answers table based upon mapping fields
         # first delete only answers for 612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634
-        query = "DELETE from security_answers WHERE question_id IN (SELECT id FROM security_questions WHERE mapping IN ('spf_spoofing_possible', 'spf_record_more', 'spf_dmarc', 'spf_record', 'ctfr_subdomain', 'ssllabs', 'domain', 'whoxy_history', 'website_ip', 'wpscan', 'business_hibp', 'dnstwist', 'shodan', 'urlscan')) AND company_id='{}';".format(self.domain)
+        query = "DELETE from security_answers WHERE question_id IN (SELECT id FROM security_questions WHERE Category='Public Data - Business' AND mapping IN ('spf_spoofing_possible', 'spf_record_more', 'spf_dmarc', 'spf_record', 'ctfr_subdomain', 'ssllabs', 'domain', 'whoxy_history', 'website_ip', 'wpscan', 'business_hibp', 'dnstwist', 'shodan', 'urlscan')) AND company_id='{}';".format(self.domain)
         self.connection.execute(query)
         
         ip = socket.gethostbyname(self.domain)
 
-        query = "SELECT id FROM security_questions WHERE mapping IN ('spf_spoofing_possible', 'spf_record_more', 'spf_dmarc', 'spf_record', 'ctfr_subdomain', 'ssllabs', 'domain', 'whoxy_history', 'website_ip', 'wpscan', 'business_hibp', 'dnstwist', 'shodan', 'urlscan')"
+        query = "SELECT id FROM security_questions WHERE Category='Public Data - Business' AND mapping IN ('spf_spoofing_possible', 'spf_record_more', 'spf_dmarc', 'spf_record', 'ctfr_subdomain', 'ssllabs', 'domain', 'whoxy_history', 'website_ip', 'wpscan', 'business_hibp', 'dnstwist', 'shodan', 'urlscan')"
         res = self.connection.execute(query)
         mapping = [dict(r) for r in res]
         
