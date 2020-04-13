@@ -160,26 +160,30 @@ class PublicData:
 
         # update the security_answers table based upon mapping fields
         # first delete only answers for 612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634
-        query = "DELETE from security_answers WHERE question_id IN (SELECT id FROM security_questions WHERE mapping IN ('spf_spoofing_possible', 'ctfr_subdomain', 'spf_record_more', 'spf_dmarc', 'spf_record', 'ssllabs', 'whoxy_history', 'domain', 'website_ip', 'wpscan', 'business_hibp', 'dnstwist', 'urlscan', 'shodan')) AND company_id='{}';".format(self.domain)
+        query = "DELETE from security_answers WHERE question_id IN (SELECT id FROM security_questions WHERE mapping IN ('spf_spoofing_possible', 'spf_record_more', 'spf_dmarc', 'spf_record', 'ctfr_subdomain', 'ssllabs', 'domain', 'whoxy_history', 'website_ip', 'wpscan', 'business_hibp', 'dnstwist', 'shodan', 'urlscan')) AND company_id='{}';".format(self.domain)
         self.connection.execute(query)
         
         ip = socket.gethostbyname(self.domain)
+
+        query = "SELECT id FROM security_questions WHERE mapping IN ('spf_spoofing_possible', 'spf_record_more', 'spf_dmarc', 'spf_record', 'ctfr_subdomain', 'ssllabs', 'domain', 'whoxy_history', 'website_ip', 'wpscan', 'business_hibp', 'dnstwist', 'shodan', 'urlscan')"
+        res = self.connection.execute(query)
+        mapping = [dict(r) for r in res]
         
         # insert public data
-        public_data_to_insert = [dict(question_id=612, company_id=self.domain, Answer=data['spf_spoofing_possible'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=614, company_id=self.domain, Answer=data['spf_record_more'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=615, company_id=self.domain, Answer=data['spf_dmarc'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=616, company_id=self.domain, Answer=data['spf_record'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=617, company_id=self.domain, Answer=data['ctfr_subdomain'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=618, company_id=self.domain, Answer=data['ssllabs'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=620, company_id=self.domain, Answer=self.domain, high_risk=1)]
-        public_data_to_insert += [dict(question_id=623, company_id=self.domain, Answer=data['whoxy'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=624, company_id=self.domain, Answer=ip, high_risk=1)]
-        public_data_to_insert += [dict(question_id=626, company_id=self.domain, Answer=data['wpscan'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=631, company_id=self.domain, Answer=data['business_hibp'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=632, company_id=self.domain, Answer=data['dnstwist'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=633, company_id=self.domain, Answer=data['shodan'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=634, company_id=self.domain, Answer=data['urlscan'], high_risk=1)]
+        public_data_to_insert = [dict(question_id=mapping[0]['id'], company_id=self.domain, Answer=data['spf_spoofing_possible'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[1]['id'], company_id=self.domain, Answer=data['spf_record_more'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[2]['id'], company_id=self.domain, Answer=data['spf_dmarc'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[3]['id'], company_id=self.domain, Answer=data['spf_record'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[4]['id'], company_id=self.domain, Answer=data['ctfr_subdomain'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[5]['id'], company_id=self.domain, Answer=data['ssllabs'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[6]['id'], company_id=self.domain, Answer=self.domain, high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[7]['id'], company_id=self.domain, Answer=data['whoxy'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[8]['id'], company_id=self.domain, Answer=ip, high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[9]['id'], company_id=self.domain, Answer=data['wpscan'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[10]['id'], company_id=self.domain, Answer=data['business_hibp'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[11]['id'], company_id=self.domain, Answer=data['dnstwist'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[12]['id'], company_id=self.domain, Answer=data['shodan'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=mapping[13]['id'], company_id=self.domain, Answer=data['urlscan'], high_risk=1)]
 
         self.connection.execute(self.answers_table.insert(), public_data_to_insert)
 
