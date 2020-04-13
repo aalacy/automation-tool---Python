@@ -60,7 +60,7 @@ Display(visible=0, size=(620, 840)).start()
 # initialize selenium
 option = webdriver.ChromeOptions()
 option.add_argument('--no-sandbox')
-driver = webdriver.Chrome(executable_path= path + '/data/chromedriver.exe', chrome_options=option)
+driver = webdriver.Chrome(executable_path= path + '/data/chromedriver', chrome_options=option)
 
 class Angel:
 	b64data = [] 
