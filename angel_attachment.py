@@ -139,12 +139,16 @@ class Angel:
 		'''
 		print('*** hunter.io api propagation ***')
 		data = [['company', 'first_name', 'last_name', 'email', 'position', 'run_at']]
-		for company in self.company_list:
-			prospects_list = json.loads(session.get(HUNTER_PROSPECTS_URL.format(company[2])).text)['data']['emails']
-			for prospect in prospects_list:
-				data.append([company[2], prospect['first_name'], prospect['last_name'], prospect['value'], prospect['position'], date.now().strftime("%Y-%m-%d %H:%M:%S")]) 
+		try:
+			for company in self.company_list:
+				prospects_list = json.loads(session.get(HUNTER_PROSPECTS_URL.format(company[2])).text)['data']['emails']
+				for prospect in prospects_list:
+					data.append([company[2], prospect['first_name'], prospect['last_name'], prospect['value'], prospect['position'], date.now().strftime("%Y-%m-%d %H:%M:%S")]) 
 
-		self.encode_data(data, 'hunter.csv')
+			self.encode_data(data, 'hunter.csv')
+		except:
+			self.send_email('An error happened while fetching the company prospects from hunter.io', E)
+
 
 	def get_prospects_from_findemails(self):
 		'''
@@ -199,7 +203,7 @@ if __name__ == '__main__':
 	querys = parser.parse_args().query
 	angel.get_page(search_query=querys.split(','))
 
-	# angel.get_prospects_from_hunter()
+	angel.get_prospects_from_hunter()
 
 	angel.get_prospects_from_findemails()
 
