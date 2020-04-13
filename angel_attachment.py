@@ -60,7 +60,7 @@ Display(visible=0, size=(620, 840)).start()
 # initialize selenium
 option = webdriver.ChromeOptions()
 option.add_argument('--no-sandbox')
-driver = webdriver.Chrome(executable_path= path + '/data/chromedriver', chrome_options=option)
+driver = webdriver.Chrome(executable_path= path + '/data/chromedriver.exe', chrome_options=option)
 
 class Angel:
 	b64data = [] 
@@ -155,11 +155,11 @@ class Angel:
 		data = [['company', 'first_name', 'last_name', 'email', 'position', 'run_at']]
 		for company in self.company_list:
 			try:
-				prospects_list = json.loads(session.get(FINDEMAILS_PROSPECTS_URL.format(company[2])).text)['prospects']
+				prospects_list = json.loads(session.get(FINDEMAILS_PROSPECTS_URL.format(company[2])).text).get('prospects', [])
 				for prospect in prospects_list:
 					data.append([company[2], prospect['first_name'], prospect['last_name'], prospect['email']['email'], prospect['title'], date.now().strftime("%Y-%m-%d %H:%M:%S")])
 			except Exception as E:
-				send_email('An error happened while fetching the company prospects from findemails.com', E)
+				self.send_email('An error happened while fetching the company prospects from findemails.com', E)
 
 		self.encode_data(data, 'findemails.csv')
 
@@ -199,7 +199,7 @@ if __name__ == '__main__':
 	querys = parser.parse_args().query
 	angel.get_page(search_query=querys.split(','))
 
-	angel.get_prospects_from_hunter()
+	# angel.get_prospects_from_hunter()
 
 	angel.get_prospects_from_findemails()
 

@@ -171,7 +171,7 @@ class PublicData:
         public_data_to_insert += [dict(question_id=623, company_id=self.domain, Answer=data['whoxy'], high_risk=1)]
         public_data_to_insert += [dict(question_id=624, company_id=self.domain, Answer=ip, high_risk=1)]
         public_data_to_insert += [dict(question_id=626, company_id=self.domain, Answer=data['wpscan'], high_risk=1)]
-        public_data_to_insert += [dict(question_id=631, company_id=self.domain, Answer=data['hibp'], high_risk=1)]
+        public_data_to_insert += [dict(question_id=631, company_id=self.domain, Answer=data['business_hibp'], high_risk=1)]
         public_data_to_insert += [dict(question_id=632, company_id=self.domain, Answer=data['dnstwist'], high_risk=1)]
         public_data_to_insert += [dict(question_id=633, company_id=self.domain, Answer=data['shodan'], high_risk=1)]
         public_data_to_insert += [dict(question_id=634, company_id=self.domain, Answer=data['urlscan'], high_risk=1)]
