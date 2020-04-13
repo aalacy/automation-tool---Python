@@ -5,13 +5,18 @@
         2. spoofcheck - done
         3. wpscan   - done
         4. ctfr - done
-        5. crunchbase - done
-        6. builtwith - iframe
-        7. dnstwist - done
-        8. urlscan.io - done
-        9. shodan - done
-        10. ssllabs.com
-        11. HIBP Domain only
+        5. dnstwist - done
+        6. urlscan.io - done
+        7. website ip - done
+        8. shodan - done
+        9. ssllabs.com - done
+        10. HIBP Domain only - done
+    
+    @param:
+        domain
+
+    @example command
+        python3 public_data.py -d grove.co
 
 '''
 
@@ -155,7 +160,7 @@ class PublicData:
 
         # update the security_answers table based upon mapping fields
         # first delete only answers for 612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634
-        query = "delete from security_answers where question_id in (612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634) and company_id='{}';".format(self.domain)
+        query = "DELETE from security_answers WHERE question_id IN (SELECT id FROM security_questions WHERE mapping IN ('spf_spoofing_possible', 'ctfr_subdomain', 'spf_record_more', 'spf_dmarc', 'spf_record', 'ssllabs', 'whoxy_history', 'domain', 'website_ip', 'wpscan', 'business_hibp', 'dnstwist', 'urlscan', 'shodan')) AND company_id='{}';".format(self.domain)
         self.connection.execute(query)
         
         ip = socket.gethostbyname(self.domain)

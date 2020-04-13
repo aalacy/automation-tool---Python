@@ -128,7 +128,7 @@ class Angel:
 
 		except Exception as E:
 			self.send_email('An error happened while populating the company data into database in Angel.co scraper ', E)
-			print('error in company for loop ' + E)
+			print('error in company for loop in angle.co' + E)
 
 		driver.close()
 
@@ -147,6 +147,7 @@ class Angel:
 
 			self.encode_data(data, 'hunter.csv')
 		except:
+			print('error in get_prospects_from_hunter' + E)
 			self.send_email('An error happened while fetching the company prospects from hunter.io', E)
 
 
@@ -163,6 +164,7 @@ class Angel:
 				for prospect in prospects_list:
 					data.append([company[2], prospect['first_name'], prospect['last_name'], prospect['email']['email'], prospect['title'], date.now().strftime("%Y-%m-%d %H:%M:%S")])
 			except Exception as E:
+				print('error in get_prospects_from_findemails' + E)
 				self.send_email('An error happened while fetching the company prospects from findemails.com', E)
 
 		self.encode_data(data, 'findemails.csv')

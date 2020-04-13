@@ -27,9 +27,9 @@ def _run_hibp(data, domain):
 				continue
 			rows.append(row)
 
-		data['hibp'] = json.loads(json.dumps(rows))
+		data['business_hibp'] = json.loads(json.dumps(rows))
 	else:
-		data['hibp'] = [{"Email": "@"+domain, "Breach": "Data Enrichment Exposure From PDL Customer"}]
+		data['business_hibp'] = [{"Email": "@"+domain, "Breach": "Data Enrichment Exposure From PDL Customer"}]
 
 	return data
 
