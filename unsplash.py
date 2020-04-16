@@ -71,7 +71,6 @@ class Unsplash:
 		self.driver = webdriver.Chrome(executable_path= path + '/data/chromedriver.exe', chrome_options=option)
 
 	def download_images(self):
-		pdb.set_trace()
 		for image_url in self.total_urls:
 			if not image_url in self.downloaded_urls:
 				try:
