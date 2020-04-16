@@ -165,7 +165,7 @@ class PublicData:
         
         ip = socket.gethostbyname(self.domain)
 
-        query = "SELECT id FROM security_questions WHERE Category='Public Data - Business' AND mapping IN ('spf_spoofing_possible', 'spf_record_more', 'spf_dmarc', 'spf_record', 'ctfr_subdomain', 'ssllabs', 'domain', 'whoxy_history', 'website_ip', 'wpscan', 'business_hibp', 'dnstwist', 'shodan', 'urlscan');"
+        query = "SELECT id FROM security_questions WHERE Category='Public Data - Business' AND mapping IN ('spf_record_more', 'spf_spoofing_possible', 'spf_dmarc', 'spf_record', 'ctfr_subdomain', 'ssllabs', 'domain', 'whoxy_history', 'website_ip', 'wpscan', 'business_hibp', 'dnstwist', 'shodan', 'urlscan');"
         res = self.connection.execute(query)
         mapping = [dict(r) for r in res]
         

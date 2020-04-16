@@ -14,3 +14,4 @@ sendgrid
 colorama
 dnslib
 tldextract
+Pillow==7.1.1

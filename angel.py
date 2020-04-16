@@ -165,11 +165,11 @@ class Angel:
 if __name__ == "__main__":
 	angel = Angel()
 
-	# parser = argparse.ArgumentParser()
-	# parser.add_argument('-q', '--query', type=str, required=True, help="Search querys with comma separator. e.g. python3 angel.py -q 'los angeles, San francisco'")
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-q', '--query', type=str, required=True, help="Search querys with comma separator. e.g. python3 angel.py -q 'los angeles, San francisco'")
 
-	# querys = parser.parse_args().query
-	# companies = angel.get_page(search_query=querys.split(','))
+	querys = parser.parse_args().query
+	companies = angel.get_page(search_query=querys.split(','))
 
-	content = angel.read_csv()
-	send_email_with_attachment(content=content, to_email='ideveloper003@gmail.com')
+	# content = angel.read_csv()
+	# send_email_with_attachment(content=content, to_email='ideveloper003@gmail.com')
