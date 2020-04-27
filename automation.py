@@ -99,7 +99,7 @@ class Automation:
 		# windows
 		option = webdriver.ChromeOptions()
 		option.add_argument('--no-sandbox')
-		self.driver = webdriver.Chrome(executable_path= self.BASE_PATH + '/data/chromedriver', chrome_options=option)
+		self.driver = webdriver.Chrome(executable_path= self.BASE_PATH + '/data/chromedriver.exe', chrome_options=option)
 		    
 	# common functions
 	def bamboo_valiate(self, val):
@@ -179,7 +179,7 @@ class Automation:
 		db= mysql.connect(
 		    host = "localhost",
 		    user = "root",
-		    passwd = "12345678",
+		    passwd = "",
 		    database = "revamp"
 		)
 		cursor = db.cursor()
@@ -465,7 +465,7 @@ class Automation:
 
 		# dropbox api
 		dropbox_thread = threading.Thread(target=self.populate_dropbox)
-		dropbox_thread.start()
+		# dropbox_thread.start()
 
 		# zoho crm 
 		zoho_thread = threading.Thread(target=self.init_zoho)
@@ -473,11 +473,11 @@ class Automation:
 
 		# slack api
 		slack_thread = threading.Thread(target=self.populate_slack)
-		slack_thread.start()
+		# slack_thread.start()
 
 		#bamboo api
 		bamboo_thread = threading.Thread(target=self.populate_bamboo)
-		bamboo_thread.start()
+		# bamboo_thread.start()
 	    	
 if __name__ == "__main__":
 	automation = Automation()

@@ -1,0 +1,102 @@
+2020-04-27 00:52:21,281 - --- start the Scraper ---
+2020-04-27 00:52:21,282 - --- ganjapreneur: start scraper ---
+2020-04-27 00:52:40,596 - --- start the Scraper ---
+2020-04-27 00:52:58,981 - --- start the Scraper ---
+2020-04-27 00:53:27,895 - --- start the Scraper ---
+2020-04-27 00:54:38,174 - --- start the Scraper ---
+2020-04-27 00:54:46,995 - --- start the Scraper ---
+2020-04-27 01:09:47,231 - --- start the Scraper ---
+2020-04-27 01:09:47,231 - --- ganjapreneur: start scraper ---
+2020-04-27 01:10:56,946 - --- start the Scraper ---
+2020-04-27 01:10:56,947 - --- ganjapreneur: start scraper ---
+2020-04-27 01:11:54,906 - --- start the Scraper ---
+2020-04-27 01:11:54,907 - --- ganjapreneur: start scraper ---
+2020-04-27 01:11:57,415 - --- start the Scraper ---
+2020-04-27 01:11:57,416 - --- ganjapreneur: start scraper ---
+2020-04-27 01:13:24,312 - --- start the Scraper ---
+2020-04-27 01:13:24,313 - --- ganjapreneur: start scraper ---
+2020-04-27 01:18:15,927 - --- start the Scraper ---
+2020-04-27 01:18:15,928 - --- ganjapreneur: start scraper ---
+2020-04-27 01:18:37,366 - --- start the Scraper ---
+2020-04-27 01:18:37,367 - --- ganjapreneur: start scraper ---
+2020-04-27 01:47:37,783 - --- start the Scraper ---
+2020-04-27 01:47:38,523 -  ganjapreneur: --- start scraper ---
+2020-04-27 01:54:52,866 - --- start the Scraper ---
+2020-04-27 01:54:52,939 -  ganjapreneur: --- start scraper ---
+2020-04-27 01:56:23,483 - --- start the Scraper ---
+2020-04-27 01:56:23,556 -  ganjapreneur: --- start scraper ---
+2020-04-27 01:56:25,541 - ganjapreneur: --- populate data into db ---
+2020-04-27 02:56:20,330 - --- start the Scraper ---
+2020-04-27 02:56:20,411 -  ganjapreneur: --- start scraper ---
+2020-04-27 02:56:22,618 - ganjapreneur: --- populate data into db ---
+2020-04-27 02:56:31,821 - --- start the Scraper ---
+2020-04-27 02:56:33,718 - mjbizdaily: --- populate data into db ---
+2020-04-27 03:04:19,038 - --- start the Scraper ---
+2020-04-27 03:04:19,129 -  ganjapreneur: --- start scraper ---
+2020-04-27 03:04:22,753 - --- start the Scraper ---
+2020-04-27 03:04:22,832 - mjbizdaily: --- start scraper ---
+2020-04-27 03:04:24,654 - mjbizdaily: --- populate data into db ---
+2020-04-27 03:04:50,683 - --- start the Scraper ---
+2020-04-27 03:04:50,760 - mjbizdaily: --- start scraper ---
+2020-04-27 03:04:50,783 - mjbizdaily: 'mjbizdaily'
+2020-04-27 03:05:39,252 - --- start the Scraper ---
+2020-04-27 03:05:39,331 - mjbizdaily: --- start scraper ---
+2020-04-27 03:05:39,331 - mjbizdaily: 'mjbizdaily'
+2020-04-27 03:07:12,559 - --- start the Scraper ---
+2020-04-27 03:07:12,638 - mjbizdaily: --- start scraper ---
+2020-04-27 03:07:12,639 - mjbizdaily: 'mjbizdaily'
+2020-04-27 03:07:12,639 - mjbizdaily: --- populate data into db ---
+2020-04-27 03:08:26,446 - --- start the Scraper ---
+2020-04-27 03:08:26,524 - mjbizdaily: --- start scraper ---
+2020-04-27 03:08:30,810 - mjbizdaily: Invalid expression
+2020-04-27 03:08:30,812 - mjbizdaily: --- populate data into db ---
+2020-04-27 03:08:48,718 - --- start the Scraper ---
+2020-04-27 03:08:48,799 - mjbizdaily: --- start scraper ---
+2020-04-27 03:53:42,352 - --- start the Scraper ---
+2020-04-27 03:53:43,028 - mjbizdaily: --- start scraper ---
+2020-04-27 03:53:45,706 - mjbizdaily: name 'item' is not defined
+2020-04-27 03:53:45,707 - mjbizdaily: --- populate data into db ---
+2020-04-27 03:54:05,565 - --- start the Scraper ---
+2020-04-27 03:54:05,637 - mjbizdaily: --- start scraper ---
+2020-04-27 04:03:09,501 - --- start the Scraper ---
+2020-04-27 04:03:09,624 - mjbizdaily: --- start scraper ---
+2020-04-27 04:56:49,107 - mjbizdaily: HTTPSConnectionPool(host='industrydirectory.mjbizdaily.com', port=443): Max retries exceeded with url: /mnbs-payment-solutions/ (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f7fdbd2a438>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+2020-04-27 05:04:22,997 - mjbizdaily: --- populate data into db ---
+2020-04-27 05:11:22,637 - --- start the Scraper ---
+2020-04-27 05:11:22,710 - mjbizdaily: --- start scraper ---
+2020-04-27 05:12:28,514 - --- start the Scraper ---
+2020-04-27 05:12:28,588 - mjbizdaily: --- start scraper ---
+2020-04-27 05:13:20,833 - --- start the Scraper ---
+2020-04-27 05:13:20,906 -  ganjapreneur: --- start scraper ---
+2020-04-27 05:13:23,021 - ganjapreneur: --- populate data into db ---
+2020-04-27 05:13:49,091 - --- start the Scraper ---
+2020-04-27 05:13:49,159 -  ganjapreneur: --- start scraper ---
+2020-04-27 05:13:51,005 - ganjapreneur: --- populate data into db ---
+2020-04-27 05:14:05,515 - --- start the Scraper ---
+2020-04-27 05:14:05,584 - mjbizdaily: --- start scraper ---
+2020-04-27 09:07:02,780 - --- start the Scraper ---
+2020-04-27 09:07:04,726 - mjbizdaily: --- start scraper ---
+2020-04-27 09:38:39,951 - --- start the Scraper ---
+2020-04-27 09:38:40,028 - mjbizdaily: --- start scraper ---
+2020-04-27 09:39:01,978 - --- start the Scraper ---
+2020-04-27 09:39:02,069 - mjbizdaily: --- start scraper ---
+2020-04-27 09:45:12,923 - --- start the Scraper ---
+2020-04-27 09:45:13,012 - mjbizdaily: --- start scraper ---
+2020-04-27 09:53:52,993 - mjbizdaily: HTTPSConnectionPool(host='industrydirectory.mjbizdaily.com', port=443): Max retries exceeded with url: /the-savvy-bookkeep/ (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fc840e0aeb8>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+2020-04-27 09:53:52,994 - mjbizdaily: --- populate data into db ---
+2020-04-27 09:55:08,470 - --- start the Scraper ---
+2020-04-27 09:55:08,544 - mjbizdaily: --- start scraper ---
+2020-04-27 10:02:31,098 - mjbizdaily: HTTPSConnectionPool(host='industrydirectory.mjbizdaily.com', port=443): Max retries exceeded with url: /cheshier-tax-resolution/ (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fd48657a208>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+2020-04-27 10:02:31,098 - mjbizdaily: --- populate data into db ---
+2020-04-27 10:04:53,596 - --- start the Scraper ---
+2020-04-27 10:04:53,670 - mjbizdaily: --- start scraper ---
+2020-04-27 13:46:36,349 - --- start the Scraper ---
+2020-04-27 13:46:40,632 -  ganjapreneur: --- start scraper ---
+2020-04-27 14:13:09,377 - ganjapreneur: --- populate data into db ---
+2020-04-27 14:22:49,814 - --- start the Scraper ---
+2020-04-27 14:22:49,984 -  ganjapreneur: --- start scraper ---
+2020-04-27 14:24:19,030 - ganjapreneur: 
+2020-04-27 14:24:19,030 - ganjapreneur: --- populate data into db ---
+2020-04-27 14:24:36,123 - --- start the Scraper ---
+2020-04-27 14:24:36,198 -  ganjapreneur: --- start scraper ---
+2020-04-27 14:46:21,011 - ganjapreneur: --- populate data into db ---
