@@ -9,8 +9,8 @@
 		fields: url, description, website
 
 	@List
-		https://www.ganjapreneur.com/businesses/ - progress
-		https://industrydirectory.mjbizdaily.com/ - pending
+		https://www.ganjapreneur.com/businesses/ - done
+		https://industrydirectory.mjbizdaily.com/ - progress
 		https://www.medicaljane.com/directory/ - pending
 		http://business.sfchamber.com/list - pending
 

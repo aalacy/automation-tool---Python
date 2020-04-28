@@ -169,6 +169,7 @@ class Automation:
 		leads = []
 		page = 0
 		url = self.ZOHO_LEADS_URL + '?page={}'
+		pdb.set_trace()
 		while True:
 			page += 1
 			leads_data = json.loads(self.session.get(url.format(page), headers={'Authorization':'Zoho-oauthtoken ' + self.zoho_access_token}).text)
@@ -179,7 +180,7 @@ class Automation:
 		db= mysql.connect(
 		    host = "localhost",
 		    user = "root",
-		    passwd = "",
+		    passwd = "12345678",
 		    database = "revamp"
 		)
 		cursor = db.cursor()
@@ -189,7 +190,7 @@ class Automation:
 		rows = []
 		for lead in leads:
 			try:
-				row = (lead['Company'], lead['Owner']['name'], lead['Owner']['id'], lead['Email'], lead['Description'], lead['$currency_symbol'], lead['$review_process'], lead['Twitter'], lead['Website'], lead['HTT'], lead['Salutation'], lead['Linkedin_Profile'], lead['Last_Activity_Time'], lead['Full_Name'], lead['First_Name'], lead['Lead_Status'], lead['Industry'], lead['Record_Image'], lead['Modified_By']['name'], lead['Modified_By']['id'], lead['$review'], lead['$converted'], lead['$process_flow'], lead['Phone'], lead['Street'], lead['Zip_Code'], lead['id'], lead['Email_Opt_Out'], lead['$approved'], lead['Follow_Up_Date'], lead['Designation'], lead['$approval']['delegate'], lead['$approval']['approve'], lead['$approval']['reject'], lead['$approval']['resubmit'], lead['Modified_Time'], lead['Created_Time'], json.dumps(lead['$converted_detail']), lead['$editable'], lead['City'], lead['No_of_Employees'], lead['Facebook_Pofile'], lead['Active'], lead['Alignable'], lead['Last_Name'], lead['State'], lead['Lead_Source'], lead['Instagram'], lead['Country'], lead['Email_Provider'], lead['Created_By']['name'], lead['Created_By']['id'], json.dumps(lead['Tag']), json.dumps(lead.get('Assigned_Company_Applications')), date.now().strftime("%Y-%m-%d %H:%M:%S"))
+				row = (lead.get('Company'), lead.get('Owner', {}).get('name'), lead.get('Owner', {}).get('id'), lead.get('Email'), lead.get('Description'), lead.get('$currency_symbol'), lead.get('$review_process'), lead.get('Twitter'), lead.get('Website'), lead.get('HTT'), lead.get('Salutation'), lead.get('Linkedin_Profile'), lead.get('Last_Activity_Time'), lead.get('Full_Name'), lead.get('First_Name'), lead.get('Lead_Status'), lead.get('Industry'), lead.get('Record_Image'), lead.get('Modified_By', {}).get('name'), lead.get('Modified_By', {}).get('id'), lead.get('$review'), lead.get('$converted'), lead.get('$process_flow'), lead.get('Phone'), lead.get('Street'), lead.get('Zip_Code'), lead.get('id'), lead.get('Email_Opt_Out'), lead.get('$approved'), lead.get('Follow_Up_Date'), lead.get('Designation'), lead.get('$approval', {}).get('delegate'), lead.get('$approval').get('approve'), lead.get('$approval', {}).get('reject'), lead.get('$approval', {}).get('resubmit'), lead.get('Modified_Time'), lead.get('Created_Time'), json.dumps(lead.get('$converted_detail', {})), lead.get('$editable'), lead.get('City'), lead.get('No_of_Employees'), lead.get('Facebook_Pofile'), lead.get('Active'), lead.get('Alignable'), lead.get('Last_Name'), lead.get('State'), lead.get('Lead_Source'), lead.get('Instagram'), lead.get('Country'), lead.get('Email_Provider'), lead.get('Created_By', {}).get('name'), lead.get('Created_By', {}).get('id'), json.dumps(lead.get('Tag', [])), json.dumps(lead.get('Assigned_Company_Applications', [])), date.now().strftime("%Y-%m-%d %H:%M:%S"))
 				rows.append(row)
 			except KeyError:
 				self.d_log('error in zoho' + json.dumps(lead))
@@ -465,7 +466,7 @@ class Automation:
 
 		# dropbox api
 		dropbox_thread = threading.Thread(target=self.populate_dropbox)
-		# dropbox_thread.start()
+		dropbox_thread.start()
 
 		# zoho crm 
 		zoho_thread = threading.Thread(target=self.init_zoho)
@@ -473,11 +474,11 @@ class Automation:
 
 		# slack api
 		slack_thread = threading.Thread(target=self.populate_slack)
-		# slack_thread.start()
+		slack_thread.start()
 
 		#bamboo api
 		bamboo_thread = threading.Thread(target=self.populate_bamboo)
-		# bamboo_thread.start()
+		bamboo_thread.start()
 	    	
 if __name__ == "__main__":
 	automation = Automation()
