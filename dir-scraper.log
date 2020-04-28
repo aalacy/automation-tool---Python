@@ -100,3 +100,42 @@
 2020-04-27 14:24:36,123 - --- start the Scraper ---
 2020-04-27 14:24:36,198 -  ganjapreneur: --- start scraper ---
 2020-04-27 14:46:21,011 - ganjapreneur: --- populate data into db ---
+2020-04-27 23:19:25,076 - --- start the Scraper ---
+2020-04-27 23:19:25,437 - mjbizdaily: --- start scraper ---
+2020-04-27 23:20:09,057 - --- start the Scraper ---
+2020-04-27 23:20:09,138 - mjbizdaily: --- start scraper ---
+2020-04-27 23:27:09,339 - --- start the Scraper ---
+2020-04-27 23:27:09,422 -  ganjapreneur: --- start scraper ---
+2020-04-27 23:27:09,423 - ganjapreneur: name 'session' is not defined
+2020-04-27 23:27:09,423 - ganjapreneur: --- populate data into db ---
+2020-04-27 23:27:32,528 - --- start the Scraper ---
+2020-04-27 23:27:32,602 -  ganjapreneur: --- start scraper ---
+2020-04-27 23:27:33,404 - ganjapreneur: HTTPSConnectionPool(host='www.ganjapreneur.com', port=443): Max retries exceeded with url: /businesses/ (Caused by ProxyError('Cannot connect to proxy.', RemoteDisconnected('Remote end closed connection without response',)))
+2020-04-27 23:27:33,405 - ganjapreneur: --- populate data into db ---
+2020-04-27 23:28:47,923 - --- start the Scraper ---
+2020-04-27 23:28:47,998 -  ganjapreneur: --- start scraper ---
+2020-04-27 23:28:48,811 - ganjapreneur: HTTPSConnectionPool(host='www.ganjapreneur.com', port=443): Max retries exceeded with url: /businesses/ (Caused by ProxyError('Cannot connect to proxy.', RemoteDisconnected('Remote end closed connection without response',)))
+2020-04-27 23:28:48,812 - ganjapreneur: --- populate data into db ---
+2020-04-28 09:35:02,529 - --- start the Scraper ---
+2020-04-28 09:35:03,678 - mjbizdaily: --- start scraper ---
+2020-04-28 09:35:09,118 - mjbizdaily: HTTPSConnectionPool(host='industrydirectory.mjbizdaily.com', port=443): Max retries exceeded with url: / (Caused by ProxyError('Cannot connect to proxy.', RemoteDisconnected('Remote end closed connection without response',)))
+2020-04-28 09:35:09,118 - mjbizdaily: --- populate data into db ---
+2020-04-28 09:36:42,106 - --- start the Scraper ---
+2020-04-28 09:36:42,195 -  ganjapreneur: --- start scraper ---
+2020-04-28 09:37:33,334 - --- start the Scraper ---
+2020-04-28 09:37:33,410 - mjbizdaily: --- start scraper ---
+2020-04-28 09:42:41,215 - --- start the Scraper ---
+2020-04-28 09:42:41,289 - mjbizdaily: --- start scraper ---
+2020-04-28 09:57:17,367 - --- start the Scraper ---
+2020-04-28 09:57:17,443 - mjbizdaily: --- start scraper ---
+2020-04-28 09:57:56,240 - --- start the Scraper ---
+2020-04-28 09:57:56,331 - sfchamber: --- start scraper ---
+2020-04-28 10:00:00,606 - --- start the Scraper ---
+2020-04-28 10:00:00,680 - sfchamber: --- start scraper ---
+2020-04-28 10:01:52,194 - --- start the Scraper ---
+2020-04-28 10:01:52,271 - sfchamber: --- start scraper ---
+2020-04-28 10:02:47,071 - --- start the Scraper ---
+2020-04-28 10:02:47,172 - mjbizdaily: --- start scraper ---
+2020-04-28 10:44:23,715 - sfchamber: --- populate data into db ---
+2020-04-28 12:27:16,225 - mjbizdaily: HTTPSConnectionPool(host='industrydirectory.mjbizdaily.com', port=443): Max retries exceeded with url: /g-w-jones-exchange-bank/ (Caused by ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 503 Service unavailable',)))
+2020-04-28 12:27:16,249 - mjbizdaily: --- populate data into db ---

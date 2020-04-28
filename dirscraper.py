@@ -12,7 +12,7 @@
 		https://www.ganjapreneur.com/businesses/ - done
 		https://industrydirectory.mjbizdaily.com/ - progress
 		https://www.medicaljane.com/directory/ - pending
-		http://business.sfchamber.com/list - pending
+		http://business.sfchamber.com/list - progress
 
 	@param: 
 		-k: the name of childscraper. e.g, ganjapreneur from https://www.ganjapreneur.com/businesses/
@@ -85,6 +85,15 @@ class Scraper:
 		# list of directories to be saved
 		self.dirs = []
 
+		# proxies
+		self.proxies = {
+		  'http': '37.48.118.90:13042',
+		  'https': '83.149.70.159:13042',
+		}
+
+		self.session = requests.Session()
+		self.session.proxies = self.proxies
+
 	# save dirs to the db
 	def save_dirs(self):
 		print(self.kind + ': --- populate data into db ---')
@@ -102,7 +111,7 @@ class Scraper:
 		print('ganjapreneur --- start scraper  ---')
 
 		try: 
-			biz_res = html.fromstring(requests.get(self.urls['ganjapreneur']).content)
+			biz_res = html.fromstring(self.session.get(self.urls['ganjapreneur']).content)
 			# biz-ancillary section
 			categories = biz_res.xpath('//section[@class="biz-ancillary"]//section[contains(@class, "bizblock")]//ul/li//a/@href')
 			print(self.kind + ' categories ' + str(len(categories)))
@@ -117,12 +126,12 @@ class Scraper:
 
 	def _parse_ganjapreneur(self, categories):
 		for cat in categories:
-			regular_res = html.fromstring(requests.get(cat).content)
+			regular_res = html.fromstring(self.session.get(cat).content)
 			# Regular Lists
 			regular_lists = regular_res.xpath('//section[@class="regular-listings"]/a/@href')
 			print(self.kind + ' ' + cat + ' regular lists: ' + str(len(regular_lists)))
 			for reg_link in regular_lists:
-				res = html.fromstring(requests.get(reg_link).content)
+				res = html.fromstring(self.session.get(reg_link).content)
 				self.dirs.append({
 					'title': ' '.join(res.xpath('.//h1//text()')).strip(),
 					'website': ''.join(res.xpath('//li[@class="biz-website"]//a/@href')),
@@ -150,16 +159,18 @@ class Scraper:
 		logging.info(self.kind + ': --- start scraper ---')
 		print(self.kind + '--- start scraper  ---')
 		try: 
-			biz_res = html.fromstring(requests.get(self.urls[self.kind]).content)
+			biz_res = html.fromstring(self.session.get(self.urls[self.kind]).content)
 			categories = biz_res.xpath('//ul[@class="cat-grid"]/li/a/@href')
 			print(self.kind + ' categories ' + str(len(categories)))
-			time.sleep(2)
+			time.sleep(1)
 			for cat in categories:
-				sub_res = html.fromstring(requests.get(cat.replace('/dirsection', '')).content)
+				sub_res = html.fromstring(self.session.get(cat.replace('/dirsection', '')).content)
+				time.sleep(1)
 				items = sub_res.xpath('//ul[@class="business-results"]/li/a/@href')
 				print(self.kind + ' ' + cat.replace('/dirsection', '') + ' lists: ' + str(len(items)))
 				for href in items:
-					detail_res = html.fromstring(requests.get(href).content)
+					detail_res = html.fromstring(self.session.get(href).content)
+					time.sleep(1)
 					info_sections = detail_res.xpath('.//div[@class="info-section"]')
 					description = ''
 					for section in info_sections:
@@ -176,13 +187,42 @@ class Scraper:
 							'kind': self.kind,
 							'run_at': date.now().strftime("%Y-%m-%d %H:%M:%S")
 						})
-					time.sleep(2)
 
 		except Exception as E:
 			pdb.set_trace()
 			logging.warning(self.kind + ': ' + str(E))
 			print(self.kind + ': ' + str(E))
 
+	# http://business.sfchamber.com/list
+	def sfchamber(self):
+		logging.info(self.kind + ': --- start scraper ---')
+		print(self.kind + '--- start scraper  ---')
+		try: 
+			biz_res = html.fromstring(self.session.get(self.urls[self.kind]).content)
+			categories = biz_res.xpath('//div[@id="gz-ql"]/ul/li/a/@href')
+			print(self.kind + ' categories ' + str(len(categories)))
+			for cat in categories:
+				sub_res = html.fromstring(self.session.get(cat).content)
+				items = sub_res.xpath('//div[contains(@class, "gz-results-cards")]//div[contains(@class, "gz-results-card")]//div[contains(@class, "gz-card-top")]//a/@href')
+				print(self.kind + ' ' + cat + ' lists: ' + str(len(items)))
+				for href in items:
+					detail_res = html.fromstring(self.session.get(href).content)
+					title = ' '.join(detail_res.xpath('.//h1[@class="gz-pagetitle"]//text()')).strip()
+					description = ' '.join(detail_res.xpath('.//div[@class="gz-details-categories"]//span[@class="gz-cat"]/text()'))
+					if not title in self.dirs:
+						self.dirs.append({
+							'title': title,
+							'url': self.urls[self.kind],
+							'description': description,
+							'website': ' '.join(detail_res.xpath('.//li[contains(@class, "gz-card-website")]/a/@href')).strip(),
+							'kind': self.kind,
+							'run_at': date.now().strftime("%Y-%m-%d %H:%M:%S")
+						})
+
+		except Exception as E:
+			pdb.set_trace()
+			logging.warning(self.kind + ': ' + str(E))
+			print(self.kind + ': ' + str(E))
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
