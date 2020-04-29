@@ -11,8 +11,8 @@
 	@List
 		https://www.ganjapreneur.com/businesses/ - done
 		https://industrydirectory.mjbizdaily.com/ - progress
-		https://www.medicaljane.com/directory/ - pending
-		http://business.sfchamber.com/list - progress
+		https://www.medicaljane.com/directory/ - done
+		http://business.sfchamber.com/list - done
 
 	@param: 
 		-k: the name of childscraper. e.g, ganjapreneur from https://www.ganjapreneur.com/businesses/
@@ -27,7 +27,7 @@ import re
 import csv
 import os
 import requests
-from urllib.parse import urlparse
+from urllib.parse import urlparse, quote
 from configparser import RawConfigParser
 import sqlalchemy as db
 from sqlalchemy import create_engine, Table, Column, Text, Integer, Text, String, MetaData, DateTime
@@ -60,7 +60,7 @@ class Scraper:
 		# set up engine for database for sql alchemy
 		Base = declarative_base()
 		metadata = MetaData()
-		engine = create_engine(config.get('database', 'mysql2'))
+		engine = create_engine(config.get('database', 'mysql1'))
 
 		self.directories_table = Table('directories', metadata,	
 		    Column('id', Integer, primary_key=True),
@@ -78,7 +78,7 @@ class Scraper:
 		self.urls = {
 			'ganjapreneur': 'https://www.ganjapreneur.com/businesses/',
 			'mjbizdaily': 'https://industrydirectory.mjbizdaily.com',
-			'medicaljane': 'https://www.medicaljane.com/directory',
+			'medicaljane': 'https://www.medicaljane.com/directory/companies/0-9/',
 			'sfchamber': 'http://business.sfchamber.com/list'
 		}
 
@@ -92,7 +92,7 @@ class Scraper:
 		}
 
 		self.session = requests.Session()
-		self.session.proxies = self.proxies
+		# self.session.proxies = self.proxies
 
 	# save dirs to the db
 	def save_dirs(self):
@@ -169,6 +169,7 @@ class Scraper:
 				items = sub_res.xpath('//ul[@class="business-results"]/li/a/@href')
 				print(self.kind + ' ' + cat.replace('/dirsection', '') + ' lists: ' + str(len(items)))
 				for href in items:
+					print(self.kind + ' ' + href)
 					detail_res = html.fromstring(self.session.get(href).content)
 					time.sleep(1)
 					info_sections = detail_res.xpath('.//div[@class="info-section"]')
@@ -189,7 +190,6 @@ class Scraper:
 						})
 
 		except Exception as E:
-			pdb.set_trace()
 			logging.warning(self.kind + ': ' + str(E))
 			print(self.kind + ': ' + str(E))
 
@@ -220,9 +220,52 @@ class Scraper:
 						})
 
 		except Exception as E:
-			pdb.set_trace()
 			logging.warning(self.kind + ': ' + str(E))
 			print(self.kind + ': ' + str(E))
+
+	# https://www.medicaljane.com/directory/
+	def medicaljane(self):
+		logging.info(self.kind + ' : --- start scraper ---')
+		print(self.kind + '--- start scraper  ---')
+		try: 
+			link_res = html.fromstring(self.session.get(self.urls[self.kind]).content)
+			categories = link_res.xpath('//ul[@class="pagination__alpha"]/li/a/@href')
+			print(self.kind + ' categories ' + str(len(categories)))
+			for cat in categories:
+				sub_res = html.fromstring(self.session.get(cat).content)
+				items = sub_res.xpath('//div[@class="loop__content"]//div[contains(@class, "loop__img--company")]/a/@href')
+				print(self.kind + ' ' + cat + ' lists: ' + str(len(items)))
+				for item in items:
+					detail_res = html.fromstring(self.session.get(item).content)
+					title = ' '.join(detail_res.xpath('//h1[@class="widget-mjwidgetbanner-simple__text"]//text()')).strip()
+					description = ' '.join(detail_res.xpath('//div[@class="wysiwyg"]/p/text()')).strip()
+					website = self._get_website_from_name(title)
+					if not title in self.dirs:
+						self.dirs.append({
+							'title': title,
+							'url': self.urls[self.kind],
+							'description': description,
+							'website': website,
+							'kind': self.kind,
+							'run_at': date.now().strftime("%Y-%m-%d %H:%M:%S")
+						})
+
+		except Exception as E:
+			logging.warning(self.kind + ': ' + str(E))
+			print(self.kind + ': ' + str(E))
+
+	def _get_website_from_name(self, name):
+		website = ''
+		try:
+			res = requests.get('https://autocomplete.clearbit.com/v1/companies/suggest?query=' + quote(name)).text
+			data = json.loads(res)
+			if len(data) > 0:
+				website=  data[0]['domain']
+		except Exception as E:
+			logging.warning(self.kind + ': ' + str(E))
+			print(self.kind + ': ' + str(E))
+
+		return website
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
