@@ -2,3 +2,4 @@ venv
 public_data/dnstwist
 __pycache__
 images
+.env

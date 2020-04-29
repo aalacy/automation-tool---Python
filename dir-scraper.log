@@ -163,3 +163,20 @@
 2020-04-28 23:48:54,850 - medicaljane: HTTPSConnectionPool(host='autocomplete.clearbit.com', port=443): Max retries exceeded with url: /v1/companies/suggest?query=Royal%20Seed%20Bank (Caused by SSLError(SSLError("bad handshake: SysCallError(-1, 'Unexpected EOF')",),))
 2020-04-28 23:49:18,299 - medicaljane: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response',))
 2020-04-28 23:49:18,300 - medicaljane: --- populate data into db ---
+2020-04-29 01:46:38,819 - --- start the Scraper ---
+2020-04-29 01:46:50,167 - --- start the Scraper ---
+2020-04-29 01:46:50,309 - mjbizdaily: --- start scraper ---
+2020-04-29 01:46:52,627 - mjbizdaily: Unexpected error encountered: invalid integer: 
+2020-04-29 01:46:52,628 - mjbizdaily: --- populate data into db ---
+2020-04-29 01:47:23,937 - --- start the Scraper ---
+2020-04-29 01:47:24,011 - mjbizdaily: --- start scraper ---
+2020-04-29 01:50:55,649 - --- start the Scraper ---
+2020-04-29 01:50:55,719 - mjbizdaily: --- start scraper ---
+2020-04-29 01:50:59,932 - mjbizdaily: 'str' object has no attribute 'content'
+2020-04-29 01:50:59,933 - mjbizdaily: --- populate data into db ---
+2020-04-29 01:51:17,512 - --- start the Scraper ---
+2020-04-29 01:51:17,583 - mjbizdaily: --- start scraper ---
+2020-04-29 02:50:46,484 - --- start the Scraper ---
+2020-04-29 02:50:46,555 -  ganjapreneur: --- start scraper ---
+2020-04-29 02:52:47,101 - --- start the Scraper ---
+2020-04-29 02:52:47,172 -  ganjapreneur: --- start scraper ---

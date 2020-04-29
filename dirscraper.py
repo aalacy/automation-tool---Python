@@ -27,6 +27,7 @@ import re
 import csv
 import os
 import requests
+import faster_than_requests as frequests
 from urllib.parse import urlparse, quote
 from configparser import RawConfigParser
 import sqlalchemy as db
@@ -40,10 +41,14 @@ import datetime
 import time
 import sys
 import logging
+from dotenv import load_dotenv
 import pdb
 
 from util import validate
 from mail import send_email
+
+# load .env
+load_dotenv()
 
 # log
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO, filename='dir-scraper.log')
@@ -52,15 +57,11 @@ class Scraper:
 	def __init__(self):
 		logging.info('--- start the Scraper ---')
 
-		# config
-		BASE_PATH = os.path.abspath(os.curdir)
-		config = RawConfigParser()
-		config.read(BASE_PATH + '/settings.cfg')
-
 		# set up engine for database for sql alchemy
 		Base = declarative_base()
 		metadata = MetaData()
-		engine = create_engine(config.get('database', 'mysql1'))
+		db_config = os.getenv('DATABASE')
+		engine = create_engine(db_config)
 
 		self.directories_table = Table('directories', metadata,	
 		    Column('id', Integer, primary_key=True),
@@ -92,7 +93,9 @@ class Scraper:
 		}
 
 		self.session = requests.Session()
-		self.session.proxies = self.proxies
+		environment = os.getenv('ENVIRONMENT')
+		if environment != 'local':
+			self.session.proxies = self.proxies
 
 	# save dirs to the db
 	def save_dirs(self):
@@ -159,19 +162,16 @@ class Scraper:
 		logging.info(self.kind + ': --- start scraper ---')
 		print(self.kind + '--- start scraper  ---')
 		try: 
-			biz_res = html.fromstring(self.session.get(self.urls[self.kind]).content)
+			biz_res = html.fromstring(frequests.get2str(self.urls[self.kind]))
 			categories = biz_res.xpath('//ul[@class="cat-grid"]/li/a/@href')
 			print(self.kind + ' categories ' + str(len(categories)))
-			time.sleep(1)
 			for cat in categories:
-				sub_res = html.fromstring(self.session.get(cat.replace('/dirsection', '')).content)
-				time.sleep(1)
+				sub_res = html.fromstring(frequests.get2str(cat.replace('/dirsection', '')))
 				items = sub_res.xpath('//ul[@class="business-results"]/li/a/@href')
 				print(self.kind + ' ' + cat.replace('/dirsection', '') + ' lists: ' + str(len(items)))
 				for href in items:
 					print(self.kind + ' ' + href)
-					detail_res = html.fromstring(self.session.get(href).content)
-					time.sleep(1)
+					detail_res = html.fromstring(frequests.get2str(href))
 					info_sections = detail_res.xpath('.//div[@class="info-section"]')
 					description = ''
 					for section in info_sections:
