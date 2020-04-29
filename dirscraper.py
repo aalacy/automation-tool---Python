@@ -92,7 +92,7 @@ class Scraper:
 		}
 
 		self.session = requests.Session()
-		# self.session.proxies = self.proxies
+		self.session.proxies = self.proxies
 
 	# save dirs to the db
 	def save_dirs(self):
