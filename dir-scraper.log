@@ -180,3 +180,40 @@
 2020-04-29 02:50:46,555 -  ganjapreneur: --- start scraper ---
 2020-04-29 02:52:47,101 - --- start the Scraper ---
 2020-04-29 02:52:47,172 -  ganjapreneur: --- start scraper ---
+2020-04-29 02:57:45,188 - --- start the Scraper ---
+2020-04-29 02:57:45,264 -  ganjapreneur: --- start scraper ---
+2020-04-29 02:57:54,112 - --- start the Scraper ---
+2020-04-29 02:57:54,186 - mjbizdaily: --- start scraper ---
+2020-04-29 02:58:00,694 - mjbizdaily: --- populate data into db ---
+2020-04-29 10:15:45,507 - --- start the Scraper ---
+2020-04-29 10:16:37,531 - --- start the Scraper ---
+2020-04-29 10:16:37,601 - mjbizdaily: --- start scraper ---
+2020-04-29 10:16:37,601 - mjbizdaily: name 'urequests' is not defined
+2020-04-29 10:16:37,602 - mjbizdaily: --- populate data into db ---
+2020-04-29 10:16:59,345 - --- start the Scraper ---
+2020-04-29 10:16:59,441 - mjbizdaily: --- start scraper ---
+2020-04-29 10:17:10,364 - mjbizdaily: expected string or bytes-like object
+2020-04-29 10:17:10,365 - mjbizdaily: --- populate data into db ---
+2020-04-29 10:17:42,026 - --- start the Scraper ---
+2020-04-29 10:17:42,099 - mjbizdaily: --- start scraper ---
+2020-04-29 10:17:42,100 - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f6ee6270a58>: Failed to establish a new connection: [Errno 13] Permission denied',))': /
+2020-04-29 10:17:42,100 - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f6ee62c8ef0>: Failed to establish a new connection: [Errno 13] Permission denied',))': /
+2020-04-29 10:17:42,100 - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f6ee62700f0>: Failed to establish a new connection: [Errno 13] Permission denied',))': /
+2020-04-29 10:17:42,100 - mjbizdaily: HTTPSConnectionPool(host='industrydirectory.mjbizdaily.com', port=443): Max retries exceeded with url: / (Caused by ProxyError('Cannot connect to proxy.', NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f6ee6270550>: Failed to establish a new connection: [Errno 13] Permission denied',)))
+2020-04-29 10:17:42,101 - mjbizdaily: --- populate data into db ---
+2020-04-29 10:18:08,036 - --- start the Scraper ---
+2020-04-29 10:18:08,110 - mjbizdaily: --- start scraper ---
+2020-04-29 10:18:08,894 - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', RemoteDisconnected('Remote end closed connection without response',))': /
+2020-04-29 10:18:15,348 - mjbizdaily: expected string or bytes-like object
+2020-04-29 10:18:15,349 - mjbizdaily: --- populate data into db ---
+2020-04-29 10:23:24,242 - --- start the Scraper ---
+2020-04-29 10:23:39,679 - --- start the Scraper ---
+2020-04-29 10:23:39,747 - mjbizdaily: --- start scraper ---
+2020-04-29 10:23:54,276 - mjbizdaily: fromstring() missing 1 required positional argument: 'html'
+2020-04-29 10:24:09,222 - --- start the Scraper ---
+2020-04-29 10:24:09,291 - mjbizdaily: --- start scraper ---
+2020-04-29 10:24:47,012 - mjbizdaily: 
+2020-04-29 10:24:47,016 - mjbizdaily: --- populate data into db ---
+2020-04-29 10:24:50,255 - --- start the Scraper ---
+2020-04-29 10:24:50,323 - mjbizdaily: --- start scraper ---
+2020-04-29 10:25:06,316 - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 502 Bad Gateway',))': /

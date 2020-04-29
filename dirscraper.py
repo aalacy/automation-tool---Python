@@ -10,7 +10,7 @@
 
 	@List
 		https://www.ganjapreneur.com/businesses/ - done
-		https://industrydirectory.mjbizdaily.com/ - progress
+		https://industrydirectory.mjbizdaily.com/ - done
 		https://www.medicaljane.com/directory/ - done
 		http://business.sfchamber.com/list - done
 
@@ -27,6 +27,7 @@ import re
 import csv
 import os
 import requests
+import urllib3
 import faster_than_requests as frequests
 from urllib.parse import urlparse, quote
 from configparser import RawConfigParser
@@ -49,6 +50,8 @@ from mail import send_email
 
 # load .env
 load_dotenv()
+
+urllib3.disable_warnings()
 
 # log
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO, filename='dir-scraper.log')
@@ -96,6 +99,8 @@ class Scraper:
 		environment = os.getenv('ENVIRONMENT')
 		if environment != 'local':
 			self.session.proxies = self.proxies
+
+		self.urequests = urllib3.ProxyManager('https://37.48.118.90:13042')
 
 	# save dirs to the db
 	def save_dirs(self):
@@ -162,16 +167,16 @@ class Scraper:
 		logging.info(self.kind + ': --- start scraper ---')
 		print(self.kind + '--- start scraper  ---')
 		try: 
-			biz_res = html.fromstring(frequests.get2str(self.urls[self.kind]))
+			biz_res = html.fromstring(self.urequests.request('GET', self.urls[self.kind]).data)
 			categories = biz_res.xpath('//ul[@class="cat-grid"]/li/a/@href')
 			print(self.kind + ' categories ' + str(len(categories)))
 			for cat in categories:
-				sub_res = html.fromstring(frequests.get2str(cat.replace('/dirsection', '')))
+				sub_res = html.fromstring(self.urequests.request('GET', cat.replace('/dirsection', '')).data)
 				items = sub_res.xpath('//ul[@class="business-results"]/li/a/@href')
 				print(self.kind + ' ' + cat.replace('/dirsection', '') + ' lists: ' + str(len(items)))
 				for href in items:
 					print(self.kind + ' ' + href)
-					detail_res = html.fromstring(frequests.get2str(href))
+					detail_res = html.fromstring(self.urequests.request('GET', href).data)
 					info_sections = detail_res.xpath('.//div[@class="info-section"]')
 					description = ''
 					for section in info_sections:
