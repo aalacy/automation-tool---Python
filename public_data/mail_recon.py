@@ -42,14 +42,14 @@ def _run_email_provider(data, domain):
             print("Office 365 Detected")
 
     if res == 'proofpoint':
-        data['email_provider'] = 'Proofpoint'
+        data['email_provider'] = 'Your email service provider is Proofpoint'
     elif res == 'o365':
         o365 = check_365(domain)
         if o365:
-            data['email_provider'] = 'Microsoft office'
+            data['email_provider'] = 'Your email service provider is Microsoft office'
     else:
         if len(_DOMAIN['mx']) > 0:
-            data['email_provider'] = _DOMAIN['mx'][0].split('.')[-3].capitalize()
+            data['email_provider'] = 'Your email service provider is ' + _DOMAIN['mx'][0].split('.')[-3].capitalize()
 
     return data
 
