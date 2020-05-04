@@ -99,6 +99,7 @@ class Scraper:
 		environment = os.getenv('ENVIRONMENT')
 		if environment != 'local':
 			self.session.proxies = self.proxies
+			self.session.mount('https://', requests.adapters.HTTPAdapter(pool_connections=1000, max_retries=1))
 
 		self.urequests = urllib3.ProxyManager('https://37.48.118.90:13042')
 

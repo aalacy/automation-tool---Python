@@ -17,3 +17,5 @@ tldextract
 Pillow==7.1.1
 faster-than-requests
 python-dotenv
+urllib3
+dnspython

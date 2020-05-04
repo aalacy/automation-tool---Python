@@ -169,7 +169,6 @@ class Automation:
 		leads = []
 		page = 0
 		url = self.ZOHO_LEADS_URL + '?page={}'
-		pdb.set_trace()
 		while True:
 			page += 1
 			leads_data = json.loads(self.session.get(url.format(page), headers={'Authorization':'Zoho-oauthtoken ' + self.zoho_access_token}).text)
@@ -180,7 +179,7 @@ class Automation:
 		db= mysql.connect(
 		    host = "localhost",
 		    user = "root",
-		    passwd = "12345678",
+		    passwd = "",
 		    database = "revamp"
 		)
 		cursor = db.cursor()
