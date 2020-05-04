@@ -32,15 +32,21 @@ def _run_email_provider(data, domain):
         print("No MX for domain {}".format(domain))
 
     # Determine who owns the MX
+    res = None
     for mx in _DOMAIN['mx']:
         if re.match(_RE_PROOFPOINT,str(mx)):
             print("Proofpoint Detected.")
+            res = 'proofpoint'
         elif re.match(_RE_365, str(mx)):
+            res = 'o365'
             print("Office 365 Detected")
 
-    o365 = check_365(domain)
-    if o365:
-        data['email_provider'] = 'Microsoft office'
+    if res == 'proofpoint':
+        data['email_provider'] = 'Proofpoint'
+    elif res == 'o365':
+        o365 = check_365(domain)
+        if o365:
+            data['email_provider'] = 'Microsoft office'
     else:
         if len(_DOMAIN['mx']) > 0:
             data['email_provider'] = _DOMAIN['mx'][0].split('.')[-3].capitalize()
