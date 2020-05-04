@@ -211,37 +211,37 @@ if __name__ == "__main__":
     print("\n[!] ---- TARGET: {d} ---- [!] \n".format(d=public_data.domain))
 
     # run urlscan.io
-    # target_uuid = urlscan_sumbit(domain)
+    target_uuid = urlscan_sumbit(domain)
     
     # run spoofcheck
     data = _run_spoofcheck(domain)
 
     # run ctfr
-    # data = _run_ctrf(data, domain)
+    data = _run_ctrf(data, domain)
 
-    # # run whoxy
-    # data = _run_whoxy_history_data(data, domain)
+    # run whoxy
+    data = _run_whoxy_history_data(data, domain)
 
-    # # run shodan
-    # data = _run_shodan_ip(data, domain)
+    # run shodan
+    data = _run_shodan_ip(data, domain)
 
-    # # run ssllabs
-    # data = _run_ssllabs(data, domain)
+    # run ssllabs
+    data = _run_ssllabs(data, domain)
 
-    # # run wpscan
-    # data = _run_wpscan(data, domain)
+    # run wpscan
+    data = _run_wpscan(data, domain)
 
-    # # run hibp
-    # data = _run_hibp(data, domain)
+    # run hibp
+    data = _run_hibp(data, domain)
 
-    # # run dnstwist
-    # data = _run_dnstwist(data, domain)
+    # run dnstwist
+    data = _run_dnstwist(data, domain)
 
     # run email provider
     data = _run_email_provider(data, domain)
 
     # run urlscan.io
-    # data = print_summary(data, target_uuid)
+    data = print_summary(data, target_uuid)
 
     # update the table with the data
     public_data._update_table(data)
