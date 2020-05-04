@@ -38,7 +38,12 @@ def _run_email_provider(data, domain):
         elif re.match(_RE_365, str(mx)):
             print("Office 365 Detected")
 
-    data['email_provider']  = check_365(domain)
+    o365 = check_365(domain)
+    if o365:
+        data['email_provider'] = 'Microsoft office'
+    else:
+        if len(_DOMAIN['mx']) > 0:
+            data['email_provider'] = _DOMAIN['mx'][0].split('.')[-3].capitalize()
 
     return data
 
@@ -70,7 +75,13 @@ def check_365(domain):
     print('[**] email provider found for {}: {}'.format(domain, _DOMAIN['provider']))
 
 if __name__ == '__main__':
-    res = _run_email_provider({}, '627846.com')
+    # Build Arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--domain', type=str,
+                        help='Domain to query.', required=True)
+
+    args = parser.parse_args()
+    res = _run_email_provider({}, args.domain)
 
     print(res)
 
