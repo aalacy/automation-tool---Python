@@ -63,14 +63,14 @@ def check_365(domain):
             _DOMAIN['provider'].append(name_365)
             # Return the 365 A Record
             return name_365
-    except dns.resolver.NoAnswer as e:
-        print("No response @ 365")
+    except Exception as e:
+        print(str(e))
         return ''
 
     print('[**] email provider found for {}: {}'.format(domain, _DOMAIN['provider']))
 
 if __name__ == '__main__':
-    res = _run_email_provider({}, 'grove.co')
+    res = _run_email_provider({}, '627846.com')
 
     print(res)
 
