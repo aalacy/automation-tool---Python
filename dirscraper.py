@@ -268,8 +268,8 @@ class Scraper:
 			print(self.kind + ': ' + str(E))
 
 	# https://www.alignable.com/fremont-ca/directory 
-	def _alignable_detail(self, cat):
-		detail_res = html.fromstring(self.session.get('https://www.alignable.com' + cat).content)
+	def _alignable_detail(self, headers, cat):
+		detail_res = html.fromstring(self.session.get('https://www.alignable.com' + cat, headers=headers).content)
 		title = ' '.join(detail_res.xpath('//div[@class="business-profile-banner__text-line1"]/h1//text()')).strip()
 		description = ' '.join(detail_res.xpath('//div[@class="business-profile-banner__text-line2"]//a/text()')).strip()
 		blocks = detail_res.xpath('//div[contains(@class, "profile-block")]//li[@class="profile-info__line"]')
@@ -287,28 +287,18 @@ class Scraper:
 			'run_at': date.now().strftime("%Y-%m-%d %H:%M:%S")
 		}
 
-	def _parse_alignable_cats(self, link_res):
+	def _parse_alignable_cats(self, headers, link_res):
 		dirs = []
 		categories = link_res.xpath('.//div[@class="biz-listing__profile"]/a[contains(@class, "biz-listing__owner-wrapper")]/@href')
 		print(self.kind + ' categories ' + str(len(categories)))
 		logging.info(self.kind + ' categories ' + str(len(categories)))
 		for cat in categories:
-			dirs.append(self._alignable_detail(cat))
+			dirs.append(self._alignable_detail(headers, cat))
 			time.sleep(1)
 
 		return dirs
 
-	def parse_alignable(self, state, cities):
-		# get the sesssion cookie
-		headers={
-			'accept': 'application/json, text/javascript, */*; q=0.01',
-			'cookie': '_ga=GA1.2.529784995.1589313982; _gid=GA1.2.36966013.1589313982; _AlignableWeb_session=919f9af0a4422130775515bb0e38defe; AWSALB=niPwfAuDPMsOuw1dw5fOenBSoQX/QSQoIvY0IqnC/E7YS1zKcX7kUJW8hKFylutkkJ9+AGuYE7zLoUfAFlv8ICAW4Y06rRUXCWIU1PUMeUhOjxQQXVp5zfI38VOY; AWSALBCORS=niPwfAuDPMsOuw1dw5fOenBSoQX/QSQoIvY0IqnC/E7YS1zKcX7kUJW8hKFylutkkJ9+AGuYE7zLoUfAFlv8ICAW4Y06rRUXCWIU1PUMeUhOjxQQXVp5zfI38VOY',
-			'referer': 'https://www.alignable.com/fremont-ca/directory',
-			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36',
-			'x-csrf-token': 'oAweTrZhnJE4iY7HYp4fEoUy7iBvMbFgmxGeHJowQ0VO+b+6PKyK/qiM2ACWyWt1KYDA0/6d3b5p7DeCuzQXQg==',
-			'x-requested-with': 'XMLHttpRequest	'
-		}
-		self.session.get('https://www.alignable.com', headers=headers)
+	def parse_alignable(self, headers, state, cities):
 		domain_url = 'https://www.alignable.com'
 		dirs = []
 		try:
@@ -317,8 +307,8 @@ class Scraper:
 				logging.info(self.kind + ' city ' + city + ' state ' + state)
 				url = domain_url + '/{}-{}/directory'.format('-'.join(city.split(' ')), state)
 				# visible page without scrolling
-				link_res = html.fromstring(self.session.get(url).content)
-				dirs += self._parse_alignable_cats(link_res)
+				link_res = html.fromstring(self.session.get(url, headers=headers).content)
+				dirs += self._parse_alignable_cats(headers, link_res)
 				
 				# scroll the page to get more
 				page = 2
@@ -330,7 +320,7 @@ class Scraper:
 							page_res = html.fromstring(_resp)
 							print(self.kind, ' --- pagination  page ', str(page), ' ---')
 							logging.info(self.kind + ' --- pagination  page ' +  str(page) + ' ---')
-							dirs.append((self._parse_alignable_cats(page_res)))
+							dirs.append((self._parse_alignable_cats(headers, page_res)))
 							page += 1
 							time.sleep(1)
 						else:
@@ -369,9 +359,20 @@ class Scraper:
 				else:
 					us_codes.update({ state: [city]}) 
 
+			# get the sesssion cookie
+			headers={
+				'accept': 'application/json, text/javascript, */*; q=0.01',
+				'cookie': '_ga=GA1.2.529784995.1589313982; _gid=GA1.2.36966013.1589313982; _AlignableWeb_session=919f9af0a4422130775515bb0e38defe; AWSALB=niPwfAuDPMsOuw1dw5fOenBSoQX/QSQoIvY0IqnC/E7YS1zKcX7kUJW8hKFylutkkJ9+AGuYE7zLoUfAFlv8ICAW4Y06rRUXCWIU1PUMeUhOjxQQXVp5zfI38VOY; AWSALBCORS=niPwfAuDPMsOuw1dw5fOenBSoQX/QSQoIvY0IqnC/E7YS1zKcX7kUJW8hKFylutkkJ9+AGuYE7zLoUfAFlv8ICAW4Y06rRUXCWIU1PUMeUhOjxQQXVp5zfI38VOY',
+				'referer': 'https://www.alignable.com/fremont-ca/directory',
+				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36',
+				'x-csrf-token': 'oAweTrZhnJE4iY7HYp4fEoUy7iBvMbFgmxGeHJowQ0VO+b+6PKyK/qiM2ACWyWt1KYDA0/6d3b5p7DeCuzQXQg==',
+				'x-requested-with': 'XMLHttpRequest	'
+			}
+			self.session.get('https://www.alignable.com', headers=headers)
+
 			pool = mpool.ThreadPool(5)
 			for state, cities in us_codes.items():
-				pool.apply_async(self.parse_alignable, args=(state, cities))
+				pool.apply_async(self.parse_alignable, args=(headers, state, cities))
 				# self.parse_alignable(state, cities)
 
 			pool.close()
