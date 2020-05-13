@@ -25,14 +25,21 @@ def urlscan_sumbit(domain):
     else:
         scan_data = '{"url": "%s", "public": "on"}' % domain 
 
-    response = session.post('https://urlscan.io/api/v1/scan/', headers=headers, data=scan_data)
+    response = None
+    try:
+        response = session.post('https://urlscan.io/api/v1/scan/', headers=headers, data=scan_data)
+    except Exception as E:
+        print(str(E))
 
+    target_uuid = None
+    if response:
     ## end POST request
-    r = response.content.decode("utf-8")
-    target_uuid = response.json().get('uuid')
+        r = response.content.decode("utf-8")
+        target_uuid = response.json().get('uuid')
 
-    print('[***] urlscan.io: successfully submitted request to the server.[***]')
-    time.sleep(5)
+        logs = '[***] urlscan.io: successfully submitted request to the server.[***]'
+        print(logs)
+        time.sleep(5)
 
     return target_uuid
 

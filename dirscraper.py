@@ -13,6 +13,7 @@
 		https://industrydirectory.mjbizdaily.com/ - done
 		https://www.medicaljane.com/directory/ - done
 		http://business.sfchamber.com/list - done
+		https://www.alignable.com/fremont-ca/directory - processing
 
 	@param: 
 		-k: the name of childscraper. e.g, ganjapreneur from https://www.ganjapreneur.com/businesses/
@@ -25,6 +26,7 @@ import argparse
 import json
 import re
 import csv
+import pandas as pd
 import os
 import requests
 import urllib3
@@ -47,6 +49,8 @@ import pdb
 
 from util import validate
 from mail import send_email
+import threading
+import multiprocessing.pool as mpool
 
 # load .env
 load_dotenv()
@@ -99,16 +103,19 @@ class Scraper:
 		environment = os.getenv('ENVIRONMENT')
 		if environment != 'local':
 			self.session.proxies = self.proxies
-			self.session.mount('https://', requests.adapters.HTTPAdapter(pool_connections=1000, max_retries=1))
+			self.session.mount('https://', requests.adapters.HTTPAdapter(pool_connections=100000, max_retries=1))
 
 		self.urequests = urllib3.ProxyManager('https://37.48.118.90:13042')
 
 	# save dirs to the db
 	def save_dirs(self):
+		self._save_dirs(self.dirs)
+
+	def _save_dirs(self, dirs):
 		print(self.kind + ': --- populate data into db ---')
 		logging.info(self.kind + ': --- populate data into db ---')
-		if len(self.dirs):
-			self.connection.execute(self.directories_table.insert(), self.dirs)
+		if len(dirs):
+			self.connection.execute(self.directories_table.insert(), dirs)
 
 	'''
 		child scrapers
@@ -260,6 +267,118 @@ class Scraper:
 			logging.warning(self.kind + ': ' + str(E))
 			print(self.kind + ': ' + str(E))
 
+	# https://www.alignable.com/fremont-ca/directory 
+	def _alignable_detail(self, cat):
+		detail_res = html.fromstring(self.session.get('https://www.alignable.com' + cat).content)
+		title = ' '.join(detail_res.xpath('//div[@class="business-profile-banner__text-line1"]/h1//text()')).strip()
+		description = ' '.join(detail_res.xpath('//div[@class="business-profile-banner__text-line2"]//a/text()')).strip()
+		blocks = detail_res.xpath('//div[contains(@class, "profile-block")]//li[@class="profile-info__line"]')
+		website = ''
+		for block in blocks:
+			if block.xpath('.//div[contains(@class, "icon-arrow-right")]'):
+				website = ' '.join(block.xpath('.//a/@href')).strip()
+
+		return {
+			'title': title,
+			'url': 'https://www.alignable.com',
+			'description': description,
+			'website': website,
+			'kind': self.kind,
+			'run_at': date.now().strftime("%Y-%m-%d %H:%M:%S")
+		}
+
+	def _parse_alignable_cats(self, link_res):
+		dirs = []
+		categories = link_res.xpath('.//div[@class="biz-listing__profile"]/a[contains(@class, "biz-listing__owner-wrapper")]/@href')
+		print(self.kind + ' categories ' + str(len(categories)))
+		logging.info(self.kind + ' categories ' + str(len(categories)))
+		for cat in categories:
+			dirs.append(self._alignable_detail(cat))
+			time.sleep(1)
+
+		return dirs
+
+	def parse_alignable(self, state, cities):
+		# get the sesssion cookie
+		headers={
+			'accept': 'application/json, text/javascript, */*; q=0.01',
+			'cookie': '_ga=GA1.2.529784995.1589313982; _gid=GA1.2.36966013.1589313982; _AlignableWeb_session=919f9af0a4422130775515bb0e38defe; AWSALB=niPwfAuDPMsOuw1dw5fOenBSoQX/QSQoIvY0IqnC/E7YS1zKcX7kUJW8hKFylutkkJ9+AGuYE7zLoUfAFlv8ICAW4Y06rRUXCWIU1PUMeUhOjxQQXVp5zfI38VOY; AWSALBCORS=niPwfAuDPMsOuw1dw5fOenBSoQX/QSQoIvY0IqnC/E7YS1zKcX7kUJW8hKFylutkkJ9+AGuYE7zLoUfAFlv8ICAW4Y06rRUXCWIU1PUMeUhOjxQQXVp5zfI38VOY',
+			'referer': 'https://www.alignable.com/fremont-ca/directory',
+			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36',
+			'x-csrf-token': 'oAweTrZhnJE4iY7HYp4fEoUy7iBvMbFgmxGeHJowQ0VO+b+6PKyK/qiM2ACWyWt1KYDA0/6d3b5p7DeCuzQXQg==',
+			'x-requested-with': 'XMLHttpRequest	'
+		}
+		self.session.get('https://www.alignable.com', headers=headers)
+		domain_url = 'https://www.alignable.com'
+		dirs = []
+		for city in cities:
+			print(self.kind + ' city ' + city + ' state ' + state)
+			logging.info(self.kind + ' city ' + city + ' state ' + state)
+			url = domain_url + '/{}-{}/directory'.format('-'.join(city.split(' ')), state)
+			# visible page without scrolling
+			link_res = html.fromstring(self.session.get(url).content)
+			dirs += self._parse_alignable_cats(link_res)
+			
+			# scroll the page to get more
+			page = 2
+			while True:
+				_resp = self.session.get('{}.js?page={}'.format(url, page), headers=headers).content
+				_resp = _resp.strip().replace(b'$("#geo-business").append(', b'')[1:-2].replace(b'\\n', b'').replace(b'\\', b'')
+				try:
+					if _resp is not None:
+						page_res = html.fromstring(_resp)
+						print(self.kind, ' --- pagination  page ', str(page), ' ---')
+						logging.info(self.kind + ' --- pagination  page ' +  str(page) + ' ---')
+						dirs.append((self._parse_alignable_cats(page_res)))
+						page += 1
+						time.sleep(1)
+					else:
+						break
+				except Exception as E:
+					logging.warning(str(E) + ' ' + city + ' ' + state)
+					print(E)
+					break
+
+			time.sleep(1)
+
+		# populate the data into db
+		new_dirs = []
+		for dir in dirs:
+			if dir not in new_dirs:
+				new_dirs.append(dir)
+		self._save_dirs(new_dirs)
+
+	def alignable(self):
+		logging.info(self.kind + ' : --- start scraper ---')
+		print(self.kind + '--- start scraper  ---')
+		domain = 'https://www.alignable.com'
+		try: 
+			# rotate the city-state link
+			logging.info(self.kind + ' : --- read city, state list ---')
+			print(self.kind + '--- read city, state list  ---')
+			us_codes = {}
+			data = pd.read_csv('./data/us_code_list.csv', engine="python", header=None)
+			for index, row in data.iterrows():
+				city = row[3]
+				state = row[4]
+				if state in us_codes:
+					if city not in us_codes[state]:
+						us_codes[state].append(city)
+				else:
+					us_codes.update({ state: [city]}) 
+
+			pool = mpool.ThreadPool(5)
+			for state, cities in us_codes.items():
+				pool.apply_async(self.parse_alignable, args=(state, cities))
+				# self.parse_alignable(state, cities)
+
+			pool.close()
+			pool.join()
+				
+		except Exception as E:
+			logging.warning(self.kind + ': ' + str(E))
+			print(self.kind + ': ' + str(E))
+
 	def _get_website_from_name(self, name):
 		website = ''
 		try:
@@ -290,4 +409,5 @@ if __name__ == '__main__':
 
 	if method:
 		method()
-		scraper.save_dirs()
+		if kind != 'alignable':
+			scraper.save_dirs()

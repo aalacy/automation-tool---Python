@@ -241,7 +241,8 @@ if __name__ == "__main__":
     data = _run_email_provider(data, domain)
 
     # run urlscan.io
-    data = print_summary(data, target_uuid)
+    if target_uuid:
+        data = print_summary(data, target_uuid)
 
     # update the table with the data
     public_data._update_table(data)

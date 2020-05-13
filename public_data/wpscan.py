@@ -14,6 +14,7 @@ logging.basicConfig(level=logging.INFO)
 def _run_wpscan(data, domain):
 	print('[***] WPScan [***]')
 
+
 	OUTPUT_FILE = '../data/wpscan-{}.txt'.format(domain)
 
 	try:
