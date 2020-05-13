@@ -13,7 +13,7 @@
 		https://industrydirectory.mjbizdaily.com/ - done
 		https://www.medicaljane.com/directory/ - done
 		http://business.sfchamber.com/list - done
-		https://www.alignable.com/fremont-ca/directory - processing
+		https://www.alignable.com/fremont-ca/directory - done
 
 	@param: 
 		-k: the name of childscraper. e.g, ganjapreneur from https://www.ganjapreneur.com/businesses/
@@ -311,35 +311,37 @@ class Scraper:
 		self.session.get('https://www.alignable.com', headers=headers)
 		domain_url = 'https://www.alignable.com'
 		dirs = []
-		for city in cities:
-			print(self.kind + ' city ' + city + ' state ' + state)
-			logging.info(self.kind + ' city ' + city + ' state ' + state)
-			url = domain_url + '/{}-{}/directory'.format('-'.join(city.split(' ')), state)
-			# visible page without scrolling
-			link_res = html.fromstring(self.session.get(url).content)
-			dirs += self._parse_alignable_cats(link_res)
-			
-			# scroll the page to get more
-			page = 2
-			while True:
-				_resp = self.session.get('{}.js?page={}'.format(url, page), headers=headers).content
-				_resp = _resp.strip().replace(b'$("#geo-business").append(', b'')[1:-2].replace(b'\\n', b'').replace(b'\\', b'')
-				try:
-					if _resp is not None:
-						page_res = html.fromstring(_resp)
-						print(self.kind, ' --- pagination  page ', str(page), ' ---')
-						logging.info(self.kind + ' --- pagination  page ' +  str(page) + ' ---')
-						dirs.append((self._parse_alignable_cats(page_res)))
-						page += 1
-						time.sleep(1)
-					else:
+		try:
+			for city in cities:
+				print(self.kind + ' city ' + city + ' state ' + state)
+				logging.info(self.kind + ' city ' + city + ' state ' + state)
+				url = domain_url + '/{}-{}/directory'.format('-'.join(city.split(' ')), state)
+				# visible page without scrolling
+				link_res = html.fromstring(self.session.get(url).content)
+				dirs += self._parse_alignable_cats(link_res)
+				
+				# scroll the page to get more
+				page = 2
+				while True:
+					_resp = self.session.get('{}.js?page={}'.format(url, page), headers=headers).content
+					_resp = _resp.strip().replace(b'$("#geo-business").append(', b'')[1:-2].replace(b'\\n', b'').replace(b'\\', b'')
+					try:
+						if _resp is not None:
+							page_res = html.fromstring(_resp)
+							print(self.kind, ' --- pagination  page ', str(page), ' ---')
+							logging.info(self.kind + ' --- pagination  page ' +  str(page) + ' ---')
+							dirs.append((self._parse_alignable_cats(page_res)))
+							page += 1
+							time.sleep(1)
+						else:
+							break
+					except Exception as E:
+						logging.warning(str(E) + ' ' + city + ' ' + state)
+						print(E)
 						break
-				except Exception as E:
-					logging.warning(str(E) + ' ' + city + ' ' + state)
-					print(E)
-					break
-
-			time.sleep(1)
+		except Exception as E:
+			print(E)
+			logging.warning(str(E))
 
 		# populate the data into db
 		new_dirs = []
