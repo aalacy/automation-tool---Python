@@ -268,8 +268,8 @@ class Scraper:
 			print(self.kind + ': ' + str(E))
 
 	# https://www.alignable.com/fremont-ca/directory 
-	def _alignable_detail(self, headers, cat):
-		detail_res = html.fromstring(self.session.get('https://www.alignable.com' + cat, headers=headers).content)
+	def _alignable_detail(self, cat):
+		detail_res = html.fromstring(self.session.get('https://www.alignable.com' + cat).content)
 		title = ' '.join(detail_res.xpath('//div[@class="business-profile-banner__text-line1"]/h1//text()')).strip()
 		description = ' '.join(detail_res.xpath('//div[@class="business-profile-banner__text-line2"]//a/text()')).strip()
 		blocks = detail_res.xpath('//div[contains(@class, "profile-block")]//li[@class="profile-info__line"]')
@@ -287,13 +287,13 @@ class Scraper:
 			'run_at': date.now().strftime("%Y-%m-%d %H:%M:%S")
 		}
 
-	def _parse_alignable_cats(self, headers, link_res):
+	def _parse_alignable_cats(self, city, state, link_res):
 		dirs = []
-		categories = link_res.xpath('.//div[@class="biz-listing__profile"]/a[contains(@class, "biz-listing__owner-wrapper")]/@href')
-		print(self.kind + ' categories ' + str(len(categories)))
-		logging.info(self.kind + ' categories ' + str(len(categories)))
+		categories = link_res.xpath('//div[@class="biz-listing__profile"]/a[contains(@class, "biz-listing__owner-wrapper")]/@href')
+		print(self.kind + ' city: ' + city + ' state: ' + state + ' categories: ' + str(len(categories)))
+		logging.info(self.kind + ' city: ' + city + ' state: ' + state + ' categories: ' + str(len(categories)))
 		for cat in categories:
-			dirs.append(self._alignable_detail(headers, cat))
+			dirs.append(self._alignable_detail(cat))
 			time.sleep(1)
 
 		return dirs
@@ -306,9 +306,10 @@ class Scraper:
 				print(self.kind + ' city ' + city + ' state ' + state)
 				logging.info(self.kind + ' city ' + city + ' state ' + state)
 				url = domain_url + '/{}-{}/directory'.format('-'.join(city.split(' ')), state)
+				print(url)
 				# visible page without scrolling
-				link_res = html.fromstring(self.session.get(url, headers=headers).content)
-				dirs += self._parse_alignable_cats(headers, link_res)
+				link_res = html.fromstring(self.session.get(url).content)
+				dirs += self._parse_alignable_cats(city, state, link_res)
 				
 				# scroll the page to get more
 				page = 2
@@ -320,7 +321,7 @@ class Scraper:
 							page_res = html.fromstring(_resp)
 							print(self.kind, ' --- pagination  page ', str(page), ' ---')
 							logging.info(self.kind + ' --- pagination  page ' +  str(page) + ' ---')
-							dirs.append((self._parse_alignable_cats(headers, page_res)))
+							dirs.append((self._parse_alignable_cats(city, state, page_res)))
 							page += 1
 							time.sleep(1)
 						else:
@@ -370,10 +371,10 @@ class Scraper:
 			}
 			self.session.get('https://www.alignable.com', headers=headers)
 
-			pool = mpool.ThreadPool(5)
+			pool = mpool.ThreadPool(2)
 			for state, cities in us_codes.items():
-				pool.apply_async(self.parse_alignable, args=(headers, state, cities))
-				# self.parse_alignable(state, cities)
+				# pool.apply_async(self.parse_alignable, args=(headers, state, cities))
+				self.parse_alignable(headers, state, cities)
 
 			pool.close()
 			pool.join()

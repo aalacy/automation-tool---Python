@@ -50887,3 +50887,43 @@
 2020-05-13 12:29:46,143 - --- start the Scraper ---
 2020-05-13 12:29:46,922 - alignable : --- start scraper ---
 2020-05-13 12:29:46,923 - alignable : --- read city, state list ---
+2020-05-13 13:13:30,011 - --- start the Scraper ---
+2020-05-13 13:13:30,579 - alignable : --- start scraper ---
+2020-05-13 13:13:30,580 - alignable : --- read city, state list ---
+2020-05-13 13:13:37,611 - alignable city Holtsville state NY
+2020-05-13 13:13:37,612 - alignable city Adjuntas state PR
+2020-05-13 13:13:38,952 - alignable categories 0
+2020-05-13 13:13:39,589 - alignable categories 0
+2020-05-13 13:13:39,790 - alignable --- pagination  page 2 ---
+2020-05-13 13:13:39,790 - alignable categories 15
+2020-05-13 13:13:40,417 - alignable --- pagination  page 2 ---
+2020-05-13 13:13:40,418 - alignable categories 15
+2020-05-13 13:15:48,351 - --- start the Scraper ---
+2020-05-13 13:15:48,450 - alignable : --- start scraper ---
+2020-05-13 13:15:48,450 - alignable : --- read city, state list ---
+2020-05-13 13:15:55,387 - alignable: parse_alignable() missing 1 required positional argument: 'cities'
+2020-05-13 13:16:17,655 - --- start the Scraper ---
+2020-05-13 13:16:17,741 - alignable : --- start scraper ---
+2020-05-13 13:16:17,742 - alignable : --- read city, state list ---
+2020-05-13 13:16:24,428 - alignable city Holtsville state NY
+2020-05-13 13:16:25,358 - alignable city: Holtsville state: NY categories: 0
+2020-05-13 13:16:26,122 - alignable --- pagination  page 2 ---
+2020-05-13 13:16:26,123 - alignable city: Holtsville state: NY categories: 15
+2020-05-13 13:16:47,192 - --- start the Scraper ---
+2020-05-13 13:16:47,279 - alignable : --- start scraper ---
+2020-05-13 13:16:47,279 - alignable : --- read city, state list ---
+2020-05-13 13:16:54,503 - alignable city Holtsville state NY
+2020-05-13 13:16:55,573 - alignable city: Holtsville state: NY categories: 0
+2020-05-13 13:16:56,316 - alignable --- pagination  page 2 ---
+2020-05-13 13:16:56,316 - alignable city: Holtsville state: NY categories: 15
+2020-05-13 13:17:18,334 - --- start the Scraper ---
+2020-05-13 13:17:18,419 - alignable : --- start scraper ---
+2020-05-13 13:17:18,420 - alignable : --- read city, state list ---
+2020-05-13 13:17:25,134 - alignable city Holtsville state NY
+2020-05-13 13:17:26,165 - alignable city: Holtsville state: NY categories: 0
+2020-05-13 13:17:26,933 - alignable --- pagination  page 2 ---
+2020-05-13 13:17:26,935 - alignable city: Holtsville state: NY categories: 15
+2020-05-13 13:18:11,303 - --- start the Scraper ---
+2020-05-13 13:18:11,392 - alignable : --- start scraper ---
+2020-05-13 13:18:11,392 - alignable : --- read city, state list ---
+2020-05-13 13:18:18,277 - alignable city Holtsville state NY
