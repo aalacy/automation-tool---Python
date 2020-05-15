@@ -320,15 +320,16 @@ class Scraper:
 					dirs += _dirs
 				
 				# scroll the page to get more
-				page = 2
+				page = 1
 				while True:
-					_resp = self.session.get('{}.js?page={}'.format(url, page), headers=headers).content
-					_resp = _resp.strip().replace(b'$("#geo-business").append(', b'')[1:-2].replace(b'\\n', b'').replace(b'\\', b'')
+					resp = self.session.get('{}.js?page={}'.format(url, page), headers=headers).content
+					_resp = resp.strip().replace(b'$("#geo-business").append(', b'')[1:-2].replace(b'\\n', b'').replace(b'\\', b'')
 					try:
 						if _resp is not None:
 							page_res = html.fromstring(_resp)
 							print(self.kind, ' --- pagination  page ', str(page), ' ---')
 							logging.info(self.kind + ' --- pagination  page ' +  str(page) + ' ---')
+							logging.info(str(_resp))
 							_dirs = self._parse_alignable_cats(city, state, link_res)
 							if len(_dirs):
 								dirs += _dirs
@@ -340,6 +341,10 @@ class Scraper:
 						logging.warning(str(E) + ' ' + city + ' ' + state)
 						print(E)
 						break
+
+					if page > 1:
+						break
+
 		except Exception as E:
 			print(E)
 			logging.warning(str(E))
@@ -380,11 +385,22 @@ class Scraper:
 				'x-requested-with': 'XMLHttpRequest	'
 			}
 			self.session.get('https://www.alignable.com', headers=headers)
+			# payload = {
 
-			pool = mpool.ThreadPool(2)
+			# }
+			# self.session.post('https://rs.fullstory.com/rec/bundle?OrgId=WUq&UserId=5188941210468352&SessionId=6165097554395136&PageId=4898214557532160&Seq=2', {
+			# 	'accept': '*/*',
+			# 	'accept-encoding': 'gzip, deflate, br',
+			# 	'accept-language': 'en-US,en;q=0.9',
+			# 	'referer': 'https://www.alignable.com/fremont-ca/directory',
+			# 	'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+			# }, payload)
+
+			pool = mpool.ThreadPool(4)
 			for state, cities in us_codes.items():
-				# pool.apply_async(self.parse_alignable, args=(headers, state, cities))
-				self.parse_alignable(headers, state, cities)
+				pool.apply_async(self.parse_alignable, args=(headers, state, cities))
+				# self.parse_alignable(headers, state, cities)
+				# break
 
 			pool.close()
 			pool.join()
