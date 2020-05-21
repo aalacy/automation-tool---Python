@@ -329,7 +329,6 @@ class Scraper:
 							page_res = html.fromstring(_resp)
 							print(self.kind, ' --- pagination  page ', str(page), ' ---')
 							logging.info(self.kind + ' --- pagination  page ' +  str(page) + ' ---')
-							logging.info(str(_resp))
 							_dirs = self._parse_alignable_cats(city, state, link_res)
 							if len(_dirs):
 								dirs += _dirs
@@ -398,8 +397,8 @@ class Scraper:
 
 			pool = mpool.ThreadPool(4)
 			for state, cities in us_codes.items():
-				pool.apply_async(self.parse_alignable, args=(headers, state, cities))
-				# self.parse_alignable(headers, state, cities)
+				# pool.apply_async(self.parse_alignable, args=(headers, state, cities))
+				self.parse_alignable(headers, state, cities)
 				# break
 
 			pool.close()

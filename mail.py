@@ -70,12 +70,12 @@ def send_email_with_attachment(template_id='d-8b6655afc0de466eb5b5b856b55a959d',
 
 	return response
 
-def send_email_with_attachment_normal(to_email='crm@revampcybersecurity.com', from_email='info@revampcybersecurity.com', data="", query='los'):
+def send_email_with_attachment_general(to_email='crm@revampcybersecurity.com', from_email='info@revampcybersecurity.com', data="", html=''):
 	message = Mail(
 	    from_email=from_email,
 	    to_emails=to_email,
 	    subject='Attachment',
-	    html_content='<strong>Here is the attachment for angel scraper with query <i>{}</i></strong>'.format(query)
+	    html_content=html
 	)
 	# file_path = 'data/allcompanies.csv'
 	# data = ''
@@ -97,3 +97,7 @@ def send_email_with_attachment_normal(to_email='crm@revampcybersecurity.com', fr
 		print(response.status_code)
 	except Exception as e:
 		print(e.message)
+
+def send_email_with_attachment_normal(to_email='crm@revampcybersecurity.com', from_email='info@revampcybersecurity.com', data="", query='los'):
+	html = '<strong>Here is the attachment for angel scraper with query <i>{}</i></strong>'.format(query)
+	send_email_with_attachment_general(to_email, from_email, data, html)
