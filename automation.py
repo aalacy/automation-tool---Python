@@ -58,7 +58,8 @@ class Automation:
 	# ZOHO_PW = 'Imobile123'
 
 	# Slack
-	SLACK_TOKEN = 'xoxp-151682192533-268011284087-937133863458-6b95e834e25acd4cf3e9a35353f95d53'
+	# SLACK_TOKEN = 'xoxp-151682192533-268011284087-937133863458-6b95e834e25acd4cf3e9a35353f95d53'
+	SLACK_TOKEN = 'xoxp-25274897922-248657672914-852474845509-fd06080b93c57cd66994d5840ccc1cad'
 	slack_users_url = 'https://slack.com/api/users.list?token=' + SLACK_TOKEN + '&pretty=1'
 
 	# Bamboohr
@@ -97,9 +98,9 @@ class Automation:
 		
 		# initialize selenium
 		# windows
-		option = webdriver.ChromeOptions()
-		option.add_argument('--no-sandbox')
-		self.driver = webdriver.Chrome(executable_path= self.BASE_PATH + '/data/chromedriver.exe', chrome_options=option)
+		# option = webdriver.ChromeOptions()
+		# option.add_argument('--no-sandbox')
+		# self.driver = webdriver.Chrome(executable_path= self.BASE_PATH + '/data/chromedriver.exe', chrome_options=option)
 		    
 	# common functions
 	def bamboo_valiate(self, val):

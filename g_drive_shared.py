@@ -31,6 +31,7 @@ class GDrive:
 	FILE_FOR_FOLDER_LIST = './data/g_drive_folders_ids.txt'
 
 	def __init__(self, USER_EMAIL):
+		self.USER_EMAIL = USER_EMAIL
 		# Authentication
 		self.credentials = service_account.Credentials.from_service_account_file(
 		    self.SERVICE_ACCOUNT_JSON_FILE_PATH,
@@ -170,7 +171,7 @@ class GDrive:
 
 			self.b64data.append(encode_csv_data(self.csv_file, 'google drive shared external users.csv'))
 
-			html_content = '<strong>Here is the attachment for google external users, <i>Account {}</i></strong>'.format(USER_EMAIL)
+			html_content = '<strong>Here is the attachment for google external users, <i>Account {}</i></strong>'.format(self.USER_EMAIL)
 			send_email_with_attachment_general(data=self.b64data, html=html_content)
 			# to_email='ideveloper003@gmail.com'
 
