@@ -143,15 +143,6 @@ class GDrive:
 		            writer.writerow(data)
 		except IOError:
 		    print("I/O error")
-		    pdb.set_trace()
-
-	def callback(self, request_id, response, exception):
-		if exception:
-			# Handle error
-			print(exception)
-			# send_email(str(exception), 'exception in g_drive.py while revoking acess control')
-		else:
-			print(response)
 
 	def fetch_shared_info(self):
 		# read folders

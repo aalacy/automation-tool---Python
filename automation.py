@@ -59,8 +59,12 @@ class Automation:
 
 	# Slack
 	# SLACK_TOKEN = 'xoxp-151682192533-268011284087-937133863458-6b95e834e25acd4cf3e9a35353f95d53'
-	SLACK_TOKEN = 'xoxp-25274897922-248657672914-852474845509-fd06080b93c57cd66994d5840ccc1cad'
+	SLACK_TOKEN = 'xoxp-151682192533-837477530853-1134262267543-e8f340a3f7c8adf1a379b6e531fd29de'
 	slack_users_url = 'https://slack.com/api/users.list?token=' + SLACK_TOKEN + '&pretty=1'
+	SLACK_CLIENT_ID = '151682192533.1166812005137'
+	SLACK_CLIENT_SECRET = '16fc4c4aeed351557a3c06e2bc4e2115'
+	SLACK_SCOPE = 'admin.users:read'
+	SLACK_AUTHORIZE_URL = f'https://slack.com/oauth/v2/authorize?scope={SLACK_SCOPE}&client_id={SLACK_CLIENT_ID}'
 
 	# Bamboohr
 	BAMBOOHR_API_KEY = '139900df2e12f70421f818da5b80a21388a99e30'
@@ -242,6 +246,7 @@ class Automation:
 
 		next_cursor = ''
 		# parse pagination
+		rows = []
 		while True:
 			if next_cursor:
 				self.slack_users_url += '&next_cursor=' + urllib.parse.quote(next_cursor)
@@ -255,12 +260,14 @@ class Automation:
 			except:
 				pass
 
-			rows = []
 			for user in slack_users.get('members', []):
 				try:
 					user_profile = user['profile']
 					row = []
-					if user['is_bot'] or user_profile['real_name'] == 'Slackbot':
+					if user['deleted']:
+						continue
+
+					if user['is_bot'] or user_profile['real_name'] == 'Slackbot' or user['real_name'] == 'Slackbot':
 						row = [user['name'], '', 'admin', not user['deleted'], '', '0', user['id'], user_profile['real_name'], user_profile['display_name'], date.now().strftime("%Y-%m-%d %H:%M:%S")]
 					else:
 						has_2fa = ''
@@ -268,23 +275,25 @@ class Automation:
 							has_2fa = user['has_2fa']
 						except:
 							pass
-						row = [user['name'], user_profile['email'], 'admin', not user['deleted'], has_2fa, '0', user['id'], user_profile['real_name'], user_profile['display_name'], date.now().strftime("%Y-%m-%d %H:%M:%S"), '']
+						row = [user['name'], user_profile.get('email'), 'admin', not user['deleted'], has_2fa, '0', user['id'], user_profile['real_name'], user_profile['display_name'], date.now().strftime("%Y-%m-%d %H:%M:%S"), '']
 						rows.append(row)
 					# print('**** Slack populate row***')
-				except:
+				except Exception as E:
+					pdb.set_trace()
 					self.d_log('error in slack api ' + json.dumps(user))
 					break;
-			try:
-				cursor.executemany(insert_query, rows)
-				#close the connection to the database.
-				db.commit()   
-			except Exception as E:
-				print('-- error while populating slack ---', E)
-				send_email('Issue report on automation.py', '-- error while populating slack ---' + str(E))
 
 			if not next_cursor:
 				break;
 
+		pdb.set_trace()
+		try:
+			cursor.executemany(insert_query, rows)
+			#close the connection to the database.
+			db.commit()   
+		except Exception as E:
+			print('-- error while populating slack ---', E)
+			# send_email('Issue report on automation.py', '-- error while populating slack ---' + str(E))
 		cursor.close()
 		print('======== End of Slack API ===============')
 
@@ -474,8 +483,9 @@ class Automation:
 		# zoho_thread.start()
 
 		# slack api
-		slack_thread = threading.Thread(target=self.populate_slack)
-		slack_thread.start()
+		# slack_thread = threading.Thread(target=self.populate_slack)
+		# slack_thread.start()
+		self.populate_slack()
 
 		#bamboo api
 		# bamboo_thread = threading.Thread(target=self.populate_bamboo)

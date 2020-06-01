@@ -3,13 +3,13 @@ lxml
 requests
 mysql-connector-python
 google-api-python-client
+google_auth_oauthlib
+google_auth
+oauth2client
 pyvirtualdisplay
 sqlalchemy
 pandas
-google_auth_oauthlib
-google_auth
 pyOpenSSL
-oauth2client
 sendgrid
 colorama
 dnslib
