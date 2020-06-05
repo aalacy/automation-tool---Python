@@ -16,8 +16,8 @@ from googleapiclient.discovery import build
 from mail import send_email, send_email_by_template
 
 # local paths
-# BASE_PATH = os.path.abspath(os.curdir)
-BASE_PATH = '/home/johnathanstv/automation'
+BASE_PATH = os.path.abspath(os.curdir)
+# BASE_PATH = '/home/johnathanstv/automation'
 
 # config
 config = RawConfigParser()
@@ -26,7 +26,7 @@ config.read(BASE_PATH + '/settings.cfg')
 # set up engine for database
 Base = declarative_base()
 metadata = MetaData()
-engine = create_engine(config.get('database', 'mysql1'))
+engine = create_engine(config.get('database', 'mysql2'))
 
 # Path to the Service Account's Private Key file
 SERVICE_ACCOUNT_JSON_FILE_PATH = BASE_PATH + '/data/revamp-cyber-a59c90daeb09.json'
@@ -137,6 +137,7 @@ class Migrate:
 		self.email_list = []
 
 		metadata.create_all(engine)
+		self.run_at = date.now().strftime("%Y-%m-%d %H:%M:%S")
 
 	def group_access_settings(service, groupId, settings):
 		"""Retrieves a group's settings and updates the access permissions to it.
@@ -196,109 +197,114 @@ class Migrate:
 
 		groups_to_insert = []
 		groups_to_update = []
-		try:
-			for old_group in group_list:
-				group = service.groups()
+		for old_group in group_list:
+			group = service.groups()
 
-				# Retrieve the group properties
-				print('\n .... Retrive group properties for {} .... '.format(old_group['email']))
+			# Retrieve the group properties
+			print('\n .... Retrive group properties for {} .... '.format(old_group['email']))
+			try:
 				_group = group.get(groupUniqueId=old_group['email']).execute()
-				data = [dict(name=old_group['name'], email=old_group['email'], description=old_group['description'], id=old_group['id'], aliases=old_group['aliases'], members=old_group['members'], members_count=old_group['members_count'], run_at=old_group['run_at'], kind=_group.get('kind', ''), whoCanAdd=_group.get('whoCanAdd', ''), whoCanJoin=_group.get('whoCanJoin', ''), whoCanViewMembership=_group.get('whoCanViewMembership', ''), whoCanViewGroup=_group.get('whoCanViewGroup', ''), whoCanInvite=_group.get('whoCanInvite', ''), allowExternalMembers=_group.get('allowExternalMembers', ''), whoCanPostMessage=_group.get('whoCanPostMessage', ''), allowWebPosting=_group.get('allowWebPosting', ''), primaryLanguage=_group.get('primaryLanguage', ''), maxMessageBytes=_group.get('maxMessageBytes', ''), isArchived=_group.get('isArchived', ''), archiveOnly=_group.get('archiveOnly', ''), messageModerationLevel=_group.get('messageModerationLevel', ''), spamModerationLevel=_group.get('spamModerationLevel', ''), replyTo=_group.get('replyTo', ''), customReplyTo=_group.get('customReplyTo', ''), includeCustomFooter=_group.get('includeCustomFooter', ''), customFooterText=_group.get('customFooterText', ''), sendMessageDenyNotification=_group.get('sendMessageDenyNotification', ''), defaultMessageDenyNotificationText=_group.get('defaultMessageDenyNotificationText', ''), showInGroupDirectory=_group.get('showInGroupDirectory', ''), allowGoogleCommunication=_group.get('allowGoogleCommunication', ''), membersCanPostAsTheGroup=_group.get('membersCanPostAsTheGroup', ''), messageDisplayFont=_group.get('messageDisplayFont', ''), includeInGlobalAddressList=_group.get('includeInGlobalAddressList', ''), whoCanLeaveGroup=_group.get('whoCanLeaveGroup', ''), whoCanContactOwner=_group.get('whoCanContactOwner', ''), whoCanAddReferences=_group.get('whoCanAddReferences', ''), whoCanAssignTopics=_group.get('whoCanAssignTopics', ''), whoCanUnassignTopic=_group.get('whoCanUnassignTopic', ''), whoCanTakeTopics=_group.get('whoCanTakeTopics', ''), whoCanMarkDuplicate=_group.get('whoCanMarkDuplicate', ''), whoCanMarkNoResponseNeeded=_group.get('whoCanMarkNoResponseNeeded', ''), whoCanMarkFavoriteReplyOnAnyTopic=_group.get('whoCanMarkFavoriteReplyOnAnyTopic', ''), whoCanMarkFavoriteReplyOnOwnTopic=_group.get('whoCanMarkFavoriteReplyOnOwnTopic', ''), whoCanUnmarkFavoriteReplyOnAnyTopic=_group.get('whoCanUnmarkFavoriteReplyOnAnyTopic', ''), whoCanEnterFreeFormTags=_group.get('whoCanEnterFreeFormTags', ''), whoCanModifyTagsAndCategories=_group.get('whoCanModifyTagsAndCategories', ''), favoriteRepliesOnTop=_group.get('favoriteRepliesOnTop', ''), whoCanApproveMembers=_group.get('whoCanApproveMembers', ''), whoCanBanUsers=_group.get('whoCanBanUsers', ''), whoCanModifyMembers=_group.get('whoCanModifyMembers'), whoCanApproveMessages=_group.get('whoCanApproveMessages', ''), whoCanDeleteAnyPost=_group.get('whoCanDeleteAnyPost', ''), whoCanDeleteTopics=_group.get('whoCanDeleteTopics', ''), whoCanLockTopics=_group.get('whoCanLockTopics', ''), whoCanMoveTopicsIn=_group.get('whoCanMoveTopicsIn', ''), whoCanMoveTopicsOut=_group.get('whoCanMoveTopicsOut', ''), whoCanPostAnnouncements=_group.get('whoCanPostAnnouncements', ''), whoCanHideAbuse=_group.get('whoCanHideAbuse', ''), whoCanMakeTopicsSticky=_group.get('whoCanMakeTopicsSticky', ''), whoCanModerateMembers=_group.get('whoCanModerateMembers', ''), whoCanModerateContent=_group.get('whoCanModerateContent', ''), whoCanAssistContent=_group.get('whoCanAssistContent', ''), customRolesEnabledForSettingsToBeMerged=_group.get('customRolesEnabledForSettingsToBeMerged', ''), enableCollaborativeInbox=_group.get('enableCollaborativeInbox', ''), whoCanDiscoverGroup=_group.get('whoCanDiscoverGroup', ''))]
+			except Exception as E:
+				print(E)
+				# send_email('-- error happened while retrieving group settings for ' + old_group['email'], TITLE)
+				continue
 
-				# Check if the group with this email already exist, if then, update it, if not insert new one
-				should_update = False
-				for _prev_group in prev_groups:
-					if old_group['email'] == _prev_group['email']:
-						should_update = True
+			data = [dict(name=old_group['name'], email=old_group['email'], description=old_group['description'], id=old_group['id'], aliases=old_group['aliases'], members=old_group['members'], members_count=old_group['members_count'], run_at=self.run_at, kind=_group.get('kind', ''), whoCanAdd=_group.get('whoCanAdd', ''), whoCanJoin=_group.get('whoCanJoin', ''), whoCanViewMembership=_group.get('whoCanViewMembership', ''), whoCanViewGroup=_group.get('whoCanViewGroup', ''), whoCanInvite=_group.get('whoCanInvite', ''), allowExternalMembers=_group.get('allowExternalMembers', ''), whoCanPostMessage=_group.get('whoCanPostMessage', ''), allowWebPosting=_group.get('allowWebPosting', ''), primaryLanguage=_group.get('primaryLanguage', ''), maxMessageBytes=_group.get('maxMessageBytes', ''), isArchived=_group.get('isArchived', ''), archiveOnly=_group.get('archiveOnly', ''), messageModerationLevel=_group.get('messageModerationLevel', ''), spamModerationLevel=_group.get('spamModerationLevel', ''), replyTo=_group.get('replyTo', ''), customReplyTo=_group.get('customReplyTo', ''), includeCustomFooter=_group.get('includeCustomFooter', ''), customFooterText=_group.get('customFooterText', ''), sendMessageDenyNotification=_group.get('sendMessageDenyNotification', ''), defaultMessageDenyNotificationText=_group.get('defaultMessageDenyNotificationText', ''), showInGroupDirectory=_group.get('showInGroupDirectory', ''), allowGoogleCommunication=_group.get('allowGoogleCommunication', ''), membersCanPostAsTheGroup=_group.get('membersCanPostAsTheGroup', ''), messageDisplayFont=_group.get('messageDisplayFont', ''), includeInGlobalAddressList=_group.get('includeInGlobalAddressList', ''), whoCanLeaveGroup=_group.get('whoCanLeaveGroup', ''), whoCanContactOwner=_group.get('whoCanContactOwner', ''), whoCanAddReferences=_group.get('whoCanAddReferences', ''), whoCanAssignTopics=_group.get('whoCanAssignTopics', ''), whoCanUnassignTopic=_group.get('whoCanUnassignTopic', ''), whoCanTakeTopics=_group.get('whoCanTakeTopics', ''), whoCanMarkDuplicate=_group.get('whoCanMarkDuplicate', ''), whoCanMarkNoResponseNeeded=_group.get('whoCanMarkNoResponseNeeded', ''), whoCanMarkFavoriteReplyOnAnyTopic=_group.get('whoCanMarkFavoriteReplyOnAnyTopic', ''), whoCanMarkFavoriteReplyOnOwnTopic=_group.get('whoCanMarkFavoriteReplyOnOwnTopic', ''), whoCanUnmarkFavoriteReplyOnAnyTopic=_group.get('whoCanUnmarkFavoriteReplyOnAnyTopic', ''), whoCanEnterFreeFormTags=_group.get('whoCanEnterFreeFormTags', ''), whoCanModifyTagsAndCategories=_group.get('whoCanModifyTagsAndCategories', ''), favoriteRepliesOnTop=_group.get('favoriteRepliesOnTop', ''), whoCanApproveMembers=_group.get('whoCanApproveMembers', ''), whoCanBanUsers=_group.get('whoCanBanUsers', ''), whoCanModifyMembers=_group.get('whoCanModifyMembers'), whoCanApproveMessages=_group.get('whoCanApproveMessages', ''), whoCanDeleteAnyPost=_group.get('whoCanDeleteAnyPost', ''), whoCanDeleteTopics=_group.get('whoCanDeleteTopics', ''), whoCanLockTopics=_group.get('whoCanLockTopics', ''), whoCanMoveTopicsIn=_group.get('whoCanMoveTopicsIn', ''), whoCanMoveTopicsOut=_group.get('whoCanMoveTopicsOut', ''), whoCanPostAnnouncements=_group.get('whoCanPostAnnouncements', ''), whoCanHideAbuse=_group.get('whoCanHideAbuse', ''), whoCanMakeTopicsSticky=_group.get('whoCanMakeTopicsSticky', ''), whoCanModerateMembers=_group.get('whoCanModerateMembers', ''), whoCanModerateContent=_group.get('whoCanModerateContent', ''), whoCanAssistContent=_group.get('whoCanAssistContent', ''), customRolesEnabledForSettingsToBeMerged=_group.get('customRolesEnabledForSettingsToBeMerged', ''), enableCollaborativeInbox=_group.get('enableCollaborativeInbox', ''), whoCanDiscoverGroup=_group.get('whoCanDiscoverGroup', ''))]
 
-				if should_update:
-					groups_to_update += data
-				else:
-					groups_to_insert += data 
+			# Check if the group with this email already exist, if then, update it, if not insert new one
+			should_update = False
+			for _prev_group in prev_groups:
+				if old_group['email'] == _prev_group['email']:
+					should_update = True
+
+			if should_update:
+				groups_to_update += data
+			else:
+				groups_to_insert += data 
+		try:
+			stmt = groups_table.update().\
+			    where(groups_table.c.email == bindparam('email')).\
+			    values({
+			        'name': bindparam('name'),
+			        'email': bindparam('email'),
+			        'description': bindparam('description'),
+			        'id': bindparam('id'),
+			        'aliases': bindparam('aliases'),
+			        'members': bindparam('members'),
+			        'members_count': bindparam('members_count'),
+			        'kind': bindparam('kind'),
+					'whoCanAdd': bindparam('whoCanAdd'),
+					'whoCanJoin': bindparam('whoCanJoin'),
+					'whoCanViewMembership': bindparam('whoCanViewMembership'),
+					'whoCanViewGroup': bindparam('whoCanViewGroup'),
+					'whoCanInvite': bindparam('whoCanInvite'),
+					'allowExternalMembers': bindparam('allowExternalMembers'),
+					'whoCanPostMessage': bindparam('whoCanPostMessage'),
+					'allowWebPosting': bindparam('allowWebPosting'),
+					'primaryLanguage': bindparam('primaryLanguage'),
+					'maxMessageBytes': bindparam('maxMessageBytes'),
+					'isArchived': bindparam('isArchived'),
+					'archiveOnly': bindparam('archiveOnly'),
+					'messageModerationLevel': bindparam('messageModerationLevel'),
+					'spamModerationLevel': bindparam('spamModerationLevel'),
+					'replyTo': bindparam('replyTo'),
+					'customReplyTo': bindparam('customReplyTo'),
+					'includeCustomFooter': bindparam('includeCustomFooter'),
+					'customFooterText': bindparam('customFooterText'),
+					'sendMessageDenyNotification': bindparam('sendMessageDenyNotification'),
+					'defaultMessageDenyNotificationText': bindparam('defaultMessageDenyNotificationText'),
+					'showInGroupDirectory': bindparam('showInGroupDirectory'), 
+					'allowGoogleCommunication': bindparam('allowGoogleCommunication'),
+					'membersCanPostAsTheGroup': bindparam('membersCanPostAsTheGroup'),
+					'messageDisplayFont': bindparam('messageDisplayFont'),
+					'includeInGlobalAddressList': bindparam('includeInGlobalAddressList'),
+					'whoCanLeaveGroup': bindparam('whoCanLeaveGroup'),
+					'whoCanContactOwner': bindparam('whoCanContactOwner'),
+					'whoCanAddReferences': bindparam('whoCanAddReferences'),
+					'whoCanAssignTopics': bindparam('whoCanAssignTopics'),
+					'whoCanUnassignTopic': bindparam('whoCanUnassignTopic'),
+					'whoCanTakeTopics': bindparam('whoCanTakeTopics'),
+					'whoCanMarkDuplicate': bindparam('whoCanMarkDuplicate'),
+					'whoCanMarkNoResponseNeeded': bindparam('whoCanMarkNoResponseNeeded'),
+					'whoCanMarkFavoriteReplyOnAnyTopic': bindparam('whoCanMarkFavoriteReplyOnAnyTopic'),
+					'whoCanMarkFavoriteReplyOnOwnTopic': bindparam('whoCanMarkFavoriteReplyOnOwnTopic'),
+					'whoCanUnmarkFavoriteReplyOnAnyTopic': bindparam('whoCanUnmarkFavoriteReplyOnAnyTopic'),
+					'whoCanEnterFreeFormTags': bindparam('whoCanEnterFreeFormTags'),
+					'whoCanModifyTagsAndCategories': bindparam('whoCanModifyTagsAndCategories'),
+					'favoriteRepliesOnTop': bindparam('favoriteRepliesOnTop'),
+					'whoCanApproveMembers': bindparam('whoCanApproveMembers'),
+					'whoCanBanUsers': bindparam('whoCanBanUsers'),
+					'whoCanModifyMembers': bindparam('whoCanModifyMembers'),
+					'whoCanApproveMessages': bindparam('whoCanApproveMessages'), 
+					'whoCanDeleteAnyPost': bindparam('whoCanDeleteAnyPost'),
+					'whoCanDeleteTopics': bindparam('whoCanDeleteTopics'),
+					'whoCanLockTopics': bindparam('whoCanLockTopics'),
+					'whoCanMoveTopicsIn': bindparam('whoCanMoveTopicsIn'),
+					'whoCanMoveTopicsOut': bindparam('whoCanMoveTopicsOut'),
+					'whoCanPostAnnouncements': bindparam('whoCanPostAnnouncements'),
+					'whoCanHideAbuse': bindparam('whoCanHideAbuse'),
+					'whoCanMakeTopicsSticky': bindparam('whoCanMakeTopicsSticky'),
+					'whoCanModerateMembers': bindparam('whoCanModerateMembers'),
+					'whoCanModerateContent': bindparam('whoCanModerateContent'),
+					'whoCanAssistContent': bindparam('whoCanAssistContent'),
+					'customRolesEnabledForSettingsToBeMerged': bindparam('customRolesEnabledForSettingsToBeMerged'),
+					'enableCollaborativeInbox': bindparam('enableCollaborativeInbox'),
+					'whoCanDiscoverGroup': bindparam('whoCanDiscoverGroup'),
+					'allowGoogleCommunication': bindparam('allowGoogleCommunication'),
+			        'run_at': bindparam('run_at'),
+			    })
 			
+			if not engine.dialect.has_table(engine, 'groups'):
+				self.connection.execute(groups_table.insert(), groups_to_insert)
+			else:
+				if len(groups_to_insert) > 0:
+					self.connection.execute(groups_table.insert(), groups_to_insert)
+				if len(groups_to_update) > 0:
+					self.connection.execute(stmt, groups_to_update)
 		except Exception as E:
 			print(E)
-			send_email('-- error happened while creating groups table from google groups ' + str(E), TITLE)
+			# send_email('-- error happened while creating groups table from google groups ' + str(E), TITLE)
 		
-		stmt = groups_table.update().\
-		    where(groups_table.c.email == bindparam('email')).\
-		    values({
-		        'name': bindparam('name'),
-		        'email': bindparam('email'),
-		        'description': bindparam('description'),
-		        'id': bindparam('id'),
-		        'aliases': bindparam('aliases'),
-		        'members': bindparam('members'),
-		        'members_count': bindparam('members_count'),
-		        'kind': bindparam('kind'),
-				'whoCanAdd': bindparam('whoCanAdd'),
-				'whoCanJoin': bindparam('whoCanJoin'),
-				'whoCanViewMembership': bindparam('whoCanViewMembership'),
-				'whoCanViewGroup': bindparam('whoCanViewGroup'),
-				'whoCanInvite': bindparam('whoCanInvite'),
-				'allowExternalMembers': bindparam('allowExternalMembers'),
-				'whoCanPostMessage': bindparam('whoCanPostMessage'),
-				'allowWebPosting': bindparam('allowWebPosting'),
-				'primaryLanguage': bindparam('primaryLanguage'),
-				'maxMessageBytes': bindparam('maxMessageBytes'),
-				'isArchived': bindparam('isArchived'),
-				'archiveOnly': bindparam('archiveOnly'),
-				'messageModerationLevel': bindparam('messageModerationLevel'),
-				'spamModerationLevel': bindparam('spamModerationLevel'),
-				'replyTo': bindparam('replyTo'),
-				'customReplyTo': bindparam('customReplyTo'),
-				'includeCustomFooter': bindparam('includeCustomFooter'),
-				'customFooterText': bindparam('customFooterText'),
-				'sendMessageDenyNotification': bindparam('sendMessageDenyNotification'),
-				'defaultMessageDenyNotificationText': bindparam('defaultMessageDenyNotificationText'),
-				'showInGroupDirectory': bindparam('showInGroupDirectory'), 
-				'allowGoogleCommunication': bindparam('allowGoogleCommunication'),
-				'membersCanPostAsTheGroup': bindparam('membersCanPostAsTheGroup'),
-				'messageDisplayFont': bindparam('messageDisplayFont'),
-				'includeInGlobalAddressList': bindparam('includeInGlobalAddressList'),
-				'whoCanLeaveGroup': bindparam('whoCanLeaveGroup'),
-				'whoCanContactOwner': bindparam('whoCanContactOwner'),
-				'whoCanAddReferences': bindparam('whoCanAddReferences'),
-				'whoCanAssignTopics': bindparam('whoCanAssignTopics'),
-				'whoCanUnassignTopic': bindparam('whoCanUnassignTopic'),
-				'whoCanTakeTopics': bindparam('whoCanTakeTopics'),
-				'whoCanMarkDuplicate': bindparam('whoCanMarkDuplicate'),
-				'whoCanMarkNoResponseNeeded': bindparam('whoCanMarkNoResponseNeeded'),
-				'whoCanMarkFavoriteReplyOnAnyTopic': bindparam('whoCanMarkFavoriteReplyOnAnyTopic'),
-				'whoCanMarkFavoriteReplyOnOwnTopic': bindparam('whoCanMarkFavoriteReplyOnOwnTopic'),
-				'whoCanUnmarkFavoriteReplyOnAnyTopic': bindparam('whoCanUnmarkFavoriteReplyOnAnyTopic'),
-				'whoCanEnterFreeFormTags': bindparam('whoCanEnterFreeFormTags'),
-				'whoCanModifyTagsAndCategories': bindparam('whoCanModifyTagsAndCategories'),
-				'favoriteRepliesOnTop': bindparam('favoriteRepliesOnTop'),
-				'whoCanApproveMembers': bindparam('whoCanApproveMembers'),
-				'whoCanBanUsers': bindparam('whoCanBanUsers'),
-				'whoCanModifyMembers': bindparam('whoCanModifyMembers'),
-				'whoCanApproveMessages': bindparam('whoCanApproveMessages'), 
-				'whoCanDeleteAnyPost': bindparam('whoCanDeleteAnyPost'),
-				'whoCanDeleteTopics': bindparam('whoCanDeleteTopics'),
-				'whoCanLockTopics': bindparam('whoCanLockTopics'),
-				'whoCanMoveTopicsIn': bindparam('whoCanMoveTopicsIn'),
-				'whoCanMoveTopicsOut': bindparam('whoCanMoveTopicsOut'),
-				'whoCanPostAnnouncements': bindparam('whoCanPostAnnouncements'),
-				'whoCanHideAbuse': bindparam('whoCanHideAbuse'),
-				'whoCanMakeTopicsSticky': bindparam('whoCanMakeTopicsSticky'),
-				'whoCanModerateMembers': bindparam('whoCanModerateMembers'),
-				'whoCanModerateContent': bindparam('whoCanModerateContent'),
-				'whoCanAssistContent': bindparam('whoCanAssistContent'),
-				'customRolesEnabledForSettingsToBeMerged': bindparam('customRolesEnabledForSettingsToBeMerged'),
-				'enableCollaborativeInbox': bindparam('enableCollaborativeInbox'),
-				'whoCanDiscoverGroup': bindparam('whoCanDiscoverGroup'),
-				'allowGoogleCommunication': bindparam('allowGoogleCommunication'),
-		        'run_at': bindparam('run_at'),
-		    })
-		
-		if not engine.dialect.has_table(engine, 'groups'):
-			self.connection.execute(groups_table.insert(), groups_to_insert)
-		else:
-			if len(groups_to_insert) > 0:
-				self.connection.execute(groups_table.insert(), groups_to_insert)
-			if len(groups_to_update) > 0:
-				self.connection.execute(stmt, groups_to_update)
 
 	def migrate_users(self):
 		'''
@@ -343,7 +349,7 @@ class Migrate:
 					if user.email == _user['email']:
 						should_update = True
 				
-				data = [dict(firstname_lastname=user.firstname_lastname, email=user.email, gsuite_2fa=user.is_forced_in_2sv, gsuite_admin=user.is_admin, location=user.org_unit_path, email_not_active=user.suspended, department=department, job_title=job_title, run_at=user.run_at)]
+				data = [dict(firstname_lastname=user.firstname_lastname, email=user.email, gsuite_2fa=user.is_forced_in_2sv, gsuite_admin=user.is_admin, location=user.org_unit_path, email_not_active=user.suspended, department=department, job_title=job_title, run_at=self.run_at)]
 
 				# Check if the user with this email already exist, if then, update it, if not insert new one
 				if should_update:
@@ -394,7 +400,7 @@ if __name__ == '__main__':
     print('.... create users table .....')
     # obj.migrate_users()
 
-    obj.notify_users_from_query()
+    # obj.notify_users_from_query()
 
     print('.... create groups table .....')
-    # obj.migrate_grouproups()
+    obj.migrate_grouproups()

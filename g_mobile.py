@@ -12,8 +12,6 @@ from google.oauth2 import service_account
 from sqlalchemy import create_engine, Table, Column, Text, BLOB, \
                     Integer, Text, String, MetaData, DateTime, JSON
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.sql.expression import bindparam
-from sqlalchemy.orm import Session
 
 import pdb
 from mail import send_email

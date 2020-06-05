@@ -94,7 +94,7 @@ class GDrive:
 				'folder_name': folder_name,
 				'file_id': file.get('id'),
 				'file_name': file.get('name'),
-				'users': ''
+				'users': '',
 			}
 			users = []
 			for permission in file.get('permissions', []):
@@ -134,7 +134,7 @@ class GDrive:
 			print(E)
 
 	def process_output(self):
-		csv_columns = ['folder_id','folder_name','file_id', 'file_name', 'users']
+		csv_columns = ['folder_id', 'folder_name', 'file_id', 'file_name', 'users']
 		try:
 		    with open(self.csv_file, 'w+') as csvfile:
 		        writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
