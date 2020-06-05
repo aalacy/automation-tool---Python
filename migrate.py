@@ -16,8 +16,8 @@ from googleapiclient.discovery import build
 from mail import send_email, send_email_by_template
 
 # local paths
-BASE_PATH = os.path.abspath(os.curdir)
-# BASE_PATH = '/home/johnathanstv/automation'
+# BASE_PATH = os.path.abspath(os.curdir)
+BASE_PATH = '/home/johnathanstv/automation'
 
 # config
 config = RawConfigParser()
@@ -197,6 +197,7 @@ class Migrate:
 
 		groups_to_insert = []
 		groups_to_update = []
+		error_emails = []
 		for old_group in group_list:
 			group = service.groups()
 
@@ -206,7 +207,7 @@ class Migrate:
 				_group = group.get(groupUniqueId=old_group['email']).execute()
 			except Exception as E:
 				print(E)
-				# send_email('-- error happened while retrieving group settings for ' + old_group['email'], TITLE)
+				error_emails.append(old_group['email'])
 				continue
 
 			data = [dict(name=old_group['name'], email=old_group['email'], description=old_group['description'], id=old_group['id'], aliases=old_group['aliases'], members=old_group['members'], members_count=old_group['members_count'], run_at=self.run_at, kind=_group.get('kind', ''), whoCanAdd=_group.get('whoCanAdd', ''), whoCanJoin=_group.get('whoCanJoin', ''), whoCanViewMembership=_group.get('whoCanViewMembership', ''), whoCanViewGroup=_group.get('whoCanViewGroup', ''), whoCanInvite=_group.get('whoCanInvite', ''), allowExternalMembers=_group.get('allowExternalMembers', ''), whoCanPostMessage=_group.get('whoCanPostMessage', ''), allowWebPosting=_group.get('allowWebPosting', ''), primaryLanguage=_group.get('primaryLanguage', ''), maxMessageBytes=_group.get('maxMessageBytes', ''), isArchived=_group.get('isArchived', ''), archiveOnly=_group.get('archiveOnly', ''), messageModerationLevel=_group.get('messageModerationLevel', ''), spamModerationLevel=_group.get('spamModerationLevel', ''), replyTo=_group.get('replyTo', ''), customReplyTo=_group.get('customReplyTo', ''), includeCustomFooter=_group.get('includeCustomFooter', ''), customFooterText=_group.get('customFooterText', ''), sendMessageDenyNotification=_group.get('sendMessageDenyNotification', ''), defaultMessageDenyNotificationText=_group.get('defaultMessageDenyNotificationText', ''), showInGroupDirectory=_group.get('showInGroupDirectory', ''), allowGoogleCommunication=_group.get('allowGoogleCommunication', ''), membersCanPostAsTheGroup=_group.get('membersCanPostAsTheGroup', ''), messageDisplayFont=_group.get('messageDisplayFont', ''), includeInGlobalAddressList=_group.get('includeInGlobalAddressList', ''), whoCanLeaveGroup=_group.get('whoCanLeaveGroup', ''), whoCanContactOwner=_group.get('whoCanContactOwner', ''), whoCanAddReferences=_group.get('whoCanAddReferences', ''), whoCanAssignTopics=_group.get('whoCanAssignTopics', ''), whoCanUnassignTopic=_group.get('whoCanUnassignTopic', ''), whoCanTakeTopics=_group.get('whoCanTakeTopics', ''), whoCanMarkDuplicate=_group.get('whoCanMarkDuplicate', ''), whoCanMarkNoResponseNeeded=_group.get('whoCanMarkNoResponseNeeded', ''), whoCanMarkFavoriteReplyOnAnyTopic=_group.get('whoCanMarkFavoriteReplyOnAnyTopic', ''), whoCanMarkFavoriteReplyOnOwnTopic=_group.get('whoCanMarkFavoriteReplyOnOwnTopic', ''), whoCanUnmarkFavoriteReplyOnAnyTopic=_group.get('whoCanUnmarkFavoriteReplyOnAnyTopic', ''), whoCanEnterFreeFormTags=_group.get('whoCanEnterFreeFormTags', ''), whoCanModifyTagsAndCategories=_group.get('whoCanModifyTagsAndCategories', ''), favoriteRepliesOnTop=_group.get('favoriteRepliesOnTop', ''), whoCanApproveMembers=_group.get('whoCanApproveMembers', ''), whoCanBanUsers=_group.get('whoCanBanUsers', ''), whoCanModifyMembers=_group.get('whoCanModifyMembers'), whoCanApproveMessages=_group.get('whoCanApproveMessages', ''), whoCanDeleteAnyPost=_group.get('whoCanDeleteAnyPost', ''), whoCanDeleteTopics=_group.get('whoCanDeleteTopics', ''), whoCanLockTopics=_group.get('whoCanLockTopics', ''), whoCanMoveTopicsIn=_group.get('whoCanMoveTopicsIn', ''), whoCanMoveTopicsOut=_group.get('whoCanMoveTopicsOut', ''), whoCanPostAnnouncements=_group.get('whoCanPostAnnouncements', ''), whoCanHideAbuse=_group.get('whoCanHideAbuse', ''), whoCanMakeTopicsSticky=_group.get('whoCanMakeTopicsSticky', ''), whoCanModerateMembers=_group.get('whoCanModerateMembers', ''), whoCanModerateContent=_group.get('whoCanModerateContent', ''), whoCanAssistContent=_group.get('whoCanAssistContent', ''), customRolesEnabledForSettingsToBeMerged=_group.get('customRolesEnabledForSettingsToBeMerged', ''), enableCollaborativeInbox=_group.get('enableCollaborativeInbox', ''), whoCanDiscoverGroup=_group.get('whoCanDiscoverGroup', ''))]
@@ -221,6 +222,10 @@ class Migrate:
 				groups_to_update += data
 			else:
 				groups_to_insert += data 
+
+		if len(error_emails):
+			send_email('-- error happened while retrieving group settings for ' + ', '.join(error_emails), TITLE)
+
 		try:
 			stmt = groups_table.update().\
 			    where(groups_table.c.email == bindparam('email')).\
@@ -303,7 +308,7 @@ class Migrate:
 					self.connection.execute(stmt, groups_to_update)
 		except Exception as E:
 			print(E)
-			# send_email('-- error happened while creating groups table from google groups ' + str(E), TITLE)
+			send_email('-- error happened while creating groups table from google groups ' + str(E), TITLE)
 		
 
 	def migrate_users(self):
