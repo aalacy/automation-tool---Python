@@ -12,15 +12,18 @@ TO_EMAIL = 'martin@revampcybersecurity.com'
 def send_email(text, title, to_email='martin@revampcybersecurity.com'):
 	msg_body = '<strong>{} at {}</strong>'.format(text,  date.now().strftime("%Y-%m-%d %H:%M:%S"))
 	message = Mail(
-		from_email='report@revamp.com',
-		to_emails=to_email,
-		subject=title,
-		html_content=msg_body)
+	    from_email='report@revamp.com',
+	    to_emails=TO_EMAIL,
+	    subject=title,
+	    html_content=msg_body)
 	try:
-		sg = SendGridAPIClient(SENDGRID_API_KEY)
-		response = sg.send(message)
+	    sg = SendGridAPIClient(SENDGRID_API_KEY)
+	    response = sg.send(message)
+	    print(response.status_code)
+	    print(response.body)
+	    print(response.headers)
 	except Exception as e:
-		print(str(e))
+	    print(str(e))
 
 def send_email_by_template(template_id='d-a1b7b69d690241fd9b20f78d76518b0b', to_email='mscott@grove.co', from_email='login@revampcybersecurity.com', title='Users from query', email_list='', from_user="Revamp Cybersecurity"):
 	message = Mail(
@@ -31,7 +34,7 @@ def send_email_by_template(template_id='d-a1b7b69d690241fd9b20f78d76518b0b', to_
 	message.template_id = template_id
 	if email_list:
 		message.dynamic_template_data = {
-			'email_list': email_list
+		    'email_list': email_list
 		}
 
 	try:
@@ -72,10 +75,10 @@ def send_email_with_attachment(template_id='d-8b6655afc0de466eb5b5b856b55a959d',
 
 def send_email_with_attachment_general(to_email='crm@revampcybersecurity.com', from_email='info@revampcybersecurity.com', data="", html=''):
 	message = Mail(
-		from_email=from_email,
-		to_emails=to_email,
-		subject='Attachment',
-		html_content=html
+	    from_email=from_email,
+	    to_emails=to_email,
+	    subject='Attachment',
+	    html_content=html
 	)
 	# file_path = 'data/allcompanies.csv'
 	# data = ''
