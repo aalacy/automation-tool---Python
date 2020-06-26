@@ -108,7 +108,6 @@ def get_groups():
     nextPageToken = None
     try:
         while True:
-            pdb.set_trace()
             group_results = g_service.groups().list(customer='my_customer', maxResults=100,
                                          domain='grove.co', pageToken=nextPageToken).execute()
             # users = results.get('users', [])
