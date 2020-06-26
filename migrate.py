@@ -386,7 +386,7 @@ class Migrate:
 
 		except Exception as E:
 			print(E);
-			# send_email('-- error happened while creating users table from gsuite users and bamboo' + str(E), TITLE)
+			send_email('-- error happened while creating users table from gsuite users and bamboo' + str(E), TITLE)
 
 	def notify_users_from_query(self):
 		query = "SELECT email FROM users WHERE location LIKE '%/%'"

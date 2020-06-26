@@ -26,6 +26,7 @@ class GSuite:
 
 	# Path to the Service Account's Private Key file
 	SERVICE_ACCOUNT_PKCS12_FILE_PATH = './data/gamproject.p12'
+	SERVICE_ACCOUNT_JSON_FILE_PATH = './data/revamp-cyber-a59c90daeb09.json'
 
 	# The email of the user. Needs permissions to access the Admin APIs.
 	USER_EMAIL =  'it-software@grove.co'
@@ -34,17 +35,14 @@ class GSuite:
 
 	def __init__(self):
 		print('... loading credentials ....')
-		credentials = ServiceAccountCredentials.from_p12_keyfile(
-		        self.SERVICE_ACCOUNT_EMAIL,
-		        self.SERVICE_ACCOUNT_PKCS12_FILE_PATH,
-		        'notasecret',
-		        scopes=[
-		            'https://www.googleapis.com/auth/admin.directory.user', 
-		            'https://www.googleapis.com/auth/admin.directory.group',
-		            'https://www.googleapis.com/auth/admin.directory.device.mobile'
-		        ])
-
-		credentials = credentials.create_delegated(self.USER_EMAIL)
+		credentials = service_account.Credentials.from_service_account_file(
+		    self.SERVICE_ACCOUNT_JSON_FILE_PATH,
+		    scopes=[
+		        'https://www.googleapis.com/auth/admin.directory.user', 
+	            'https://www.googleapis.com/auth/admin.directory.group',
+	            'https://www.googleapis.com/auth/admin.directory.device.mobile'
+		    ],
+		    subject=self.USER_EMAIL)
 
 		self.g_service = build('admin', 'directory_v1', credentials=credentials)
 
@@ -99,6 +97,9 @@ class GSuite:
 		except Exception as E:
 			send_email('Issue report on g_mobile.py', '--- error happened while populating the gsuite mobile devices ----' + str(E))
 
+	def clear_db(self):
+		self.connection.execute('DELETE FROM gsuite_devices;')
+
 	# populate the device data into gsuite_devices table
 	def populate_data(self):
 		try:
@@ -112,5 +113,7 @@ if __name__ == '__main__':
 	gsuite = GSuite()
 
 	gsuite.get_devices()
+
+	gsuite.clear_db()
 
 	gsuite.populate_data()

@@ -1,15 +1,17 @@
 import os, re, sys
 import pdb
 from google.oauth2 import service_account
-from googleapiclient.discovery import build
+from googleapicli
 import csv
 from datetime import datetime
+from dotenv import load_dotenv
 import json
 import argparse
 
 from mail import send_email_with_attachment_general
 from util import encode_csv_data
 
+load_dotenv()
 # local paths
 BASE_PATH = os.path.abspath(os.curdir)
 # BASE_PATH = '/home/johnathanstv/automation'

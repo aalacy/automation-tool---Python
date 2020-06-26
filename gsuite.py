@@ -20,30 +20,31 @@ SERVICE_ACCOUNT_EMAIL = 'it-software@gamproject-261122.iam.gserviceaccount.com'
 
 # Path to the Service Account's Private Key file
 SERVICE_ACCOUNT_PKCS12_FILE_PATH = BASE_PATH + '/data/gamproject.p12'
-SERVICE_ACCOUNT_JSON_FILE_PATH = BASE_PATH + '/data/revamp-cyber-9f29ffce52fb.json'
+SERVICE_ACCOUNT_JSON_FILE_PATH = BASE_PATH + '/data/revamp-cyber-a59c90daeb09.json'
 
 # The email of the user. Needs permissions to access the Admin APIs.
 USER_EMAIL =  'it-software@grove.co'
 
 print('... loading credentials ....')
-credentials = ServiceAccountCredentials.from_p12_keyfile(
-        SERVICE_ACCOUNT_EMAIL,
-        SERVICE_ACCOUNT_PKCS12_FILE_PATH,
-        'notasecret',
-        scopes=[
-            'https://www.googleapis.com/auth/admin.directory.user', 
-            'https://www.googleapis.com/auth/admin.directory.group'
-        ])
+# credentials = ServiceAccountCredentials.from_p12_keyfile(
+#         SERVICE_ACCOUNT_EMAIL,
+#         SERVICE_ACCOUNT_PKCS12_FILE_PATH,
+#         'notasecret',
+#         scopes=[
+#             'https://www.googleapis.com/auth/admin.directory.user', 
+#             'https://www.googleapis.com/auth/admin.directory.group'
+#         ])
 
-credentials = credentials.create_delegated(USER_EMAIL)
+# credentials = credentials.create_delegated(USER_EMAIL)
 
-# credentials = service_account.Credentials.from_service_account_file(
-#     SERVICE_ACCOUNT_JSON_FILE_PATH,
-#     scopes=[
-#         'https://www.googleapis.com/auth/admin.directory.user', 
-#         'https://www.googleapis.com/auth/admin.directory.group'
-#     ],
-#     subject=USER_EMAIL)
+credentials = service_account.Credentials.from_service_account_file(
+    SERVICE_ACCOUNT_JSON_FILE_PATH,
+    scopes=[
+        'https://www.googleapis.com/auth/admin.directory.user', 
+        'https://www.googleapis.com/auth/admin.directory.group'
+    ],
+    subject=USER_EMAIL)
+
 
 g_service = build('admin', 'directory_v1', credentials=credentials)
 
@@ -71,6 +72,7 @@ def get_users():
     nextPageToken = None
     try:
         while True:
+            pdb.set_trace()
             user_results = g_service.users().list(customer='my_customer', maxResults=100,
                                          pageToken=nextPageToken).execute()
             users = user_results.get('users', [])
@@ -87,6 +89,7 @@ def get_users():
         cursor.executemany(query, user_list)
         db.commit()
     except Exception as E:
+        print(E)
         send_email('Issue report on gsuite.py', '--- error happened while populating the gsuite users ----' + str(E))
 
 def get_groups():
@@ -105,6 +108,7 @@ def get_groups():
     nextPageToken = None
     try:
         while True:
+            pdb.set_trace()
             group_results = g_service.groups().list(customer='my_customer', maxResults=100,
                                          domain='grove.co', pageToken=nextPageToken).execute()
             # users = results.get('users', [])
