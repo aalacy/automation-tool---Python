@@ -62,6 +62,7 @@ class GSuite:
 		self.gsuite_devices = Table(
 			'gsuite_devices', 
 			metadata,
+			Column('id', Integer, primary_key=True),
 			Column('kind', String(512)),
 			Column('resourceId', String(512)),
 			Column('deviceId', String(512)),
@@ -75,6 +76,7 @@ class GSuite:
 			Column('firstsync', String(512)),
 			Column('lastsync', String(512)),
 			Column('useragent', String(512)),
+			Column('company_id', String(512)),
 			Column('run_at', String(256))
 		)
 
@@ -89,7 +91,7 @@ class GSuite:
 				device_results = self.g_service.mobiledevices().list(customerId='my_customer', pageToken=nextPageToken).execute()
 				devices = device_results.get('mobiledevices', [])
 				for device in devices:
-					self.data_insert += [dict(kind=device.get('kind'), resourceId=device.get('resourceId'), deviceId=device.get('deviceId'), name=', '.join(device.get('name')), email=', '.join(device.get('email')), model=device.get('model'), os=device.get('os'), type=device.get('type'), status=device.get('status'), hardwareId=device.get('hardwareId', ''), firstsync=device.get('firstSync'), lastsync=device.get('lastSync'), useragent=device.get('userAgent'), run_at=run_at)]
+					self.data_insert += [dict(kind=device.get('kind'), resourceId=device.get('resourceId'), deviceId=device.get('deviceId'), name=', '.join(device.get('name')), email=', '.join(device.get('email')), model=device.get('model'), os=device.get('os'), type=device.get('type'), status=device.get('status'), hardwareId=device.get('hardwareId', ''), firstsync=device.get('firstSync'), lastsync=device.get('lastSync'), useragent=device.get('userAgent'), run_at=run_at, company_id='')]
 					
 				if 'nextPageToken' in device_results:
 					nextPageToken = device_results['nextPageToken']
