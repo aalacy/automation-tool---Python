@@ -63,11 +63,11 @@ groups_table = Table('groups', metadata,
 	Column('_id', Integer, primary_key=True),
 	Column('email', String(256)),
 	Column('name', String(256)),
-	Column('description', Text),
+	Column('description', Text()),
 	Column('id', String(256)),
 	Column('aliases', String(256)),
 	Column('members_count', Integer),
-	Column('members', String(256)),
+	Column('members', Text()),
 	Column('kind', String(256)),
 	Column('whoCanAdd', String(256)),
 	Column('whoCanJoin', String(256)),
@@ -413,4 +413,4 @@ if __name__ == '__main__':
     # obj.notify_users_from_query()
 
     print('.... create groups table .....')
-    # obj.migrate_grouproups()
+    obj.migrate_grouproups()

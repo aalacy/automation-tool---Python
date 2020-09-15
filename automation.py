@@ -24,8 +24,18 @@ import time
 import threading
 from pyvirtualdisplay import Display
 import shlex, subprocess
+import logging
 
 from mail import send_email
+
+logging.basicConfig(
+	filename='automation.log',
+	level=logging.DEBUG,
+	format="%(asctime)s:%(levelname)s:%(message)s"
+)
+
+USER_NAME = 'root'
+PASSWORD = '12345678'
 
 ###
 # Zoho -> Application -> Slack, Dropbox, Bamboo, 
@@ -102,9 +112,9 @@ class Automation:
 		
 		# initialize selenium
 		# windows
-		# option = webdriver.ChromeOptions()
+		option = webdriver.ChromeOptions()
 		# option.add_argument('--no-sandbox')
-		# self.driver = webdriver.Chrome(executable_path= self.BASE_PATH + '/data/chromedriver.exe', chrome_options=option)
+		self.driver = webdriver.Chrome(executable_path= self.BASE_PATH + '/data/chromedriver.exe', chrome_options=option)
 		    
 	# common functions
 	def bamboo_valiate(self, val):
@@ -116,7 +126,8 @@ class Automation:
 		return res
 
 	def d_log(self, err):
-		self.log.write(err + ' __at__' + date.now().strftime("%Y-%m-%d %H:%M:%S") + '\n')
+		# self.log.write(err + ' __at__' + date.now().strftime("%Y-%m-%d %H:%M:%S") + '\n')
+		logging.warning(str(err))
 
 	# Zoho api to get the company table
 	def init_zoho(self):
@@ -132,36 +143,50 @@ class Automation:
 		WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.ID, "password"))).send_keys(self.ZOHO_PW)
 		WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.ID, "nextbtn"))).click()
 		time.sleep(3)
-		params = urlparse(self.driver.current_url)
-		code = params.query.split('&')[0].split('=')[1]
-
-		print('*** zoho access code *** ', code)
-
-		# Generate token
-		data = {
-			'grant_type': 'authorization_code',
-			'client_id': self.ZOHO_Client_ID,
-			'client_secret': self.ZOHO_Client_Secret,
-			'redirect_uri': 'https://www.revampcybersecurity.com/',
-			'code': code
-		}
-		res_token =  self.session.post(url = self.ZOHO_TOKEN_URL, data = data).text
-		time.sleep(1)
-		res_token = json.loads(res_token)
-		self.zoho_access_token = res_token['access_token']
-		print('*** zoho access token *** ', self.zoho_access_token)
 		try:
-			self.zoho_refresh_token = res_token['refresh_token']
+			# confirm timezone
+			WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "update_profile"))).click()
+			time.sleep(2)
 		except:
-			self.d_log('log in zoho no refresh token' + json.dumps(res_token))
+			pass
 
-		print('**** close selenium driver ****')
-		# Logout browser to delete the active session
-		self.driver.get('https://accounts.zoho.com/logout')
-		time.sleep(2)
-		self.driver.close()
+		try:
+			# click accept button
+			self.driver.execute_script("submitApproveForm()")
+			time.sleep(3)
+		except:
+			pass
 
-		self.populate_leads_from_zoho()
+		try:
+			params = urlparse(self.driver.current_url)
+			code = params.query.split('&')[0].split('=')[1]
+
+			print('*** zoho access code *** ', code)
+
+			# Generate token
+			data = {
+				'grant_type': 'authorization_code',
+				'client_id': self.ZOHO_Client_ID,
+				'client_secret': self.ZOHO_Client_Secret,
+				'redirect_uri': 'https://www.revampcybersecurity.com/',
+				'code': code
+			}
+			res_token =  self.session.post(url = self.ZOHO_TOKEN_URL, data = data).text
+			time.sleep(1)
+			res_token = json.loads(res_token)
+			self.zoho_access_token = res_token['access_token']
+			print('*** zoho access token *** ', self.zoho_access_token)
+			self.zoho_refresh_token = res_token['refresh_token']
+			print('**** close selenium driver ****')
+			# Logout browser to delete the active session
+			self.driver.get('https://accounts.zoho.com/logout')
+			time.sleep(2)
+
+			self.driver.close()
+			self.populate_leads_from_zoho()
+		except:
+			self.d_log('log in zoho no refresh token')
+			self.driver.close()
 
 	# Refresh Zoho token
 	def refresh_zoho_token(self):
@@ -183,8 +208,8 @@ class Automation:
 				break
 		db= mysql.connect(
 		    host = "localhost",
-		    user = "root",
-		    passwd = "",
+		    user = USER_NAME,
+		    passwd = PASSWORD,
 		    database = "revamp"
 		)
 		cursor = db.cursor()
@@ -479,13 +504,13 @@ class Automation:
 		# dropbox_thread.start()
 
 		# # zoho crm 
-		# zoho_thread = threading.Thread(target=self.init_zoho)
-		# zoho_thread.start()
+		zoho_thread = threading.Thread(target=self.init_zoho)
+		zoho_thread.start()
 
 		# slack api
 		# slack_thread = threading.Thread(target=self.populate_slack)
 		# slack_thread.start()
-		self.populate_slack()
+		# self.populate_slack()
 
 		#bamboo api
 		# bamboo_thread = threading.Thread(target=self.populate_bamboo)

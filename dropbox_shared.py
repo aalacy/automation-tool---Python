@@ -1,3 +1,27 @@
+#!/bin/usr/env python3
+
+'''
+	@Purpose
+		Read the list of shared links inside the given dropbox account
+
+	@ table Structure
+		name: directories
+		fields: url, description, website
+
+	@List
+		https://www.ganjapreneur.com/businesses/ - done
+		https://industrydirectory.mjbizdaily.com/ - done
+		https://www.medicaljane.com/directory/ - done
+		http://business.sfchamber.com/list - done
+		https://www.alignable.com/fremont-ca/directory - done
+
+	@param: 
+		-k: the name of childscraper. e.g, ganjapreneur from https://www.ganjapreneur.com/businesses/
+
+	e.g.
+		python3 dirscraper.py -k ganjapreneur
+'''
+
 from datetime import datetime
 import json
 import re
@@ -18,7 +42,7 @@ class Dropbox:
 		self.session = requests.Session()
 
 	def _get_folders(self, folders):
-		pdb.set_trace()
+		pass
 
 	def read_links(self):
 		try:
@@ -48,7 +72,6 @@ class Dropbox:
 
 		except Exception as E:
 			print(E)
-			pdb.set_trace()
 
 
 if __name__ == '__main__':
