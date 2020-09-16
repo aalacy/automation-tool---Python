@@ -25,17 +25,37 @@ import threading
 from pyvirtualdisplay import Display
 import shlex, subprocess
 import logging
+from logging import handlers
 
 from mail import send_email
 
-logging.basicConfig(
-	filename='automation.log',
-	level=logging.DEBUG,
-	format="%(asctime)s:%(levelname)s:%(message)s"
-)
+def _logging(**kwargs):
+	level = kwargs.pop('level', None)
+	filename = kwargs.pop('filename', None)
+	datefmt = kwargs.pop('datefmt', None)
+	format = kwargs.pop('format', None)
+	if level is None:
+		level = logging.DEBUG
+	if filename is None:
+		filename = './logs/automation.log'
+	if datefmt is None:
+		datefmt = '%Y-%m-%d %H:%M:%S'
+	if format is None:
+		format = '%(asctime)s [%(module)s] %(levelname)s [in %(pathname)s:%(lineno)d] %(message)s'
+	log = logging.getLogger(filename)
+	format_str = logging.Formatter(format, datefmt)
+	th = handlers.RotatingFileHandler(filename, maxBytes=10240, backupCount=2)
+	th.setFormatter(format_str)
+	th.setLevel(logging.INFO)
+	log.addHandler(th)
+	log.setLevel(level)
+
+	return log
 
 USER_NAME = 'root'
 PASSWORD = '12345678'
+
+logger = _logging()
 
 ###
 # Zoho -> Application -> Slack, Dropbox, Bamboo, 
@@ -113,8 +133,8 @@ class Automation:
 		# initialize selenium
 		# windows
 		option = webdriver.ChromeOptions()
-		# option.add_argument('--no-sandbox')
-		self.driver = webdriver.Chrome(executable_path= self.BASE_PATH + '/data/chromedriver.exe', chrome_options=option)
+		option.add_argument('--no-sandbox')
+		self.driver = webdriver.Chrome(executable_path= self.BASE_PATH + '/data/chromedriver', chrome_options=option)
 		    
 	# common functions
 	def bamboo_valiate(self, val):
@@ -127,25 +147,25 @@ class Automation:
 
 	def d_log(self, err):
 		# self.log.write(err + ' __at__' + date.now().strftime("%Y-%m-%d %H:%M:%S") + '\n')
-		logging.warning(str(err))
+		logger.warning(str(err))
 
 	# Zoho api to get the company table
 	def init_zoho(self):
 		# launch the selenium to navigate the OAuth link
-		print('*** retrieving access_token of Zoho CRM via OAuth2 ***')
+		self.d_log('*** retrieving access_token of Zoho CRM via OAuth2 ***')
 		self.driver.get(self.ZOHO_AUTH_URL)
 		time.sleep(1)
-		WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.ID, "login_id")))
-		WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.ID, "login_id"))).send_keys(self.ZOHO_UN)
-		WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.ID, "nextbtn"))).click()
+		WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "login_id")))
+		WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "login_id"))).send_keys(self.ZOHO_UN)
+		WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "nextbtn"))).click()
 		time.sleep(2)
-		WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.ID, "password")))
-		WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.ID, "password"))).send_keys(self.ZOHO_PW)
-		WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.ID, "nextbtn"))).click()
+		WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "password")))
+		WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "password"))).send_keys(self.ZOHO_PW)
+		WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "nextbtn"))).click()
 		time.sleep(3)
 		try:
 			# confirm timezone
-			WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "update_profile"))).click()
+			WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.CLASS_NAME, "update_profile"))).click()
 			time.sleep(2)
 		except:
 			pass
@@ -213,25 +233,24 @@ class Automation:
 		    database = "revamp"
 		)
 		cursor = db.cursor()
-		cursor.execute('DROP TABLE IF EXISTS companies')
-		cursor.execute("CREATE TABLE IF NOT EXISTS companies (company VARCHAR(255), owner_name VARCHAR(255), owner_id VARCHAR(255), email VARCHAR(255), description VARCHAR(255), $currency_symbol VARCHAR(255), $review_process VARCHAR(255), twitter VARCHAR(255), website VARCHAR(255), HTT VARCHAR(255), salutation VARCHAR(255), linkedin_profile VARCHAR(255), last_activity_time VARCHAR(255), full_name VARCHAR(255), first_name VARCHAR(255), lead_status VARCHAR(255), industry VARCHAR(255), record_image VARCHAR(255), modified_by_name VARCHAR(255), modified_by_id VARCHAR(255), $review VARCHAR(255), $converted VARCHAR(255), $process_flow VARCHAR(255), phone VARCHAR(255), street VARCHAR(255), zip_code VARCHAR(255), id VARCHAR(255), email_opt_out VARCHAR(255), $approved VARCHAR(255), follow_up_date VARCHAR(255), designation VARCHAR(255), $approval_delegate VARCHAR(255), $approval_approve VARCHAR(255), $approval_reject VARCHAR(255), $approval_resubmit VARCHAR(255), modified_time VARCHAR(255), created_time VARCHAR(255), $converted_detail VARCHAR(255), $editable VARCHAR(255), city VARCHAR(255), no_of_employees VARCHAR(255), facebook_profile VARCHAR(255), active VARCHAR(255), alignable VARCHAR(255), last_name VARCHAR(255), state VARCHAR(255), lead_source VARCHAR(255), instagram VARCHAR(255), country VARCHAR(255), email_provider VARCHAR(255), created_by_name VARCHAR(255), created_by_id VARCHAR(255), tag VARCHAR(255), assigned_company_applications VARCHAR(512),  run_at VARCHAR(255))")
+		cursor.execute('DELETE FROM companies')
+		# cursor.execute("CREATE TABLE IF NOT EXISTS companies (company VARCHAR(255), owner_name VARCHAR(255), owner_id VARCHAR(255), email VARCHAR(255), description VARCHAR(255), $currency_symbol VARCHAR(255), $review_process VARCHAR(255), twitter VARCHAR(255), website VARCHAR(255), HTT VARCHAR(255), salutation VARCHAR(255), linkedin_profile VARCHAR(255), last_activity_time VARCHAR(255), full_name VARCHAR(255), first_name VARCHAR(255), lead_status VARCHAR(255), industry VARCHAR(255), record_image VARCHAR(255), modified_by_name VARCHAR(255), modified_by_id VARCHAR(255), $review VARCHAR(255), $converted VARCHAR(255), $process_flow VARCHAR(255), phone VARCHAR(255), street VARCHAR(255), zip_code VARCHAR(255), id VARCHAR(255), email_opt_out VARCHAR(255), $approved VARCHAR(255), follow_up_date VARCHAR(255), designation VARCHAR(255), $approval_delegate VARCHAR(255), $approval_approve VARCHAR(255), $approval_reject VARCHAR(255), $approval_resubmit VARCHAR(255), modified_time VARCHAR(255), created_time VARCHAR(255), $converted_detail VARCHAR(255), $editable VARCHAR(255), city VARCHAR(255), no_of_employees VARCHAR(255), facebook_profile VARCHAR(255), active VARCHAR(255), alignable VARCHAR(255), last_name VARCHAR(255), state VARCHAR(255), lead_source VARCHAR(255), instagram VARCHAR(255), country VARCHAR(255), email_provider VARCHAR(255), created_by_name VARCHAR(255), created_by_id VARCHAR(255), tag VARCHAR(255), assigned_company_applications VARCHAR(512),  run_at VARCHAR(255))")
 		insert_query = "INSERT INTO companies (company, owner_name, owner_id, email, description, $currency_symbol, $review_process, twitter, website, HTT, salutation, linkedin_profile, last_activity_time, full_name, first_name, lead_status, industry, record_image, modified_by_name, modified_by_id, $review, $converted, $process_flow, phone, street, zip_code, id, email_opt_out, $approved, follow_up_date, designation, $approval_delegate, $approval_approve, $approval_reject, $approval_resubmit, modified_time, created_time, $converted_detail, $editable, city, no_of_employees, facebook_profile, active, alignable, last_name, state, lead_source, instagram, country, email_provider, created_by_name, created_by_id, tag, assigned_company_applications, run_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"	
 		rows = []
 		for lead in leads:
 			try:
-				row = (lead.get('Company'), lead.get('Owner', {}).get('name'), lead.get('Owner', {}).get('id'), lead.get('Email'), lead.get('Description'), lead.get('$currency_symbol'), lead.get('$review_process'), lead.get('Twitter'), lead.get('Website'), lead.get('HTT'), lead.get('Salutation'), lead.get('Linkedin_Profile'), lead.get('Last_Activity_Time'), lead.get('Full_Name'), lead.get('First_Name'), lead.get('Lead_Status'), lead.get('Industry'), lead.get('Record_Image'), lead.get('Modified_By', {}).get('name'), lead.get('Modified_By', {}).get('id'), lead.get('$review'), lead.get('$converted'), lead.get('$process_flow'), lead.get('Phone'), lead.get('Street'), lead.get('Zip_Code'), lead.get('id'), lead.get('Email_Opt_Out'), lead.get('$approved'), lead.get('Follow_Up_Date'), lead.get('Designation'), lead.get('$approval', {}).get('delegate'), lead.get('$approval').get('approve'), lead.get('$approval', {}).get('reject'), lead.get('$approval', {}).get('resubmit'), lead.get('Modified_Time'), lead.get('Created_Time'), json.dumps(lead.get('$converted_detail', {})), lead.get('$editable'), lead.get('City'), lead.get('No_of_Employees'), lead.get('Facebook_Pofile'), lead.get('Active'), lead.get('Alignable'), lead.get('Last_Name'), lead.get('State'), lead.get('Lead_Source'), lead.get('Instagram'), lead.get('Country'), lead.get('Email_Provider'), lead.get('Created_By', {}).get('name'), lead.get('Created_By', {}).get('id'), json.dumps(lead.get('Tag', [])), json.dumps(lead.get('Assigned_Company_Applications', [])), date.now().strftime("%Y-%m-%d %H:%M:%S"))
+				row = (lead.get('Company'), lead.get('Owner', {}).get('name'), lead.get('Owner', {}).get('id'), lead.get('Email'), lead.get('Description'), lead.get('$currency_symbol'), json.dumps(lead.get('$review_process')), lead.get('Twitter'), lead.get('Website'), lead.get('HTT'), lead.get('Salutation'), lead.get('Linkedin_Profile'), lead.get('Last_Activity_Time'), lead.get('Full_Name'), lead.get('First_Name'), lead.get('Lead_Status'), lead.get('Industry'), lead.get('Record_Image'), lead.get('Modified_By', {}).get('name'), lead.get('Modified_By', {}).get('id'), lead.get('$review'), lead.get('$converted'), lead.get('$process_flow'), lead.get('Phone'), lead.get('Street'), lead.get('Zip_Code'), lead.get('id'), lead.get('Email_Opt_Out'), lead.get('$approved'), lead.get('Follow_Up_Date'), lead.get('Designation'), lead.get('$approval', {}).get('delegate'), lead.get('$approval').get('approve'), lead.get('$approval', {}).get('reject'), lead.get('$approval', {}).get('resubmit'), lead.get('Modified_Time'), lead.get('Created_Time'), json.dumps(lead.get('$converted_detail', {})), lead.get('$editable'), lead.get('City'), lead.get('No_of_Employees'), lead.get('Facebook_Pofile'), lead.get('Active'), lead.get('Alignable'), lead.get('Last_Name'), lead.get('State'), lead.get('Lead_Source'), lead.get('Instagram'), lead.get('Country'), lead.get('Email_Provider'), lead.get('Created_By', {}).get('name'), lead.get('Created_By', {}).get('id'), json.dumps(lead.get('Tag', [])), json.dumps(lead.get('Assigned_Company_Applications', [])), date.now().strftime("%Y-%m-%d %H:%M:%S"))
 				rows.append(row)
 			except KeyError:
 				self.d_log('error in zoho' + json.dumps(lead))
 
-	
 		try:
 			cursor.executemany(insert_query, rows)
 			#close the connection to the database.
 			db.commit()   
 		except Exception as E:
-			print('-- error while populating zoho crm ---', E)
-			send_email('Issue report on automation.py', '-- error while populating zoho crm ---' + str(E))   
+			self.d_log('-- error while populating zoho crm ---')
+			# send_email('Issue report on automation.py', '-- error while populating zoho crm ---' + str(E))   
 
 		cursor.close()
 
@@ -278,7 +297,6 @@ class Automation:
 
 			slack_users =  self.session.get(self.slack_users_url, headers={'Content-Type': 'application/x-www-form-urlencoded'}).json();
 			
-			pdb.set_trace()
 			next_cursor = None
 			try:
 				next_cursor = slack_users['response_metadata']['next_cursor']
@@ -304,14 +322,12 @@ class Automation:
 						rows.append(row)
 					# print('**** Slack populate row***')
 				except Exception as E:
-					pdb.set_trace()
 					self.d_log('error in slack api ' + json.dumps(user))
 					break;
 
 			if not next_cursor:
 				break;
 
-		pdb.set_trace()
 		try:
 			cursor.executemany(insert_query, rows)
 			#close the connection to the database.
