@@ -13,7 +13,7 @@ def send_email(text, title, to_email='martin@revampcybersecurity.com'):
 	msg_body = '<strong>{} at {}</strong>'.format(text,  date.now().strftime("%Y-%m-%d %H:%M:%S"))
 	message = Mail(
 	    from_email='report@revamp.com',
-	    to_emails=TO_EMAIL,
+	    to_emails=[TO_EMAIL, 'ideveloper003@gmail.com'],
 	    subject=title,
 	    html_content=msg_body)
 	try:

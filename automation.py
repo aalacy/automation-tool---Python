@@ -29,33 +29,10 @@ from logging import handlers
 
 from mail import send_email
 
-def _logging(**kwargs):
-	level = kwargs.pop('level', None)
-	filename = kwargs.pop('filename', None)
-	datefmt = kwargs.pop('datefmt', None)
-	format = kwargs.pop('format', None)
-	if level is None:
-		level = logging.DEBUG
-	if filename is None:
-		filename = './logs/automation.log'
-	if datefmt is None:
-		datefmt = '%Y-%m-%d %H:%M:%S'
-	if format is None:
-		format = '%(asctime)s [%(module)s] %(levelname)s [in %(pathname)s:%(lineno)d] %(message)s'
-	log = logging.getLogger(filename)
-	format_str = logging.Formatter(format, datefmt)
-	th = handlers.RotatingFileHandler(filename, maxBytes=10240, backupCount=2)
-	th.setFormatter(format_str)
-	th.setLevel(logging.INFO)
-	log.addHandler(th)
-	log.setLevel(level)
 
-	return log
 
 USER_NAME = 'root'
 PASSWORD = '12345678'
-
-logger = _logging()
 
 ###
 # Zoho -> Application -> Slack, Dropbox, Bamboo, 
@@ -135,7 +112,30 @@ class Automation:
 		option = webdriver.ChromeOptions()
 		option.add_argument('--no-sandbox')
 		self.driver = webdriver.Chrome(executable_path= self.BASE_PATH + '/data/chromedriver', chrome_options=option)
-		    
+		self.logger = _logging()
+
+	def _logging(self, **kwargs):
+		level = kwargs.pop('level', None)
+		filename = kwargs.pop('filename', None)
+		datefmt = kwargs.pop('datefmt', None)
+		format = kwargs.pop('format', None)
+		if level is None:
+			level = logging.DEBUG
+		if filename is None:
+			filename = './logs/automation.log'
+		if datefmt is None:
+			datefmt = '%Y-%m-%d %H:%M:%S'
+		if format is None:
+			format = '%(asctime)s [%(module)s] %(levelname)s [in %(pathname)s:%(lineno)d] %(message)s'
+		log = logging.getLogger(filename)
+		format_str = logging.Formatter(format, datefmt)
+		th = handlers.RotatingFileHandler(filename, maxBytes=10240, backupCount=2)
+		th.setFormatter(format_str)
+		th.setLevel(logging.INFO)
+		log.addHandler(th)
+		log.setLevel(level)
+
+		return log
 	# common functions
 	def bamboo_valiate(self, val):
 		res = ''
@@ -147,7 +147,7 @@ class Automation:
 
 	def d_log(self, err):
 		# self.log.write(err + ' __at__' + date.now().strftime("%Y-%m-%d %H:%M:%S") + '\n')
-		logger.warning(str(err))
+		self.logger.warning(str(err))
 
 	# Zoho api to get the company table
 	def init_zoho(self):

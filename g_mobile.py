@@ -50,6 +50,8 @@ class GSuite:
 		# config
 		db_config = os.getenv('DATABASE')
 
+		self.company_id = USER_EMAIL.split('@')[1]
+
 		# set up engine for database
 		Base = declarative_base()
 		metadata = MetaData()
@@ -91,7 +93,7 @@ class GSuite:
 				device_results = self.g_service.mobiledevices().list(customerId='my_customer', pageToken=nextPageToken).execute()
 				devices = device_results.get('mobiledevices', [])
 				for device in devices:
-					self.data_insert += [dict(kind=device.get('kind'), resourceId=device.get('resourceId'), deviceId=device.get('deviceId'), name=', '.join(device.get('name')), email=', '.join(device.get('email')), model=device.get('model'), os=device.get('os'), type=device.get('type'), status=device.get('status'), hardwareId=device.get('hardwareId', ''), firstsync=device.get('firstSync'), lastsync=device.get('lastSync'), useragent=device.get('userAgent'), run_at=run_at, company_id='')]
+					self.data_insert += [dict(kind=device.get('kind'), resourceId=device.get('resourceId'), deviceId=device.get('deviceId'), name=', '.join(device.get('name')), email=', '.join(device.get('email')), model=device.get('model'), os=device.get('os'), type=device.get('type'), status=device.get('status'), hardwareId=device.get('hardwareId', ''), firstsync=device.get('firstSync'), lastsync=device.get('lastSync'), useragent=device.get('userAgent'), run_at=run_at, company_id=self.company_id)]
 					
 				if 'nextPageToken' in device_results:
 					nextPageToken = device_results['nextPageToken']
@@ -102,7 +104,7 @@ class GSuite:
 			send_email('Issue report on g_mobile.py', '--- error happened while populating the gsuite mobile devices ----' + str(E))
 
 	def clear_db(self):
-		self.connection.execute('DELETE FROM gsuite_devices;')
+		self.connection.execute(f"DELETE FROM gsuite_devices WHERE company_id='{self.company_id}';")
 
 	# populate the device data into gsuite_devices table
 	def populate_data(self):

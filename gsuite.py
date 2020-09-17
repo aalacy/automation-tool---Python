@@ -72,7 +72,6 @@ def get_users():
     nextPageToken = None
     try:
         while True:
-            pdb.set_trace()
             user_results = g_service.users().list(customer='my_customer', maxResults=100,
                                          pageToken=nextPageToken).execute()
             users = user_results.get('users', [])
