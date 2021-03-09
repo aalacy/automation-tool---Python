@@ -320,7 +320,7 @@ class Migrate:
 			migrate the users table from gsuite_users and bamboo users.
 			it also allows to make any change on the users table and only update fields from two tables
 		'''
-		result = self.connection.execute('SELECT firstname_lastname, email, company_id, is_forced_in_2sv, is_admin, org_unit_path, suspended, run_at FROM gsuite_users')
+		result = self.connection.execute('SELECT firstname_lastname, email, company_id, has_2fa, is_admin, org_unit_path, suspended, run_at FROM gsuite_users')
 		
 		query = 'SELECT DISTINCT department, job_title, email, company_id FROM general_bamboo' 
 		bamboo_list = self.connection.execute(query).fetchall()
@@ -358,7 +358,7 @@ class Migrate:
 					if user.email == _user['email']:
 						should_update = True
 				
-				data = [dict(firstname_lastname=user.firstname_lastname, email=user.email, gsuite_2fa=user.is_forced_in_2sv, gsuite_admin=user.is_admin, location=user.org_unit_path, email_not_active=user.suspended, department=department, job_title=job_title, run_at=self.run_at, company_id=user.company_id)]
+				data = [dict(firstname_lastname=user.firstname_lastname, email=user.email, gsuite_2fa=user.has_2fa, gsuite_admin=user.is_admin, location=user.org_unit_path, email_not_active=user.suspended, department=department, job_title=job_title, run_at=self.run_at, company_id=user.company_id)]
 
 				# Check if the user with this email already exist, if then, update it, if not insert new one
 				if should_update:

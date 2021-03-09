@@ -30,7 +30,6 @@ from logging import handlers
 from mail import send_email
 
 
-
 USER_NAME = 'root'
 PASSWORD = '12345678'
 
@@ -112,7 +111,7 @@ class Automation:
 		option = webdriver.ChromeOptions()
 		option.add_argument('--no-sandbox')
 		self.driver = webdriver.Chrome(executable_path= self.BASE_PATH + '/data/chromedriver', chrome_options=option)
-		self.logger = _logging()
+		self.logger = self._logging()
 
 	def _logging(self, **kwargs):
 		level = kwargs.pop('level', None)
