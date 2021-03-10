@@ -19,3 +19,4 @@ faster-than-requests
 python-dotenv
 urllib3
 dnspython
+python-decouple==3.4

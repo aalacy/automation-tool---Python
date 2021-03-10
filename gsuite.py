@@ -20,10 +20,10 @@ SERVICE_ACCOUNT_EMAIL = 'it-software@gamproject-261122.iam.gserviceaccount.com'
 
 # Path to the Service Account's Private Key file
 SERVICE_ACCOUNT_PKCS12_FILE_PATH = BASE_PATH + '/data/gamproject.p12'
-SERVICE_ACCOUNT_JSON_FILE_PATH = BASE_PATH + '/data/revamp-cyber-a59c90daeb09.json'
+SERVICE_ACCOUNT_JSON_FILE_PATH = BASE_PATH + '/data/dashboard-307119-062501c89725.json'
 
 # The email of the user. Needs permissions to access the Admin APIs.
-USER_EMAIL =  'it-software@grove.co'
+USER_EMAIL =  'security@petrellilaw.com'
 
 print('... loading credentials ....')
 # credentials = ServiceAccountCredentials.from_p12_keyfile(
@@ -74,6 +74,7 @@ def get_users():
         while True:
             user_results = g_service.users().list(customer='my_customer', maxResults=100,
                                          pageToken=nextPageToken).execute()
+            pdb.set_trace()
             users = user_results.get('users', [])
             for user in users:
                 aliases = ';'.join(user.get('aliases', []))

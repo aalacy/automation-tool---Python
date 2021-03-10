@@ -358,7 +358,7 @@ class Migrate:
 					if user.email == _user['email']:
 						should_update = True
 				
-				data = [dict(firstname_lastname=user.firstname_lastname, email=user.email, gsuite_2fa=user.has_2fa, gsuite_admin=user.is_admin, location=user.org_unit_path, email_not_active=user.suspended, department=department, job_title=job_title, run_at=self.run_at, company_id=user.company_id)]
+				data = [dict(firstname_lastname=user.firstname_lastname, email=user.email, gsuite_2fa=user.has_2fa, gsuite_admin=user.is_admin, location=user.org_unit_path, suspended=user.suspended, department=department, job_title=job_title, run_at=self.run_at, company_id=user.company_id)]
 
 				# Check if the user with this email already exist, if then, update it, if not insert new one
 				if should_update:
