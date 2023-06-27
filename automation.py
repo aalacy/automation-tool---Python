@@ -47,24 +47,19 @@ class Automation:
 	###
 
 	# Zoho
-	# ZOHO_Client_ID = '1000.ZWI2OCJ8JVX1B6RNFM2CKOKZOMYKFH'
-	# ZOHO_Client_Secret = 'a2dbe4af86abfc6c0563e38f40da3d99a0f3181a61'
-	ZOHO_Client_ID = '1000.XZC8I4FCMVTPNWQ1T2LQ6HHM4ZXFIH'
-	ZOHO_Client_Secret = '500e5bc845c5c820b69d8673bc112f49c221cc1105'
-	ZOHO_AUTH_URL = 'https://accounts.zoho.com/oauth/v2/auth?scope=ZohoCRM.modules.ALL,ZohoCRM.notifications.ALL,ZohoCRM.users.ALL&client_id=' + ZOHO_Client_ID + '&response_type=code&access_type=offline&redirect_uri=https://www.revampcybersecurity.com/'
+	ZOHO_Client_ID = '1000.**'
+	ZOHO_Client_Secret = '**'
+	ZOHO_AUTH_URL = 'https://accounts.zoho.com/oauth/v2/auth?scope=ZohoCRM.modules.ALL,ZohoCRM.notifications.ALL,ZohoCRM.users.ALL&client_id=' + ZOHO_Client_ID + '&response_type=code&access_type=offline&redirect_uri=https://www.**cybersecurity.com/'
 	ZOHO_TOKEN_URL = 'https://accounts.zoho.com/oauth/v2/token'
 	ZOHO_REFRESH_URL = 'https://accounts.zoho.com/oauth/v2/token?refresh_token={}&client_id='+ZOHO_Client_ID+'&client_secret='+ ZOHO_Client_Secret +'&grant_type=refresh_token'
 	ZOHO_LEADS_URL = 'https://www.zohoapis.com/crm/v2/Leads'
 	ZOHO_NOTIFICATION_WATCH_URL = 'https://www.zohoapis.com/crm/v2/actions/watch'
-	ZOHO_REFRESH_TOKEN = '1000.d6a72e0ca03009550895e69f2ef33a29.eecbfc31578854643c83736d7a163717'
-	# https://accounts.zoho.com/oauth/v2/auth?scope=ZohoCRM.modules.ALL,ZohoCRM.notifications.READ,ZohoCRM.users.ALL&client_id=1000.XZC8I4FCMVTPNWQ1T2LQ6HHM4ZXFIH&response_type=code&access_type=offline&redirect_uri=https://www.revampcybersecurity.com/
-	ZOHO_UN = 'info@revampcybersecurity.com'
+	ZOHO_REFRESH_TOKEN = '1000.**'
+	# https://accounts.zoho.com/oauth/v2/auth?scope=ZohoCRM.modules.ALL,ZohoCRM.notifications.READ,ZohoCRM.users.ALL&client_id=1000.XZC8I4FCMVTPNWQ1T2LQ6HHM4ZXFIH&response_type=code&access_type=offline&redirect_uri=https://www.**cybersecurity.com/
+	ZOHO_UN = '**'
 	ZOHO_PW = 'MU)^s,UDv]uTf%9&JYajXV2?s'
-	# ZOHO_UN = 'johnathanstv@gmail.com'
-	# ZOHO_PW = 'Imobile123'
 
 	# Slack
-	# SLACK_TOKEN = 'xoxp-151682192533-268011284087-937133863458-6b95e834e25acd4cf3e9a35353f95d53'
 	SLACK_TOKEN = 'xoxp-151682192533-837477530853-1134262267543-e8f340a3f7c8adf1a379b6e531fd29de'
 	slack_users_url = 'https://slack.com/api/users.list?token=' + SLACK_TOKEN + '&pretty=1'
 	SLACK_CLIENT_ID = '151682192533.1166812005137'
@@ -74,8 +69,8 @@ class Automation:
 
 	# Bamboohr
 	BAMBOOHR_API_KEY = '139900df2e12f70421f818da5b80a21388a99e30'
-	BAMBOO_URL = 'https://api.bamboohr.com/api/gateway.php/grovecollab/v1/employees/directory'
-	BAMBOO_CURL_URL = "curl -i -u '139900df2e12f70421f818da5b80a21388a99e30: x' 'https://api.bamboohr.com/api/gateway.php/grovecollab/v1/employees/directory'"
+	BAMBOO_URL = 'https://api.bamboohr.com/api/gateway.php/**collab/v1/employees/directory'
+	BAMBOO_CURL_URL = "curl -i -u '139900df2e12f70421f818da5b80a21388a99e30: x' 'https://api.bamboohr.com/api/gateway.php/**collab/v1/employees/directory'"
 
 	# dropbox
 	DROPBOX_ACCESS_TOKEN = 'ZcleRNk2k4AAAAAAAArSgBy0XndfW9vszf0WGF9RaifVAeOgNE77P3fZjkFyA94Y'
@@ -187,7 +182,7 @@ class Automation:
 				'grant_type': 'authorization_code',
 				'client_id': self.ZOHO_Client_ID,
 				'client_secret': self.ZOHO_Client_Secret,
-				'redirect_uri': 'https://www.revampcybersecurity.com/',
+				'redirect_uri': 'https://www.**cybersecurity.com/',
 				'code': code
 			}
 			res_token =  self.session.post(url = self.ZOHO_TOKEN_URL, data = data).text
@@ -229,7 +224,7 @@ class Automation:
 		    host = "localhost",
 		    user = USER_NAME,
 		    passwd = PASSWORD,
-		    database = "revamp"
+		    database = "**"
 		)
 		cursor = db.cursor()
 		cursor.execute('DELETE FROM companies')
@@ -278,7 +273,7 @@ class Automation:
 		    host = "localhost",
 		    user = "root",
 		    passwd = "",
-		    database = "revamp"
+		    database = "**"
 		)
 		cursor = db.cursor()
 		cursor.execute('DROP TABLE IF EXISTS slack_users')
@@ -344,7 +339,7 @@ class Automation:
 		    host = "localhost",
 		    user = "root",
 		    passwd = "12345678",
-		    database = "revamp"
+		    database = "**"
 		)
 		cursor = db.cursor()
 		cursor.execute('DROP TABLE IF EXISTS general_bamboo')
@@ -409,7 +404,7 @@ class Automation:
 		    host = "localhost",
 		    user = "root",
 		    passwd = "12345678",
-		    database = "revamp"
+		    database = "**"
 		)
 		cursor = db.cursor()
 		cursor.execute('DROP TABLE IF EXISTS dropbox_users')
@@ -466,7 +461,7 @@ class Automation:
 		    host = "localhost",
 		    user = "root",
 		    passwd = "12345678",
-		    database = "revamp"
+		    database = "**"
 		)
 		cursor = db.cursor()
 		cursor.execute("DROP TABLE IF EXISTS applications")

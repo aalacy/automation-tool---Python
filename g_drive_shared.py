@@ -14,21 +14,19 @@ from util import encode_csv_data
 load_dotenv()
 # local paths
 BASE_PATH = os.path.abspath(os.curdir)
-# BASE_PATH = '/home/johnathanstv/automation'
 
 
 # The email of the user. Needs permissions to access the Admin APIs.
-# USER_EMAIL =  'mbosl@grove.co'
 
 class GDrive:
 
 	folders = []
 	shared_info = []
 	b64data = [] 
-	domain = '@grove.co'
+	domain = '@***.co'
 	csv_file = './data/g_drive_shared' + datetime.now().strftime('%Y%m%d') + '.csv'
 	# Path to the Service Account's Private Key file
-	SERVICE_ACCOUNT_JSON_FILE_PATH = './data/revamp-cyber-a59c90daeb09.json'
+	SERVICE_ACCOUNT_JSON_FILE_PATH = './data/-a59c90daeb09.json'
 	# The CSV file path containing folder names to revoke ac
 	FILE_FOR_FOLDER_LIST = './data/g_drive_folders_ids.txt'
 

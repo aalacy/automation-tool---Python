@@ -17,7 +17,7 @@
         domain
 
     @example command
-        python3 public_data.py -d grove.co
+        python3 public_data.py -d **.co
 
 '''
 

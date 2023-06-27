@@ -19,10 +19,10 @@ import pdb
 BASE_PATH = os.path.abspath(os.curdir)
 
 # Path to the Service Account's Private Key file
-SERVICE_ACCOUNT_JSON_FILE_PATH = BASE_PATH + '/data/revamp-cyber-a59c90daeb09.json'
+SERVICE_ACCOUNT_JSON_FILE_PATH = BASE_PATH + '/data/**-a59c90daeb09.json'
 
 # The email of the user. Needs permissions to access the Admin APIs.
-USER_EMAIL =  'it-software@grove.co'
+USER_EMAIL =  'it-software@**.co'
 
 def group_access_settings(service, groupId, settings):
   """Retrieves a group's settings and updates the access permissions to it.

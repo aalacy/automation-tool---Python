@@ -44,5 +44,5 @@ def _run_ssllabs(data, domain):
 	return data
 
 if __name__ == "__main__":
-	data = _run_ssllabs({}, 'grove.co')
+	data = _run_ssllabs({}, '**.co')
 	print (data)

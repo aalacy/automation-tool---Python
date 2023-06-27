@@ -33,5 +33,5 @@ def _run_wpscan(data, domain):
 
 
 if __name__ == '__main__':
-	data = _run_wpscan({}, 'grove.co')
+	data = _run_wpscan({}, '**.co')
 	print(data)

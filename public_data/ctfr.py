@@ -35,5 +35,5 @@ def _run_ctrf(data, domain):
     return data
 
 if __name__ == '__main__':
-    data = _run_ctrf({}, 'grove.co')
+    data = _run_ctrf({}, '**.co')
     print(data)

@@ -7,12 +7,12 @@ import base64
 # sendgrid
 SENDGRID_API_KEY = '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'
 # TO_EMAIL = 'ideveloper003@gmail.com'
-TO_EMAIL = 'martin@revampcybersecurity.com'
+TO_EMAIL = 'martin@**cybersecurity.com'
 
-def send_email(text, title, to_email='martin@revampcybersecurity.com'):
+def send_email(text, title, to_email='martin@**cybersecurity.com'):
 	msg_body = '<strong>{} at {}</strong>'.format(text,  date.now().strftime("%Y-%m-%d %H:%M:%S"))
 	message = Mail(
-	    from_email='report@revamp.com',
+	    from_email='report@**.com',
 	    to_emails=[TO_EMAIL, 'ideveloper003@gmail.com'],
 	    subject=title,
 	    html_content=msg_body)
@@ -25,7 +25,7 @@ def send_email(text, title, to_email='martin@revampcybersecurity.com'):
 	except Exception as e:
 	    print(str(e))
 
-def send_email_by_template(template_id='d-a1b7b69d690241fd9b20f78d76518b0b', to_email='mscott@grove.co', from_email='login@revampcybersecurity.com', title='Users from query', email_list='', from_user="Revamp Cybersecurity"):
+def send_email_by_template(template_id='d-a1b7b69d690241fd9b20f78d76518b0b', to_email='mscott@**.co', from_email='login@**cybersecurity.com', title='Users from query', email_list='', from_user="Revamp Cybersecurity"):
 	message = Mail(
 		subject=title,
 		to_emails=to_email,
@@ -44,7 +44,7 @@ def send_email_by_template(template_id='d-a1b7b69d690241fd9b20f78d76518b0b', to_
 	except Exception as e:
 		print('err in send_email_by_template ', e)
 
-def send_email_with_attachment(template_id='d-8b6655afc0de466eb5b5b856b55a959d', to_email='crm@revampcybersecurity.com', from_email='info@revampcybersecurity.com', content=""):
+def send_email_with_attachment(template_id='d-8b6655afc0de466eb5b5b856b55a959d', to_email='crm@**cybersecurity.com', from_email='info@**cybersecurity.com', content=""):
 	message = Mail(
 		to_emails=to_email,
 		from_email=Email(from_email, 'Revamp Cybersecurity'),
@@ -73,7 +73,7 @@ def send_email_with_attachment(template_id='d-8b6655afc0de466eb5b5b856b55a959d',
 
 	return response
 
-def send_email_with_attachment_general(to_email='crm@revampcybersecurity.com', from_email='info@revampcybersecurity.com', data="", html=''):
+def send_email_with_attachment_general(to_email='crm@**cybersecurity.com', from_email='info@**cybersecurity.com', data="", html=''):
 	message = Mail(
 	    from_email=from_email,
 	    to_emails=to_email,
@@ -101,6 +101,6 @@ def send_email_with_attachment_general(to_email='crm@revampcybersecurity.com', f
 	except Exception as e:
 		print(e.message)
 
-def send_email_with_attachment_normal(to_email='crm@revampcybersecurity.com', from_email='info@revampcybersecurity.com', data="", query='los'):
+def send_email_with_attachment_normal(to_email='crm@**cybersecurity.com', from_email='info@**cybersecurity.com', data="", query='los'):
 	html = '<strong>Here is the attachment for angel scraper with query <i>{}</i></strong>'.format(query)
 	send_email_with_attachment_general(to_email, from_email, data, html)

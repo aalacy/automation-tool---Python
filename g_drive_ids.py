@@ -7,13 +7,12 @@ from mail import send_email
 
 # local paths
 BASE_PATH = os.path.abspath(os.curdir)
-# BASE_PATH = '/home/johnathanstv/automation'
 
 # Path to the Service Account's Private Key file
-SERVICE_ACCOUNT_JSON_FILE_PATH = BASE_PATH + '/data/revamp-cyber-a59c90daeb09.json'
+SERVICE_ACCOUNT_JSON_FILE_PATH = BASE_PATH + '/data/a59c90daeb09.json'
 
 # The email of the user. Needs permissions to access the Admin APIs.
-USER_EMAIL =  'mscott@grove.co'
+USER_EMAIL =  ''
 
 # The CSV file path containing folder names to revoke ac
 FILE_FOR_FOLDER_LIST = BASE_PATH + '/data/g_drive_folders_ids.txt'

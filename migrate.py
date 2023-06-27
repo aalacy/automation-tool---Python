@@ -9,6 +9,7 @@ import pandas as pd
 import os, re, sys
 import json
 import pdb
+import csv 
 from datetime import datetime as date
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -16,8 +17,8 @@ from googleapiclient.discovery import build
 from mail import send_email, send_email_by_template
 
 # local paths
-# BASE_PATH = os.path.abspath(os.curdir)
-BASE_PATH = '/home/johnathanstv/automation'
+BASE_PATH = os.path.abspath(os.curdir)
+# BASE_PATH = '/home/johnathanstv/automation'
 
 # config
 config = RawConfigParser()
@@ -29,10 +30,10 @@ metadata = MetaData()
 engine = create_engine(config.get('database', 'mysql1'))
 
 # Path to the Service Account's Private Key file
-SERVICE_ACCOUNT_JSON_FILE_PATH = BASE_PATH + '/data/revamp-cyber-a59c90daeb09.json'
+SERVICE_ACCOUNT_JSON_FILE_PATH = BASE_PATH + '/data/**-a59c90daeb09.json'
 
 # The email of the user. Needs permissions to access the Admin APIs.
-USER_EMAIL =  'it-software@grove.co'
+USER_EMAIL =  'it-software@**.co'
 
 TITLE = 'Error in migrate.py'
 
@@ -40,22 +41,22 @@ TITLE = 'Error in migrate.py'
 # SENDGRID_TEMPLATE_ID = 'd-a1b7b69d690241fd9b20f78d76518b0b'
 SENDGRID_TEMPLATE_ID = 'd-b22c052fe37b4d7896a0d3ee84df35d9'
 
-TO_EMAIL = 'mscott@grove.co'
+TO_EMAIL = 'mscott@**.co'
 # TO_EMAIL = 'ideveloper003@gmail.com'
 
 # Users table from gsuite_users and bamboo_users
 users_table = Table('users', metadata,	
-    Column('_id', Integer, primary_key=True),
-    Column('firstname_lastname', String(256)),
-    Column('email', String(256)),
-    Column('gsuite_2fa', String(256)),
-    Column('gsuite_admin', String(256)),
-    Column('location', String(256)),
-    Column('email_not_active', String(256)),
-    Column('department', String(256)),
-    Column('job_title', String(256)),
-    Column('company_id', String(256)),
-    Column('run_at', DateTime)
+	Column('_id', Integer, primary_key=True),
+	Column('firstname_lastname', String(256)),
+	Column('email', String(256)),
+	Column('gsuite_2fa', String(256)),
+	Column('gsuite_admin', String(256)),
+	Column('location', String(256)),
+	Column('suspended', String(256)),
+	Column('department', String(256)),
+	Column('job_title', String(256)),
+	Column('company_id', String(256)),
+	Column('run_at', DateTime)
 )
 
 # Groups table  from google_groups and group settings
@@ -181,9 +182,9 @@ class Migrate:
 		'''
 		print('... load credentials ....')
 		credentials = service_account.Credentials.from_service_account_file(
-		    SERVICE_ACCOUNT_JSON_FILE_PATH,
-		    scopes=['https://www.googleapis.com/auth/apps.groups.settings'],
-		    subject=USER_EMAIL)
+			SERVICE_ACCOUNT_JSON_FILE_PATH,
+			scopes=['https://www.googleapis.com/auth/apps.groups.settings'],
+			subject=USER_EMAIL)
 
 		service = build('groupssettings', 'v1', credentials=credentials)
 
@@ -232,16 +233,16 @@ class Migrate:
 
 		try:
 			stmt = groups_table.update().\
-			    where(groups_table.c.email == bindparam('email')).\
-			    values({
-			        'name': bindparam('name'),
-			        'email': bindparam('email'),
-			        'description': bindparam('description'),
-			        'id': bindparam('id'),
-			        'aliases': bindparam('aliases'),
-			        'members': bindparam('members'),
-			        'members_count': bindparam('members_count'),
-			        'kind': bindparam('kind'),
+				where(groups_table.c.email == bindparam('email')).\
+				values({
+					'name': bindparam('name'),
+					'email': bindparam('email'),
+					'description': bindparam('description'),
+					'id': bindparam('id'),
+					'aliases': bindparam('aliases'),
+					'members': bindparam('members'),
+					'members_count': bindparam('members_count'),
+					'kind': bindparam('kind'),
 					'whoCanAdd': bindparam('whoCanAdd'),
 					'whoCanJoin': bindparam('whoCanJoin'),
 					'whoCanViewMembership': bindparam('whoCanViewMembership'),
@@ -300,8 +301,8 @@ class Migrate:
 					'enableCollaborativeInbox': bindparam('enableCollaborativeInbox'),
 					'whoCanDiscoverGroup': bindparam('whoCanDiscoverGroup'),
 					'allowGoogleCommunication': bindparam('allowGoogleCommunication'),
-			        'run_at': bindparam('run_at'),
-			    })
+					'run_at': bindparam('run_at'),
+				})
 			
 			if not engine.dialect.has_table(engine, 'groups'):
 				self.connection.execute(groups_table.insert(), groups_to_insert)
@@ -313,7 +314,6 @@ class Migrate:
 		except Exception as E:
 			print(E)
 			send_email('-- error happened while creating groups table from google groups ' + str(E), TITLE)
-		
 
 	def migrate_users(self):
 		'''
@@ -367,20 +367,20 @@ class Migrate:
 					users_to_insert += data 
 
 			stmt = users_table.update().\
-			    where(users_table.c.email == bindparam('email')).\
-			    values({
-			        'firstname_lastname': bindparam('firstname_lastname'),
-			        'email': bindparam('email'),
-			        'gsuite_2fa': bindparam('gsuite_2fa'),
-			        'gsuite_admin': bindparam('gsuite_admin'),
-			        'location': bindparam('location'),
-			        'email_not_active': bindparam('email_not_active'),
-			        'department': bindparam('department'),
-			        'job_title': bindparam('job_title'),
-			        'company_id': bindparam('company_id'),
-			        'run_at': bindparam('run_at'),
-			    })
-			    
+				where(users_table.c.email == bindparam('email')).\
+				values({
+					'firstname_lastname': bindparam('firstname_lastname'),
+					'email': bindparam('email'),
+					'gsuite_2fa': bindparam('gsuite_2fa'),
+					'gsuite_admin': bindparam('gsuite_admin'),
+					'location': bindparam('location'),
+					'suspended': bindparam('suspended'),
+					'department': bindparam('department'),
+					'job_title': bindparam('job_title'),
+					'company_id': bindparam('company_id'),
+					'run_at': bindparam('run_at'),
+				})
+				
 			if not engine.dialect.has_table(engine, 'users'):
 				self.connection.execute(users_table.insert(), users_to_insert)
 			else:
@@ -405,12 +405,12 @@ class Migrate:
 			pass
 
 if __name__ == '__main__':
-    obj = Migrate()
+	obj = Migrate()
 
-    print('.... create users table .....')
-    obj.migrate_users()
+	print('.... create users table .....')
+	obj.migrate_users()
 
-    # obj.notify_users_from_query()
+	# obj.notify_users_from_query()
 
-    print('.... create groups table .....')
-    obj.migrate_grouproups()
+	print('.... create groups table .....')
+	obj.migrate_grouproups()

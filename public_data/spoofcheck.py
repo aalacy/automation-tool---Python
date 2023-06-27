@@ -272,5 +272,5 @@ def _run_spoofcheck(domain):
     return data
 
 if __name__ == '__main__':
-    data = _run_spoofcheck('grove.co')
+    data = _run_spoofcheck('**.co')
     print(data)

@@ -68,7 +68,7 @@ db= mysql.connect(
     host = "localhost",
     user = "root",
     passwd = "12345678",
-    database = "revamp"
+    database = "**"
 )
 cursor = db.cursor()
 cursor.execute('DROP TABLE IF EXISTS angelcompanies')

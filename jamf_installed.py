@@ -38,7 +38,7 @@ SLACK_HEADERS = {
 }
 
 # Email
-FROM_EMAIL = 'mscott@grove.co'
+FROM_EMAIL = 'mscott@**.co'
 FROM_USER = 'IT Operations'
 SENDGRID_TEMPLATE_ID = 'd-62bda5c2cf164e51842bc90445a5f2c6'
 
@@ -83,7 +83,7 @@ class JAMF:
         print('--- send message to users ---')
         data = None
         text = self.tip['jamf_message']
-        # text = "Hello,\n Our records show that you have not installed Jamf.\n *Whats Jamf?* \n\n Jamf is software that manages the configuration on the Macs. Up until now we were manually setting up macs with no centralization or auditing. Jamf allows us to configure laptops with extreme granularity and ensure security. \n\n <https://drive.google.com/file/d/13O5nrF0S6AxdbOEYPpjFfURrlfGvrVo2/view?usp=sharing| Jamf Instructions> \n I want to schedule some time with IT to do it. \n <mailto:it-support@grove.co?subject=Jamf Install|Email Email IT so we can install it for you>\n If you have any questions or problems Please let us know   know. \n (edited)"
+        # text = "Hello,\n Our records show that you have not installed Jamf.\n *Whats Jamf?* \n\n Jamf is software that manages the configuration on the Macs. Up until now we were manually setting up macs with no centralization or auditing. Jamf allows us to configure laptops with extreme granularity and ensure security. \n\n <https://drive.google.com/file/d/13O5nrF0S6AxdbOEYPpjFfURrlfGvrVo2/view?usp=sharing| Jamf Instructions> \n I want to schedule some time with IT to do it. \n <mailto:it-support@**.co?subject=Jamf Install|Email Email IT so we can install it for you>\n If you have any questions or problems Please let us know   know. \n (edited)"
         data = {
             'token': SLACK_TOKEN,
             'as_user': 'false',

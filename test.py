@@ -23,16 +23,16 @@ connection = engine.connect()
 def main():
 	spoofing_possible = 'spoofing_possible'
 	ctfr_subdomain = '''
-		*.grove.co;*.grove.co
-		grove.co;*.grove.co 
-		grove.co 
+		*.**.co;*.**.co
+		**.co;*.**.co 
+		**.co 
 	'''
 
 	query = "delete from security_answers where question_id in (612, 614, 615, 616, 617, 623, 626, 631, 632, 633, 634);"
 
 	connection.execute(query)
 
-	query = "INSERT INTO security_answers (question_id, company_id, Answer) VALUES (612, 'grove.co', '{}'), (614, 'grove.co', '{}')".format(spoofing_possible, ctfr_subdomain)
+	query = "INSERT INTO security_answers (question_id, company_id, Answer) VALUES (612, '**.co', '{}'), (614, '**.co', '{}')".format(spoofing_possible, ctfr_subdomain)
 
 	connection.execute(query)
 

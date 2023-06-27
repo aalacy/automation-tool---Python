@@ -17,7 +17,7 @@ from mail import send_email, send_email_by_template
 #     host = "localhost",
 #     user = "root",
 #     passwd = "",
-#     database = "revamp"
+#     database = "**"
 # )
 # cursor = db.cursor()
 

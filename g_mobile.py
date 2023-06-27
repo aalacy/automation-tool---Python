@@ -22,14 +22,14 @@ load_dotenv()
 class GSuite:
 
 	# Email of the Service Account
-	SERVICE_ACCOUNT_EMAIL = 'it-software@gamproject-261122.iam.gserviceaccount.com'
+	SERVICE_ACCOUNT_EMAIL = 'it-software@**count.com'
 
 	# Path to the Service Account's Private Key file
 	SERVICE_ACCOUNT_PKCS12_FILE_PATH = './data/gamproject.p12'
-	SERVICE_ACCOUNT_JSON_FILE_PATH = './data/revamp-cyber-a59c90daeb09.json'
+	SERVICE_ACCOUNT_JSON_FILE_PATH = './data/**-a59c90daeb09.json'
 
 	# The email of the user. Needs permissions to access the Admin APIs.
-	USER_EMAIL =  'it-software@grove.co'
+	USER_EMAIL =  'it-software@**.co'
 
 	data_insert = []
 

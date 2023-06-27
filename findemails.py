@@ -9,7 +9,7 @@ import pdb
 ###
 
 # API credential
-FINDEMAILS_API_KEY = '69bb3c5d092f2e8b19bdaeadc425e2fe'
+FINDEMAILS_API_KEY = '69bb3c5d092f2e8b19e2fe'
 PROSPECTS_URL = 'https://www.findemails.com/api/v1/get_prospects?key='+ FINDEMAILS_API_KEY +'&company_name={}'
 FINDEMAIL_OUTPUT = './data/findemails.csv'
 

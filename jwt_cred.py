@@ -5,7 +5,7 @@ import pdb
 def main():
 	audience = 'https://pubsub.googleapis.com/google.pubsub.v1.Publisher'
 	credentials = jwt.Credentials.from_service_account_file(
-		'./data/revamp-cyber-a59c90daeb09.json',
+		'./data/**-a59c90daeb09.json',
 		audience=audience)
 
 	pdb.set_trace()

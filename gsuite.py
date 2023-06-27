@@ -1,10 +1,10 @@
+import argparse
 from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 from google.oauth2 import service_account
 import mysql.connector as mysql
 import json
 import re
-import csv
 import urllib.parse
 from datetime import datetime as date
 import os
@@ -53,7 +53,7 @@ db= mysql.connect(
     host = "localhost",
     user = "root",
     passwd = "12345678",
-    database = "revamp"
+    database = "**"
 )
 cursor = db.cursor()
 
@@ -74,9 +74,11 @@ def get_users():
         while True:
             user_results = g_service.users().list(customer='my_customer', maxResults=100,
                                          pageToken=nextPageToken).execute()
-            pdb.set_trace()
             users = user_results.get('users', [])
             for user in users:
+                if user['primaryEmail'] == 'michael.jordan@petrellilaw.com':
+                    pdb.set_trace()
+                    
                 aliases = ';'.join(user.get('aliases', []))
                 department = user.get('department', '')
                 recovery_email = user.get('recoveryEmail', '')
@@ -90,7 +92,7 @@ def get_users():
         db.commit()
     except Exception as E:
         print(E)
-        send_email('Issue report on gsuite.py', '--- error happened while populating the gsuite users ----' + str(E))
+        # send_email('Issue report on gsuite.py', '--- error happened while populating the gsuite users ----' + str(E))
 
 def get_groups():
     # Call the Admin SDK Directory API
@@ -109,7 +111,7 @@ def get_groups():
     try:
         while True:
             group_results = g_service.groups().list(customer='my_customer', maxResults=100,
-                                         domain='grove.co', pageToken=nextPageToken).execute()
+                                         domain='**.co', pageToken=nextPageToken).execute()
             # users = results.get('users', [])
             groups = group_results.get('groups', [])
             for group in groups:
@@ -134,5 +136,15 @@ def get_groups():
         send_email('--- error happened while populating the gsuite users ----' + str(E))
 
 if __name__ == '__main__':
-    get_users()
-    # get_groups()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--path', type=str, required=False, help="Path to csv data. e.g. python migrate.py -p ./data/sample.csv ")
+    parser.add_argument('-c', '--company', type=str, required=False, help="Company domain. e.g. python migrate.py -c google.com ")
+
+    path = parser.parse_args().path
+    company = parser.parse_args().company
+
+    if path and company:
+        get_users_from_csv(path, company)
+    else:
+        get_users()
+        # get_groups()

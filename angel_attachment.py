@@ -209,5 +209,5 @@ if __name__ == '__main__':
 
 	angel.get_prospects_from_findemails()
 
-	# send email to crm@revampcybersecurity.com
+	# send email to crm@**cybersecurity.com
 	angel.send_email()

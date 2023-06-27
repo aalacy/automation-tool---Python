@@ -30,7 +30,7 @@ driver = webdriver.Chrome(executable_path= './data/chromedriver.exe', chrome_opt
 driver.get('https://www.crunchbase.com/home')
 pdb.set_trace()
 # http = urllib3.PoolManager()
-# res = http.request('GET', 'https://www.shodan.io/search?query=grove.co')  
+# res = http.request('GET', 'https://www.shodan.io/search?query=**.co')  
 # data = etree.HTML(res.data) 
 # href = 'https://www.shodan.io' + data.xpath('//div[@class="search-result"][1]//a[2]/@href')[0]
 

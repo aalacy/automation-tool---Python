@@ -45,5 +45,5 @@ def _run_dnstwist(data, domain):
 
 
 if __name__ == '__main__':
-	data = _run_dnstwist({}, 'grove.co')
+	data = _run_dnstwist({}, '**.co')
 	print(data)

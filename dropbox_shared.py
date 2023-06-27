@@ -31,7 +31,7 @@ import requests
 import pdb
 
 # dropbox
-DROPBOX_ACCESS_TOKEN = 'ZcleRNk2k4AAAAAAAArSgBy0XndfW9vszf0WGF9RaifVAeOgNE77P3fZjkFyA94Y'
+DROPBOX_ACCESS_TOKEN = 'ZcleRNk2k4AAAAAAAArSgBy0XndfWkFyA94Y'
 DROPBOX_FOLDER_LIST_URL = 'https://api.dropboxapi.com/2/team/team_folder/list'
 DROPBOX_FOLDER_LIST_CONTINUE_URL = 'https://api.dropboxapi.com/2/team/team_folder/list/continue'
 
